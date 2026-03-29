@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- @version 1.0.0 -->
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<title>எழுது விசைப்பலகை பயிற்சி</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, sans-serif; padding: 1.5rem; background: #f9f9f9; color: #111; max-width: 860px; }
+h1 { font-size: 18px; font-weight: 600; margin-bottom: 0; font-family: 'Noto Sans Tamil', sans-serif; }
+h1 span { font-size: 13px; font-weight: 400; color: #666; font-family: system-ui, sans-serif; margin-left: 8px; }
+.back { font-size: 13px; color: #4a7fcb; text-decoration: none; margin-bottom: 1rem; display: inline-block; }
+.back:hover { text-decoration: underline; }
+.label { font-size: 13px; color: #666; margin-bottom: 5px; font-weight: 500; }
+.tamil { font-family: 'Noto Sans Tamil', sans-serif; font-size: 22px; width: 100%;
+  padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px;
+  background: #fff; color: #111; min-height: 56px; word-break: break-all; line-height: 1.6; }
+textarea.tamil { resize: vertical; outline: none; }
+.mono { font-family: monospace; font-size: 12px; line-height: 1.8; min-height: 40px; color: #555; }
+.match { border-color: #4a9e4a !important; background: #f0fff0 !important; }
+.nomatch { border-color: #e24a4a !important; background: #fff0f0 !important; }
+.status { font-size: 13px; font-weight: 500; min-height: 20px; margin-top: 5px; }
+.status.ok { color: #4a9e4a; } .status.no { color: #e24a4a; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+button { padding: 6px 16px; border-radius: 6px; border: 1px solid #ccc;
+  background: #fff; cursor: pointer; font-size: 13px; }
+button:hover { background: #f0f0f0; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+.box3-wrap { position: relative; }
+#box3 { cursor: text; outline: none; padding-right: 44px; }
+#box3:focus { border-color: #4a7fcb; }
+#btn-copy { position: absolute; top: 8px; right: 8px; padding: 4px 10px;
+  font-size: 11px; border-radius: 5px; border: 1px solid #ccc; background: #f5f5f5;
+  cursor: pointer; color: #555; }
+#btn-copy:hover { background: #e8e8e8; }
+#btn-copy.copied { color: #4a9e4a; border-color: #4a9e4a; }
+.hint { font-size: 11px; color: #999; margin-top: 3px; }
+.version-bar { margin-top: 1.5rem; font-size: 11px; color: #999; }
+
+/* Keystroke log — collapsible */
+.log-toggle { font-size: 12px; color: #999; cursor: pointer; user-select: none;
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.log-toggle:hover { color: #555; }
+.log-toggle .arrow { display: inline-block; transition: transform 0.2s; }
+.log-toggle.open .arrow { transform: rotate(90deg); }
+#log-wrap { display: none; }
+#log-wrap.open { display: block; }
+</style>
+</head>
+<body>
+
+<a class="back" href="index.html">← எழுது</a>
+
+<div class="topbar">
+  <h1>எழுது விசைப்பலகை பயிற்சி <span>Tamil 99 free typing</span></h1>
+  <div style="display:flex;gap:8px;align-items:center">
+    <label style="font-size:13px;display:flex;align-items:center;gap:6px;cursor:pointer">
+      <input type="checkbox" id="chk-combine" checked>
+      <span>combination mode</span>
+    </label>
+    <button id="btn-reset">↺ Reset</button>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <p class="label">குறிப்பு உரை — Reference text</p>
+    <textarea class="tamil" id="box1" rows="2" placeholder="ஒப்பிட தமிழ் உரையை ஒட்டவும்…"></textarea>
+    <p class="hint">Optional — paste text to compare against your typing</p>
+  </div>
+  <div>
+    <p class="label">தட்டச்சு செய்த உரை — Typed text</p>
+    <div class="box3-wrap">
+      <div class="tamil" id="box3" tabindex="0">​</div>
+      <button id="btn-copy" title="Copy typed text">⎘ copy</button>
+    </div>
+    <p class="status" id="status"></p>
+    <p class="hint">Click here then type using Tamil 99 keys</p>
+  </div>
+</div>
+
+<div style="margin-bottom:14px">
+  <div class="log-toggle" id="log-toggle">
+    <span class="arrow">▶</span>
+    <span>விசை பதிவு — Keystroke log</span>
+    <span style="font-size:11px;color:#bbb">(developer)</span>
+  </div>
+  <div id="log-wrap">
+    <div class="tamil mono" id="box2"></div>
+  </div>
+</div>
+
+<div class="version-bar" id="vbar"></div>
+
+<script src="js/tamil99.js"></script>
+<script>
+const engine = new Tamil99Engine();
+engine.setCombine(true);
+
+document.getElementById('chk-combine').addEventListener('change', e => {
+  engine.setCombine(e.target.checked);
+  resetState();
+});
+
+let log = [];
+let engineText = '';
+let pendingChar = '';
+
+function resetState() {
+  engineText = ''; pendingChar = ''; log = [];
+  engine.reset();
+  document.getElementById('box3').textContent = '\u200b';
+  document.getElementById('box3').className = 'tamil';
+  document.getElementById('box2').textContent = '';
+  document.getElementById('status').textContent = '';
+}
+
+function getCurrentDisplay() {
+  return pendingChar ? engineText + pendingChar : engineText;
+}
+
+function applyResult(r) {
+  if (!r) return;
+
+  if (r.type === 'consonant_pending') {
+    pendingChar = r.output;
+    return;
+  }
+
+  if (r.type === 'implicit_a') {
+    engineText += r.output;
+    pendingChar = '';
+    return;
+  }
+
+  if (r.replace) {
+    if (r.pending) {
+      const segs = [...new Intl.Segmenter().segment(r.output)].map(s => s.segment);
+      engineText += segs.slice(0, -1).join('');
+      pendingChar = segs[segs.length - 1];
+    } else {
+      engineText += r.output;
+      pendingChar = '';
+    }
+    return;
+  }
+
+  if (r.pending && r.type === 'consonant_chain') {
+    engineText += pendingChar;
+    pendingChar = r.output;
+  } else {
+    engineText += r.output;
+    pendingChar = r.pending || '';
+  }
+}
+
+function handleBackspace() {
+  const fakeEvent = { code: 'Backspace', shiftKey: false,
+    ctrlKey: false, altKey: false, metaKey: false, key: 'Backspace' };
+  const r = engine.processKey(fakeEvent);
+  if (!r) return;
+
+  if (r.type === 'backspace_pending') {
+    pendingChar = '';
+    log.push('⌫');
+    return;
+  }
+
+  const segmenter = new Intl.Segmenter();
+  const clusters = [...segmenter.segment(engineText)].map(s => s.segment);
+  if (!clusters.length) { pendingChar = ''; log.push('⌫'); return; }
+
+  const last = clusters[clusters.length - 1];
+  const lastCps = [...last];
+  const isConsonant = cp => cp >= 0x0B95 && cp <= 0x0BB9;
+  const isMarker    = cp => (cp >= 0x0BBE && cp <= 0x0BC8) || cp === 0x0BCD;
+
+  if (lastCps.length >= 2 && isConsonant(lastCps[0].codePointAt(0)) &&
+      lastCps.slice(1).every(c => isMarker(c.codePointAt(0)))) {
+    const consonant = lastCps[0];
+    engineText = clusters.slice(0, -1).join('');
+    engine._pending = consonant;
+    pendingChar = consonant;
+    log.push('⌫₂');
+  } else {
+    engineText = clusters.slice(0, -1).join('');
+    pendingChar = '';
+    log.push('⌫');
+  }
+}
+
+function render() {
+  const display = getCurrentDisplay();
+  const b3 = document.getElementById('box3');
+  b3.textContent = display || '\u200b';
+  document.getElementById('box2').textContent = log.join(' ');
+
+  const t1 = document.getElementById('box1').value.trim();
+  const t3 = display.trim();
+  const st = document.getElementById('status');
+
+  // Only show match/mismatch when reference text is present
+  if (!t1) {
+    b3.className = 'tamil';
+    st.textContent = '';
+    return;
+  }
+  if (!t3) {
+    b3.className = 'tamil';
+    st.textContent = '';
+    return;
+  }
+  if (t1 === t3) {
+    b3.className = 'tamil match';
+    st.textContent = '✓ குறிப்புடன் பொருந்துகிறது';
+    st.className = 'status ok';
+  } else {
+    b3.className = 'tamil nomatch';
+    st.textContent = '✗ பொருந்தவில்லை';
+    st.className = 'status no';
+  }
+}
+
+document.getElementById('box3').addEventListener('keydown', e => {
+  if (['Shift','Control','Alt','Meta','CapsLock','Tab','Escape'].includes(e.key)) return;
+  e.preventDefault();
+  if (e.code === 'Backspace') { handleBackspace(); render(); return; }
+  const result = engine.processKey(e);
+  if (!result) return;
+  applyResult(result);
+  log.push(e.code === 'Space' ? '␣' : (result.output?.trim() || e.code));
+  render();
+});
+
+document.getElementById('box1').addEventListener('input', render);
+
+document.getElementById('btn-reset').addEventListener('click', () => {
+  document.getElementById('chk-combine').checked = true;
+  engine.setCombine(true);
+  document.getElementById('box1').value = '';
+  resetState();
+});
+
+document.getElementById('box3').addEventListener('click', () => document.getElementById('box3').focus());
+
+// Copy button
+document.getElementById('btn-copy').addEventListener('click', () => {
+  const text = getCurrentDisplay().trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✓ copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '⎘ copy'; btn.classList.remove('copied'); }, 1500);
+  });
+});
+
+// Keystroke log toggle
+document.getElementById('log-toggle').addEventListener('click', () => {
+  const toggle = document.getElementById('log-toggle');
+  const wrap   = document.getElementById('log-wrap');
+  toggle.classList.toggle('open');
+  wrap.classList.toggle('open');
+});
+
+// Self-register version
+window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
+window.ELUTHU_VERSIONS['tamil99-tester.html'] = '1.0.0';
+
+// Version bar
+const _vbar = document.getElementById('vbar');
+if (_vbar) {
+  const v = window.ELUTHU_VERSIONS;
+  const ORDER = ['tamil99-tester.html', 'tamil99.js'];
+  _vbar.textContent = ORDER.filter(f => v[f]).map(f => `${f} v${v[f]}`).join('  ');
+}
+</script>
+</body>
+</html>

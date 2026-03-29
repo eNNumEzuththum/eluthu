@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!-- @version 1.0.0 -->
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta name="description" content="எழுது (eluthu) — free Tamil touch typing tutor using the Tamil 99 keyboard layout">
+  <title>எழுது · Learn to type Tamil</title>
+  <link rel="stylesheet" href="css/style.css?v=1.1.2">
+
+  <script>
+    window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
+    // ── Non-JS files: update manually when file changes ──────────────────
+    window.ELUTHU_VERSIONS['index.html']          = '1.0.0';
+    window.ELUTHU_VERSIONS['style.css']           = '1.0.0';
+    window.ELUTHU_VERSIONS['tamil99-keymap.json'] = '1.0.0';
+  </script>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <span class="logo">எழுது</span>
+  <span class="logo-sub">விரைவாகவும் இலகுவாகவும் கணணியில் எழுத பழகுங்கள்</span>
+  <button id="btn-picker" title="நிலை தேர்வு">☰</button>
+</header>
+
+<!-- Lesson/Exercise picker overlay -->
+<div id="picker-overlay" class="picker-overlay hidden">
+  <div class="picker-panel">
+    <div class="picker-header">
+      <span class="picker-title">நிலை தேர்வு</span>
+      <button id="btn-picker-close">✕</button>
+    </div>
+    <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<!-- Lesson / Exercise label + progress -->
+<div class="lesson-label" id="lesson-label">
+  <span id="lesson-name"></span>
+  <span class="label-sep">·</span>
+  <span id="exercise-name"></span>
+  <div class="progress-dots" id="progress-dots"></div>
+</div>
+
+<!-- Live stats (review + practice only) -->
+<div class="stats-bar hidden" id="stats-bar">
+  <div class="stat-item">
+    <span class="stat-label">துல்லியம்</span>
+    <span class="stat-value" id="stat-accuracy">—</span>
+    <span class="stat-target" id="stat-target"></span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label">வேகம்</span>
+    <span class="stat-value" id="stat-cpm">—</span>
+    <span class="stat-label">சொற்கள் / நிமிடம்</span>
+  </div>
+</div>
+
+<!-- Result banner -->
+<div class="result-banner hidden" id="result-banner">
+  <div class="result-message" id="result-message"></div>
+  <div class="result-stats" id="result-stats"></div>
+</div>
+
+<!-- Section 1: Lesson characters -->
+<section class="char-row-wrap">
+  <div class="char-row" id="char-row"></div>
+</section>
+
+<!-- Section 2: Keyboard -->
+<section class="keyboard-wrap">
+  <object id="keyboard-obj" data="assets/keyboard.svg" type="image/svg+xml"></object>
+</section>
+
+<input id="capture" type="text" autocomplete="off"
+       autocorrect="off" autocapitalize="off" spellcheck="false"
+       style="position:fixed;top:-9999px;left:-9999px;opacity:0;width:0;height:0;border:none;">
+
+<!-- Version bar -->
+<div id="version-info" class="version-bar"></div>
+
+<script src="js/tamil99.js"></script>
+<script src="js/combination.js"></script>
+<script src="js/typing.js"></script>
+<script src="js/lessons.js"></script>
+<script src="js/app.js"></script>
+<script src="js/version.js"></script>
+</body>
+</html>

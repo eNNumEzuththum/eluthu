@@ -1,0 +1,344 @@
+{
+  "_comment": "Tamil 99 Keyboard Layout - Generated from official KBDTAM99.DLL via kbdlayout.info",
+  "_version": "1.0.0",
+  "_project": "eluthu - Learn to type Tamil",
+  "_source": "https://kbdlayout.info/kbdtam99/download/xml",
+  "keys": {
+    "KeyQ": {
+      "normal": "ஆ",
+      "shift": "ஸ"
+    },
+    "KeyW": {
+      "normal": "ஈ",
+      "shift": "ஷ"
+    },
+    "KeyE": {
+      "normal": "ஊ",
+      "shift": "ஜ"
+    },
+    "KeyR": {
+      "normal": "ஐ",
+      "shift": "ஹ"
+    },
+    "KeyT": {
+      "normal": "ஏ",
+      "shift": "க்ஷ"
+    },
+    "KeyY": {
+      "normal": "ள",
+      "shift": "ஶ்ரீ"
+    },
+    "KeyU": {
+      "normal": "ற",
+      "shift": "ஶ"
+    },
+    "KeyI": {
+      "normal": "ன",
+      "shift": null
+    },
+    "KeyO": {
+      "normal": "ட",
+      "shift": "["
+    },
+    "KeyP": {
+      "normal": "ண",
+      "shift": "]"
+    },
+    "BracketLeft": {
+      "normal": "ச",
+      "shift": "{"
+    },
+    "BracketRight": {
+      "normal": "ஞ",
+      "shift": "}"
+    },
+    "KeyA": {
+      "normal": "அ",
+      "shift": "௹"
+    },
+    "KeyS": {
+      "normal": "இ",
+      "shift": "௺"
+    },
+    "KeyD": {
+      "normal": "உ",
+      "shift": "௸"
+    },
+    "KeyF": {
+      "normal": "்",
+      "shift": "ஃ"
+    },
+    "KeyG": {
+      "normal": "எ",
+      "shift": "எ"
+    },
+    "KeyH": {
+      "normal": "க",
+      "shift": "க"
+    },
+    "KeyJ": {
+      "normal": "ப",
+      "shift": "ப"
+    },
+    "KeyK": {
+      "normal": "ம",
+      "shift": "\""
+    },
+    "KeyL": {
+      "normal": "த",
+      "shift": ":"
+    },
+    "Semicolon": {
+      "normal": "ந",
+      "shift": ";"
+    },
+    "Quote": {
+      "normal": "ய",
+      "shift": "'"
+    },
+    "KeyZ": {
+      "normal": "ஔ",
+      "shift": "௳"
+    },
+    "KeyX": {
+      "normal": "ஓ",
+      "shift": "௴"
+    },
+    "KeyC": {
+      "normal": "ஒ",
+      "shift": "௵"
+    },
+    "KeyV": {
+      "normal": "வ",
+      "shift": "௶"
+    },
+    "KeyB": {
+      "normal": "ங",
+      "shift": "௷"
+    },
+    "KeyN": {
+      "normal": "ல",
+      "shift": "ௐ"
+    },
+    "KeyM": {
+      "normal": "ர",
+      "shift": "/"
+    },
+    "Slash": {
+      "normal": "ழ",
+      "shift": "?"
+    }
+  },
+  "vowels": [
+    {
+      "char": "அ",
+      "key": "KeyA",
+      "shift": false
+    },
+    {
+      "char": "ஆ",
+      "key": "KeyQ",
+      "shift": false
+    },
+    {
+      "char": "இ",
+      "key": "KeyS",
+      "shift": false
+    },
+    {
+      "char": "ஈ",
+      "key": "KeyW",
+      "shift": false
+    },
+    {
+      "char": "உ",
+      "key": "KeyD",
+      "shift": false
+    },
+    {
+      "char": "ஊ",
+      "key": "KeyE",
+      "shift": false
+    },
+    {
+      "char": "எ",
+      "key": "KeyG",
+      "shift": false
+    },
+    {
+      "char": "ஏ",
+      "key": "KeyT",
+      "shift": false
+    },
+    {
+      "char": "ஐ",
+      "key": "KeyR",
+      "shift": false
+    },
+    {
+      "char": "ஒ",
+      "key": "KeyC",
+      "shift": false
+    },
+    {
+      "char": "ஓ",
+      "key": "KeyX",
+      "shift": false
+    },
+    {
+      "char": "ஔ",
+      "key": "KeyZ",
+      "shift": false
+    }
+  ],
+  "consonants": [
+    {
+      "char": "க",
+      "key": "KeyH",
+      "shift": false
+    },
+    {
+      "char": "ங",
+      "key": "KeyB",
+      "shift": false
+    },
+    {
+      "char": "ச",
+      "key": "BracketLeft",
+      "shift": false
+    },
+    {
+      "char": "ஞ",
+      "key": "BracketRight",
+      "shift": false
+    },
+    {
+      "char": "ட",
+      "key": "KeyO",
+      "shift": false
+    },
+    {
+      "char": "ண",
+      "key": "KeyP",
+      "shift": false
+    },
+    {
+      "char": "த",
+      "key": "KeyL",
+      "shift": false
+    },
+    {
+      "char": "ந",
+      "key": "Semicolon",
+      "shift": false
+    },
+    {
+      "char": "ப",
+      "key": "KeyJ",
+      "shift": false
+    },
+    {
+      "char": "ம",
+      "key": "KeyK",
+      "shift": false
+    },
+    {
+      "char": "ய",
+      "key": "Quote",
+      "shift": false
+    },
+    {
+      "char": "ர",
+      "key": "KeyM",
+      "shift": false
+    },
+    {
+      "char": "ல",
+      "key": "KeyN",
+      "shift": false
+    },
+    {
+      "char": "வ",
+      "key": "KeyV",
+      "shift": false
+    },
+    {
+      "char": "ழ",
+      "key": "Slash",
+      "shift": false
+    },
+    {
+      "char": "ள",
+      "key": "KeyY",
+      "shift": false
+    },
+    {
+      "char": "ற",
+      "key": "KeyU",
+      "shift": false
+    },
+    {
+      "char": "ன",
+      "key": "KeyI",
+      "shift": false
+    }
+  ],
+  "special": [
+    {
+      "char": "ஃ",
+      "key": "KeyF",
+      "shift": true,
+      "name": "aytham"
+    },
+    {
+      "char": "்",
+      "key": "KeyF",
+      "shift": false,
+      "name": "pulli - makes pure consonant"
+    }
+  ],
+  "grantha": [
+    {
+      "char": "ஸ",
+      "key": "KeyQ",
+      "shift": true
+    },
+    {
+      "char": "ஷ",
+      "key": "KeyW",
+      "shift": true
+    },
+    {
+      "char": "ஜ",
+      "key": "KeyE",
+      "shift": true
+    },
+    {
+      "char": "ஹ",
+      "key": "KeyR",
+      "shift": true
+    },
+    {
+      "char": "க்ஷ",
+      "key": "KeyT",
+      "shift": true
+    },
+    {
+      "char": "ஶ்ரீ",
+      "key": "KeyY",
+      "shift": true
+    },
+    {
+      "char": "ஶ",
+      "key": "KeyU",
+      "shift": true
+    }
+  ],
+  "engine_rules": {
+    "rule1": "Press key alone (no shift) → vowel or consonant directly",
+    "rule2": "Consonant + pulli (KeyF, no shift) → pure consonant (e.g. க + ் = க்)",
+    "rule3": "Consonant + vowel key → uyirmei combined character (e.g. க + ஆ = கா)",
+    "rule4": "அ is the implicit vowel — consonant alone sounds like consonant+அ",
+    "rule5": "Shift is used ONLY for grantha letters and special symbols"
+  }
+}
