@@ -1,0 +1,1813 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="900"
+   height="320"
+   viewBox="0 0 900 320"
+   version="1.1"
+   id="svg61"
+   sodipodi:docname="keyboard_all_keys.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs61" />
+  <sodipodi:namedview
+     id="namedview61"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.06"
+     inkscape:cx="467.92452"
+     inkscape:cy="60.849056"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg61" />
+  <!-- Background -->
+  <rect
+     width="900"
+     height="320"
+     rx="15"
+     fill="#2d3436"
+     id="rect1" />
+  <style
+     id="style1">
+    .key { fill: #ffffff; stroke: #2d3436; stroke-width: 2; }
+    .special-key { fill: #b2bec3; }
+    .text { fill: #1a1a1a; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; pointer-events: none; }
+    .dark-text { fill: #2d3436; }
+  </style>
+  <!-- Row 1: Numbers -->
+  <rect
+     class="key"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect2"
+     x="10"
+     y="10" />
+  <rect
+     class="key"
+     x="70"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect3"
+     y="10" />
+  <rect
+     class="key"
+     x="130"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect4"
+     y="10" />
+  <rect
+     class="key"
+     x="190"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect5"
+     y="10" />
+  <rect
+     class="key"
+     x="250"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect6"
+     y="10" />
+  <rect
+     class="key"
+     x="310"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect7"
+     y="10" />
+  <rect
+     class="key"
+     x="370"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect8"
+     y="10" />
+  <rect
+     class="key"
+     x="430"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect9"
+     y="10" />
+  <rect
+     class="key"
+     x="490"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect10"
+     y="10" />
+  <rect
+     class="key"
+     x="550"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect11"
+     y="10" />
+  <rect
+     class="key"
+     x="610"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect12"
+     y="10" />
+  <rect
+     class="key"
+     x="670"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect13"
+     y="10" />
+  <rect
+     class="key"
+     x="730"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect14"
+     y="10" />
+  <rect
+     class="key special-key"
+     x="790"
+     width="105"
+     height="55"
+     rx="5"
+     id="rect15"
+     y="10" />
+  <text
+     x="842"
+     y="42"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text15">Backspace</text>
+  <!-- Row 2: QWERTY -->
+  <rect
+     class="key special-key"
+     width="85"
+     height="55"
+     rx="5"
+     id="rect16"
+     x="10"
+     y="70" />
+  <text
+     x="52"
+     y="102"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text16">Tab</text>
+  <rect
+     class="key"
+     x="100"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect17"
+     y="70" />
+  <rect
+     class="key"
+     x="160"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect18"
+     y="70" />
+  <rect
+     class="key"
+     x="220"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect19"
+     y="70" />
+  <rect
+     class="key"
+     x="280"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect20"
+     y="70" />
+  <rect
+     class="key"
+     x="340"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect21"
+     y="70" />
+  <rect
+     class="key"
+     x="400"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect22"
+     y="70" />
+  <rect
+     class="key"
+     x="460"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect23"
+     y="70" />
+  <rect
+     class="key"
+     x="520"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect24"
+     y="70" />
+  <rect
+     class="key"
+     x="580"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect25"
+     y="70" />
+  <rect
+     class="key"
+     x="640"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect26"
+     y="70" />
+  <rect
+     class="key"
+     x="700"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect27"
+     y="70" />
+  <rect
+     class="key"
+     x="760"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect28"
+     y="70" />
+  <rect
+     class="key"
+     x="820"
+     width="75"
+     height="55"
+     rx="5"
+     id="rect29"
+     y="70" />
+  <!-- Row 3: ASDF -->
+  <rect
+     class="key special-key"
+     width="105"
+     height="55"
+     rx="5"
+     id="rect30"
+     x="10"
+     y="130" />
+  <text
+     x="62"
+     y="162"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text30">Caps Lock</text>
+  <rect
+     class="key"
+     x="120"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect31"
+     y="130" />
+  <rect
+     class="key"
+     x="180"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect32"
+     y="130" />
+  <rect
+     class="key"
+     x="240"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect33"
+     y="130" />
+  <rect
+     class="key"
+     x="300"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect34"
+     y="130" />
+  <rect
+     class="key"
+     x="360"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect35"
+     y="130" />
+  <rect
+     class="key"
+     x="420"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect36"
+     y="130" />
+  <rect
+     class="key"
+     x="480"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect37"
+     y="130" />
+  <rect
+     class="key"
+     x="540"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect38"
+     y="130" />
+  <rect
+     class="key"
+     x="600"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect39"
+     y="130" />
+  <rect
+     class="key"
+     x="660"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect40"
+     y="130" />
+  <rect
+     class="key"
+     x="720"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect41"
+     y="130" />
+  <rect
+     class="key special-key"
+     x="780"
+     width="115"
+     height="55"
+     rx="5"
+     id="rect42"
+     y="130" />
+  <text
+     x="837"
+     y="162"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text42">Enter</text>
+  <!-- Row 4: ZXCV -->
+  <rect
+     class="key special-key"
+     width="135"
+     height="55"
+     rx="5"
+     id="rect43"
+     x="10"
+     y="190" />
+  <text
+     x="77"
+     y="222"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text43">Shift</text>
+  <rect
+     class="key"
+     x="150"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect44"
+     y="190" />
+  <rect
+     class="key"
+     x="210"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect45"
+     y="190" />
+  <rect
+     class="key"
+     x="270"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect46"
+     y="190" />
+  <rect
+     class="key"
+     x="330"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect47"
+     y="190" />
+  <rect
+     class="key"
+     x="390"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect48"
+     y="190" />
+  <rect
+     class="key"
+     x="450"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect49"
+     y="190" />
+  <rect
+     class="key"
+     x="510"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect50"
+     y="190" />
+  <rect
+     class="key"
+     x="570"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect51"
+     y="190" />
+  <rect
+     class="key"
+     x="630"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect52"
+     y="190" />
+  <rect
+     class="key"
+     x="690"
+     width="55"
+     height="55"
+     rx="5"
+     id="rect53"
+     y="190" />
+  <rect
+     class="key special-key"
+     x="750"
+     width="145"
+     height="55"
+     rx="5"
+     id="rect54"
+     y="190" />
+  <text
+     x="822"
+     y="222"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text54">Shift</text>
+  <!-- Row 5: Bottom Row -->
+  <rect
+     class="key special-key"
+     width="80"
+     height="55"
+     rx="5"
+     id="rect55"
+     x="10"
+     y="250" />
+  <text
+     x="50"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text55">Ctrl</text>
+  <rect
+     class="key special-key"
+     x="95"
+     width="60"
+     height="55"
+     rx="5"
+     id="rect56"
+     y="250" />
+  <text
+     x="125"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text56">Win</text>
+  <rect
+     class="key special-key"
+     x="160"
+     width="75"
+     height="55"
+     rx="5"
+     id="rect57"
+     y="250" />
+  <text
+     x="197"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text57">Alt</text>
+  <rect
+     class="key"
+     x="240"
+     width="350"
+     height="55"
+     rx="5"
+     id="rect58"
+     y="250" />
+  <rect
+     class="key special-key"
+     x="595"
+     width="75"
+     height="55"
+     rx="5"
+     id="rect59"
+     y="250" />
+  <text
+     x="632"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text59">Alt</text>
+  <rect
+     class="key special-key"
+     x="675"
+     width="60"
+     height="55"
+     rx="5"
+     id="rect60"
+     y="250" />
+  <text
+     x="705"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text60">Win</text>
+  <rect
+     class="key special-key"
+     x="740"
+     width="155"
+     height="55"
+     rx="5"
+     id="rect61"
+     y="250" />
+  <text
+     x="817"
+     y="282"
+     text-anchor="middle"
+     class="text dark-text"
+     id="text61">Ctrl</text>
+  <text
+     xml:space="preserve"
+     style="font-size:26.6667px;line-height:1;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.33354;stroke-linejoin:round;paint-order:stroke fill markers"
+     x="133.21866"
+     y="403.66928"
+     id="text175"><tspan
+       sodipodi:role="line"
+       id="tspan174" /></text>
+  <g
+     id="g62"
+     transform="translate(0,12)">
+    <text
+       x="37"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text2">`</text>
+    <text
+       x="97"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text3">1</text>
+    <text
+       x="157"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text4">2</text>
+    <text
+       x="217"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text5">3</text>
+    <text
+       x="277"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text6">4</text>
+    <text
+       x="337"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text7">5</text>
+    <text
+       x="397"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text8">6</text>
+    <text
+       x="457"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text9">7</text>
+    <text
+       x="517"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text10">8</text>
+    <text
+       x="577"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text11">9</text>
+    <text
+       x="637"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text12">0</text>
+    <text
+       x="697"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text13">-</text>
+    <text
+       x="757"
+       y="42"
+       text-anchor="middle"
+       class="text"
+       id="text14">=</text>
+  </g>
+  <text
+     x="715"
+     y="114"
+     text-anchor="middle"
+     class="text"
+     id="text27">[</text>
+  <text
+     x="775"
+     y="114"
+     text-anchor="middle"
+     class="text"
+     id="text28">]</text>
+  <text
+     x="845"
+     y="114"
+     text-anchor="middle"
+     class="text"
+     id="text29">\</text>
+  <text
+     x="675"
+     y="174"
+     text-anchor="middle"
+     class="text"
+     id="text40">;</text>
+  <text
+     x="735"
+     y="174"
+     text-anchor="middle"
+     class="text"
+     id="text41">'</text>
+  <text
+     x="165"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text44">Z</text>
+  <text
+     x="225"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text45">X</text>
+  <text
+     x="285"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text46">C</text>
+  <text
+     x="345"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text47">V</text>
+  <text
+     x="405"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text48">B</text>
+  <text
+     x="465"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text49">N</text>
+  <text
+     x="525"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text50">M</text>
+  <text
+     x="597"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text51">&lt;</text>
+  <text
+     x="655"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text52">&gt;</text>
+  <text
+     x="705"
+     y="210"
+     text-anchor="middle"
+     class="text"
+     id="text53" />
+  <text
+     x="115"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text78">Q</text>
+  <text
+     x="175"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text79">W</text>
+  <text
+     x="235"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text80">E</text>
+  <text
+     x="295"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text81">R</text>
+  <text
+     x="355"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text82">T</text>
+  <text
+     x="415"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text83">Y</text>
+  <text
+     x="475"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text84">U</text>
+  <text
+     x="535"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text85">I</text>
+  <text
+     x="595"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text86">O</text>
+  <text
+     x="655"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text87">P</text>
+  <text
+     x="715"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text88">{</text>
+  <text
+     x="775"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text89">}</text>
+  <text
+     x="845"
+     y="90"
+     text-anchor="middle"
+     class="text"
+     id="text90">|</text>
+  <text
+     x="195"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text92">S</text>
+  <text
+     x="255"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text93">D</text>
+  <g
+     id="g49">
+    <text
+       x="315"
+       y="150"
+       text-anchor="middle"
+       class="text"
+       id="text94">F</text>
+  </g>
+  <text
+     x="375"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text95">G</text>
+  <text
+     x="435"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text96">H</text>
+  <text
+     x="495"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text97">J</text>
+  <text
+     x="555"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text98">K</text>
+  <text
+     x="615"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text99">L</text>
+  <text
+     x="675"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text100">:</text>
+  <text
+     x="735"
+     y="150"
+     text-anchor="middle"
+     class="text"
+     id="text101" />
+  <text
+     x="165"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text102">z</text>
+  <text
+     x="225"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text103">x</text>
+  <text
+     x="285"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text104">c</text>
+  <text
+     x="345"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text105">v</text>
+  <text
+     x="405"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text106">b</text>
+  <text
+     x="465"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text107">n</text>
+  <text
+     x="525"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text108">m</text>
+  <text
+     x="597"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text109">,</text>
+  <text
+     x="655"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text110">.</text>
+  <text
+     x="705"
+     y="234"
+     text-anchor="middle"
+     class="text"
+     id="text111">/</text>
+  <text
+     x="37"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text112">~</text>
+  <text
+     x="97"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text113">!</text>
+  <text
+     x="157"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text114">@</text>
+  <text
+     x="217"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text115">#</text>
+  <text
+     x="277"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text116">$</text>
+  <text
+     x="337"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text117">%</text>
+  <text
+     x="397"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text118">^</text>
+  <text
+     x="457"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text119">&amp;</text>
+  <text
+     x="517"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text120">*</text>
+  <text
+     x="577"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text121">(</text>
+  <text
+     x="637"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text122">)</text>
+  <text
+     x="697"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text123">_</text>
+  <text
+     x="757"
+     y="30"
+     text-anchor="middle"
+     class="text"
+     id="text124">+</text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none"
+     x="134.72787"
+     y="171.8851"
+     id="text177"><tspan
+       sodipodi:role="line"
+       id="tspan176"
+       x="134.72787"
+       y="171.8851">a</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     x="159.44464"
+     y="172.28526"
+     id="text178"><tspan
+       sodipodi:role="line"
+       id="tspan177"
+       x="160.44464"
+       y="172.28526"
+       style="fill:#ff4444;fill-opacity:1;">அ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     x="158.83932"
+     y="148.46925"
+     id="text179"><tspan
+       sodipodi:role="line"
+       id="tspan178"
+       x="159.83932"
+       y="148.46925"
+       style="fill:#ffcc00;fill-opacity:1;">௹</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:1;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     x="194.91113"
+     y="173.48746"
+     id="text180"><tspan
+       sodipodi:role="line"
+       id="tspan179"
+       x="195.91113"
+       y="173.48746"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;font-family:'Courier New';-inkscape-font-specification:'Courier New'">s</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="254.67805"
+     y="175.35384"
+     id="text181"><tspan
+       sodipodi:role="line"
+       id="tspan180"
+       x="255.67805"
+       y="175.35384">d</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="314.67056"
+     y="175.52571"
+     id="text182"><tspan
+       sodipodi:role="line"
+       id="tspan181"
+       x="315.67056"
+       y="175.52571">f</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="374.67154"
+     y="171.64551"
+     id="text183"><tspan
+       sodipodi:role="line"
+       id="tspan182"
+       x="375.67154"
+       y="171.64551">g</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="435.03336"
+     y="175.52571"
+     id="text184"><tspan
+       sodipodi:role="line"
+       id="tspan183"
+       x="436.03336"
+       y="175.52571">h</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="495.72412"
+     y="173.81949"
+     id="text185"><tspan
+       sodipodi:role="line"
+       id="tspan184"
+       x="496.72412"
+       y="173.81949">j</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="554.81659"
+     y="175.52571"
+     id="text186"><tspan
+       sodipodi:role="line"
+       id="tspan185"
+       x="555.81659"
+       y="175.52571">k</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="615.31427"
+     y="175.56673"
+     id="text187"><tspan
+       sodipodi:role="line"
+       id="tspan186"
+       x="616.31427"
+       y="175.56673">l</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="114.72754"
+     y="112.06249"
+     id="text188"><tspan
+       sodipodi:role="line"
+       id="tspan187"
+       x="115.72754"
+       y="112.06249">q</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="175.02229"
+     y="113.49446"
+     id="text189"><tspan
+       sodipodi:role="line"
+       id="tspan188"
+       x="176.02229"
+       y="113.49446">w</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="235.31689"
+     y="113.48404"
+     id="text190"><tspan
+       sodipodi:role="line"
+       id="tspan189"
+       x="236.31689"
+       y="113.48404">e</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="295.18344"
+     y="113.60904"
+     id="text191"><tspan
+       sodipodi:role="line"
+       id="tspan190"
+       x="296.18344"
+       y="113.60904">r</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="355.00684"
+     y="114.91113"
+     id="text192"><tspan
+       sodipodi:role="line"
+       id="tspan191"
+       x="356.00684"
+       y="114.91113">t</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="414.49658"
+     y="111.48925"
+     id="text193"><tspan
+       sodipodi:role="line"
+       id="tspan192"
+       x="415.49658"
+       y="111.48925">y</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="475.07553"
+     y="113.41324"
+     id="text194"><tspan
+       sodipodi:role="line"
+       id="tspan193"
+       x="476.07553"
+       y="113.41324">u</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="534.99268"
+     y="115.74445"
+     id="text195"><tspan
+       sodipodi:role="line"
+       id="tspan194"
+       x="535.99268"
+       y="115.74445">i</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="595.02393"
+     y="113.48404"
+     id="text196"><tspan
+       sodipodi:role="line"
+       id="tspan195"
+       x="596.02393"
+       y="113.48404">o</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="655.56818"
+     y="111.6455"
+     id="text197"><tspan
+       sodipodi:role="line"
+       id="tspan197"
+       x="656.56818"
+       y="111.6455">p</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="135"
+     y="112"
+     id="tamil_normal_300"><tspan
+       sodipodi:role="line"
+       x="135"
+       y="112"
+       id="tspan1">ஆ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="195"
+     y="112"
+     id="tamil_normal_302"><tspan
+       sodipodi:role="line"
+       x="195"
+       y="112"
+       id="tspan3">ஈ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="255"
+     y="112"
+     id="tamil_normal_304"><tspan
+       sodipodi:role="line"
+       x="255"
+       y="112"
+       id="tspan5">ஊ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="315"
+     y="112"
+     id="tamil_normal_306"><tspan
+       sodipodi:role="line"
+       x="315"
+       y="112"
+       id="tspan7">ஐ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="375"
+     y="112"
+     id="tamil_normal_308"><tspan
+       sodipodi:role="line"
+       x="375"
+       y="112"
+       id="tspan9">ஏ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="435"
+     y="112"
+     id="tamil_normal_310"><tspan
+       sodipodi:role="line"
+       x="435"
+       y="112"
+       id="tspan11">ள</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="495"
+     y="112"
+     id="tamil_normal_312"><tspan
+       sodipodi:role="line"
+       x="495"
+       y="112"
+       id="tspan13">ற</tspan></text>
+  <g
+     id="g48"
+     transform="translate(22)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="119"
+       y="88"
+       id="tamil_shift_301"><tspan
+         sodipodi:role="line"
+         x="120"
+         y="88"
+         id="tspan2">ஸ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="179"
+       y="88"
+       id="tamil_shift_303"><tspan
+         sodipodi:role="line"
+         x="180"
+         y="88"
+         id="tspan4">ஷ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="239"
+       y="88"
+       id="tamil_shift_305"><tspan
+         sodipodi:role="line"
+         x="240"
+         y="88"
+         id="tspan6">ஜ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="299"
+       y="88"
+       id="tamil_shift_307"><tspan
+         sodipodi:role="line"
+         x="300"
+         y="88"
+         id="tspan8">ஹ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="359"
+       y="88"
+       id="tamil_shift_309"><tspan
+         sodipodi:role="line"
+         x="360"
+         y="88"
+         id="tspan10">க்ஷ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="419"
+       y="88"
+       id="tamil_shift_311"><tspan
+         sodipodi:role="line"
+         x="420"
+         y="88"
+         id="tspan12">ஶ்ரீ</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="479"
+       y="88"
+       id="tamil_shift_313"><tspan
+         sodipodi:role="line"
+         x="480"
+         y="88"
+         id="tspan14">ஶ</tspan></text>
+  </g>
+  <g
+     id="g1"
+     transform="translate(0,14)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="555"
+       y="100"
+       id="tamil_normal_314"><tspan
+         sodipodi:role="line"
+         x="556"
+         y="100"
+         id="tspan15">ன</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="615"
+       y="100"
+       id="tamil_normal_315"><tspan
+         sodipodi:role="line"
+         x="616"
+         y="100"
+         id="tspan16">ட</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="675"
+       y="100"
+       id="tamil_normal_316"><tspan
+         sodipodi:role="line"
+         x="676"
+         y="100"
+         id="tspan17">ண</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="735"
+       y="100"
+       id="tamil_normal_317"><tspan
+         sodipodi:role="line"
+         x="736"
+         y="100"
+         id="tspan18">ச</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="795"
+       y="100"
+       id="tamil_normal_318"><tspan
+         sodipodi:role="line"
+         x="796"
+         y="100"
+         id="tspan19">ஞ</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="215"
+     y="172"
+     id="tamil_normal_319"><tspan
+       sodipodi:role="line"
+       x="215"
+       y="172"
+       id="tspan20">இ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="275"
+     y="172"
+     id="tamil_normal_321"><tspan
+       sodipodi:role="line"
+       x="275"
+       y="172"
+       id="tspan22">உ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="335"
+     y="172"
+     id="tamil_normal_323"><tspan
+       sodipodi:role="line"
+       x="335"
+       y="172"
+       id="tspan24">்</tspan></text>
+  <g
+     id="g50"
+     transform="translate(24)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="199"
+       y="148"
+       id="tamil_shift_320"><tspan
+         sodipodi:role="line"
+         x="200"
+         y="148"
+         id="tspan21">௺</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="259"
+       y="148"
+       id="tamil_shift_322"><tspan
+         sodipodi:role="line"
+         x="260"
+         y="148"
+         id="tspan23">௸</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="319"
+       y="148"
+       id="tamil_shift_324"><tspan
+         sodipodi:role="line"
+         x="320"
+         y="148"
+         id="tspan25">ஃ</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="395"
+     y="172"
+     id="tamil_normal_325"><tspan
+       sodipodi:role="line"
+       x="395"
+       y="172"
+       id="tspan26">எ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="455"
+     y="172"
+     id="tamil_normal_326"><tspan
+       sodipodi:role="line"
+       x="455"
+       y="172"
+       id="tspan27">க</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="515"
+     y="172"
+     id="tamil_normal_327"><tspan
+       sodipodi:role="line"
+       x="515"
+       y="172"
+       id="tspan28">ப</tspan></text>
+  <g
+     id="g2"
+     transform="translate(0,18)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="575"
+       y="157"
+       id="tamil_normal_328"><tspan
+         sodipodi:role="line"
+         x="576"
+         y="157"
+         id="tspan29">ம</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="635"
+       y="157"
+       id="tamil_normal_329"><tspan
+         sodipodi:role="line"
+         x="636"
+         y="157"
+         id="tspan30">த</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="695"
+       y="157"
+       id="tamil_normal_330"><tspan
+         sodipodi:role="line"
+         x="696"
+         y="157"
+         id="tspan31">ந</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="755"
+       y="157"
+       id="tamil_normal_331"><tspan
+         sodipodi:role="line"
+         x="756"
+         y="157"
+         id="tspan32">ய</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="185"
+     y="232"
+     id="tamil_normal_332"><tspan
+       sodipodi:role="line"
+       x="185"
+       y="232"
+       id="tspan33">ஔ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="245"
+     y="232"
+     id="tamil_normal_334"><tspan
+       sodipodi:role="line"
+       x="245"
+       y="232"
+       id="tspan35">ஓ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="305"
+     y="232"
+     id="tamil_normal_336"><tspan
+       sodipodi:role="line"
+       x="305"
+       y="232"
+       id="tspan37">ஒ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="365"
+     y="232"
+     id="tamil_normal_338"><tspan
+       sodipodi:role="line"
+       x="365"
+       y="232"
+       id="tspan39">வ</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="425"
+     y="232"
+     id="tamil_normal_340"><tspan
+       sodipodi:role="line"
+       x="425"
+       y="232"
+       id="tspan41">ங</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+     x="485"
+     y="232"
+     id="tamil_normal_342"><tspan
+       sodipodi:role="line"
+       x="485"
+       y="232"
+       id="tspan43">ல</tspan></text>
+  <g
+     id="g47"
+     transform="translate(20)">
+    <g
+       id="g46">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+         x="169"
+         y="208"
+         id="tamil_shift_333"><tspan
+           sodipodi:role="line"
+           x="170"
+           y="208"
+           id="tspan34">௳</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="229"
+       y="208"
+       id="tamil_shift_335"><tspan
+         sodipodi:role="line"
+         x="230"
+         y="208"
+         id="tspan36">௴</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="289"
+       y="208"
+       id="tamil_shift_337"><tspan
+         sodipodi:role="line"
+         x="290"
+         y="208"
+         id="tspan38">௵</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="349"
+       y="208"
+       id="tamil_shift_339"><tspan
+         sodipodi:role="line"
+         x="350"
+         y="208"
+         id="tspan40">௶</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="409"
+       y="208"
+       id="tamil_shift_341"><tspan
+         sodipodi:role="line"
+         x="410"
+         y="208"
+         id="tspan42">௷</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ffcc00;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="469"
+       y="208"
+       id="tamil_shift_343"><tspan
+         sodipodi:role="line"
+         x="470"
+         y="208"
+         id="tspan44">ௐ</tspan></text>
+  </g>
+  <g
+     id="g3"
+     transform="translate(0,18)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="545"
+       y="217"
+       id="tamil_normal_344"><tspan
+         sodipodi:role="line"
+         x="546"
+         y="217"
+         id="tspan45">ர</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1;font-family:'Noto Sans Tamil';-inkscape-font-specification:'Noto Sans Tamil';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;fill:#ff4444;fill-opacity:1;fill-rule:evenodd;stroke:none;paint-order:stroke fill markers"
+       x="725"
+       y="217"
+       id="tamil_normal_345"><tspan
+         sodipodi:role="line"
+         x="726"
+         y="217"
+         id="tspan46">ழ</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="736.00574"
+     y="150.61763"
+     id="text58"><tspan
+       sodipodi:role="line"
+       id="tspan50"
+       x="737.00574"
+       y="150.61763" /></text>
+  <text
+     xml:space="preserve"
+     style="font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="580.08057"
+     y="212.11198"
+     id="text62"><tspan
+       sodipodi:role="line"
+       id="tspan58" /></text>
+  <text
+     xml:space="preserve"
+     style="font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-anchor:middle;fill:#1a1a1a;fill-opacity:1;stroke:none\"
+     x="705.47681"
+     y="212.93608"
+     id="text63"><tspan
+       sodipodi:role="line"
+       id="tspan62"
+       x="706.47681"
+       y="212.93608">?</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;opacity:1;fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     x="135.07161"
+     y="152.68195"
+     id="text176"><tspan
+       id="tspan175"
+       x="136.07161"
+       y="152.68195"
+       sodipodi:role="line">A</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:21.3333px;line-height:1;font-family:'Courier New';-inkscape-font-specification:'Courier New';text-align:center;text-decoration-color:#000000;letter-spacing:2px;text-anchor:middle;opacity:1;fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-opacity:1;paint-order:stroke fill markers"
+     x="733.90692"
+     y="157.6347"
+     id="text64"><tspan
+       sodipodi:role="line"
+       id="tspan47"
+       x="734.90692"
+       y="157.6347">&quot;</tspan></text>
+</svg>

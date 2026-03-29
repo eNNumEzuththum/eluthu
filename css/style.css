@@ -1,0 +1,278 @@
+/* @version 1.0.0 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&family=Inter:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f0f0f0;
+  --bg-card:   #ffffff;
+  --border:    #d0d0d0;
+  --text:      #2d2d2d;
+  --text-dim:  #999999;
+  --blue:      #4B9BFF;
+  --blue-bg:   #e8f1ff;
+  --correct:   #27ae60;
+  --incorrect: #e74c3c;
+  --font-t:    'Noto Sans Tamil', serif;
+  --font-ui:   'Inter', sans-serif;
+}
+
+/* ── Utility ──────────────────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+body {
+  background: var(--bg);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 20px 40px;
+  gap: 28px;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+header {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.logo {
+  font-family: var(--font-t);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+.logo-sub {
+  font-family: var(--font-t);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+/* ── Lesson label ─────────────────────────────────────────────────────────── */
+.lesson-label {
+  width: 100%;
+  max-width: 920px;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: var(--font-ui);
+}
+
+#lesson-name {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.label-sep {
+  color: var(--text-dim);
+}
+
+#exercise-name {
+  color: var(--text-dim);
+}
+
+/* ── Section 1: Character row ─────────────────────────────────────────────── */
+/* ── Section 1: Exercise panel ────────────────────────────────────────────── */
+.char-row-wrap {
+  width: 100%;
+  max-width: 920px;
+}
+
+.char-row {
+  font-family: var(--font-t);
+  font-size: 28px;
+  line-height: 1.8;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+/* Each character — inline, no box */
+.char-box {
+  display: inline;
+  position: relative;
+}
+
+.char-box .tamil {
+  font-family: var(--font-t);
+  font-size: 28px;
+  color: var(--text);
+}
+
+/* Current — blue underline */
+.char-box.current .tamil { color: var(--blue); }
+.char-box.current::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 1px;
+}
+
+/* Correct — green */
+.char-box.correct .tamil { color: var(--correct); }
+
+/* Incorrect — red */
+.char-box.incorrect .tamil { color: var(--incorrect); }
+
+/* Wrong flash — red */
+.char-box.wrong-flash .tamil { color: var(--incorrect); }
+
+/* Space — standard width, invisible normally */
+.char-box.space-box .space-sym {
+  display: inline-block;
+  width: 0.4em;
+  color: transparent;
+  font-size: 28px;
+}
+
+/* Space wrong — show red underline */
+.char-box.space-box.wrong-flash::after,
+.char-box.space-box.incorrect::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--incorrect);
+  border-radius: 1px;
+}
+
+}
+#capture { position:fixed; top:-9999px; left:-9999px; opacity:0; width:0; height:0; border:none; }
+
+/* ── Progress dots ────────────────────────────────────────────────────────── */
+.progress-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.prog-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s;
+}
+
+.prog-dot.done    { background: var(--correct); }
+.prog-dot.current { background: var(--blue); }
+
+/* ── Stats bar ────────────────────────────────────────────────────────────── */
+.stats-bar {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  gap: 24px;
+  padding: 6px 0;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+/* Prompt message before typing starts */
+.stat-value.prompt {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.stat-target {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+/* ── Result banner ────────────────────────────────────────────────────────── */
+.result-banner {
+  width: 100%;
+  max-width: 920px;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-banner.pass {
+  background: #f0faf4;
+  border: 1px solid var(--correct);
+}
+
+.result-banner.fail {
+  background: #fef5f5;
+  border: 1px solid var(--incorrect);
+}
+
+.result-message {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.result-banner.pass .result-message { color: var(--correct); }
+.result-banner.fail .result-message { color: var(--incorrect); }
+
+.result-stats {
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+}
+
+.result-stats span { color: var(--text-dim); }
+.result-stats strong { color: var(--text); }
+
+/* ── Picker exercise buttons ─────────────────────────────────────────────── */
+.picker-ex-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  font-family: var(--font-t);
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--text-dim);
+  transition: all 0.15s;
+}
+
+.picker-ex-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--blue-bg);
+}
+
+.picker-ex-btn.current {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: white;
+  font-weight: 600;
+}
