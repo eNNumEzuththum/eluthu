@@ -1,36 +1,37 @@
 # eluthu: Learn Tamil Touch Typing
 
-Thank you for reading this project!
-
-With the help of AI, I have developed **[eluthu](https://github.com/eNNumEzuththum/eluthu)**, a free and open-source Tamil touch typing tool. I created this project with the hope that it will help anyone looking to type in Tamil quickly, easily, and efficiently on a computer.
+**[eluthu](https://github.com/eNNumEzuththum/eluthu)** is a free and open-source Tamil touch typing learning tool. The eluthu was created with the hope that it will help anyone looking to type in Tamil quickly, easily, and efficiently on a computer.
 
 ---
 
 ## My Story
 
-Before learning to touch type, I used to hunt-and-press with just two fingers on each hand while constantly staring down at the keyboard. This caused a few major issues:
+Before learning to (English) touch type, I used to hunt-and-press with just two fingers while constantly staring down at the keyboard. This caused a few major issues:
 
 - **High Error Rate:** Because I was looking at the monitor and the keyboard back and forth, I made a massive number of mistakes.
 - **Mental Fatigue:** I had to consciously think about where the keys were instead of focusing on what I was actually trying to write.
 - **Slow Speed:** I was stuck typing at around 20 words per minute (WPM).
 
-Ten years ago, a friend introduced me to [TypingClub](https://www.typingclub.com/), a free touch typing tool for English. After practicing for a few weeks, my typing transformed:
+Ten years ago, a friend introduced me to [TypingClub](https://www.typingclub.com/), a free English touch typing tool. After practicing for a few weeks, my typing transformed:
 
 - **Fewer Mistakes:** I never look down at the keyboard.
 - **Muscle Memory:** I no longer think about the keys; my fingers automatically move to the correct positions.
-- **Increased Speed:** My typing speed is around 50 WPM.
+- **Increased Speed:** My typing speed is above 50 WPM.
 
-My experience with TypingClub inspired me to build a similar tool for Tamil. I wanted to learn Tamil touch typing myself but couldn't find a dedicated tool for it. So, I decided to build **eluthu** — to learn the skill while providing a free, open-source resource for the community.
+My experience with TypingClub inspired me to build a similar tool for Tamil. I wanted to learn Tamil touch typing myself but couldn't find a dedicated tool for it. So, I decided to build **eluthu**.
 
 ---
 
 ## Why Touch Typing?
 
-You might wonder why we still need to type on a PC in the era of AI and voice-to-text tools.
+You might wonder why we still need to type on a PC in the era of Smart phone, AI and voice-to-text tools.
 
-While voice-to-text tools work well for basic dictation, they fall short for serious writing. To convey your message clearly, you often need to edit an article multiple times, or translate English text into Tamil and refine it. These tasks require manual editing. If you write a fair amount of articles or documentation, old-school typing remains absolutely essential.
+While voice-to-text tools work well for basic dictation, they fall short for serious writing. To convey your message clearly, you often need to edit articles multiple times, or translate English text into Tamil and refine it. These tasks require manual editing. If you write a fair amount of articles, typing on keyboards remains absolutely essential.
 
-Efficient typing depends on minimising keystrokes, reducing finger displacement, and avoiding complex key combinations (like heavy reliance on the `Shift` key).
+Efficient typing depends on
+1. Minimising keystrokes,
+2. Shortining finger displacement, and
+3. Avoiding complex key combinations (like heavy reliance on the `Shift` key).
 
 > **Did you know?** The little bumps on the **F** and **J** keys are there to help you find the "home row" position without looking. Traditional keyboard layouts are intentionally designed so that high-frequency letters require minimal finger movement.
 
@@ -127,12 +128,13 @@ To stop the server press `Ctrl+C` in the terminal.
 
 This is currently an alpha version. With enough community feedback and motivation, I plan to implement:
 
-- Detailed progress history and statistics over time (speed and accuracy graphs)
-- Support for all Tamil special characters (ஸ, ஷ, ஜ, etc.)
-- Numerical typing exercises
-- Real-world practice material — Tamil poems, stories, and historical facts
-- Guided audio and animations for introductory lessons
-- A fully hosted online version (similar to TypingClub) so users don't have to run it locally
+1. Improvements -- remove space between same letters when the uyirmey is practice
+1. Detailed progress history and statistics over time (speed and accuracy graphs)
+2. Real-world practice material — Tamil poems, stories, and historical facts
+3. Guided audio and animations for introductory lessons
+4. Support for all Tamil special characters (ஸ, ஷ, ஜ, etc.)
+5. Numerical typing exercises
+6. A fully hosted online version (similar to TypingClub) so users don't have to run it locally
 
 ---
 
@@ -182,6 +184,20 @@ This is currently an alpha version. With enough community feedback and motivatio
 
 ---
 
+## FAQ
+
+**Q: I don't see any characters when I press keys — am I missing a font?**
+
+**A:** No font installation is needed — the Tamil font loads automatically from Google Fonts. If characters aren't appearing, here are two things to check:
+
+1. **Characters unlock progressively** — each lesson only shows the characters introduced so far. The first two characters you learn are **ப** (J key) and **்** pulli (F key). Earlier characters must be practised before new ones are unlocked.
+
+2. **Introduction exercises block wrong keys** — in the first exercise of each lesson, only the correct key advances the cursor. Pressing the wrong key flashes the character red but the cursor stays put. This is by design to build muscle memory.
+
+If you're just starting out, make sure you're on Lesson 1 and press the **J key** to begin.
+
+---
+
 ## Resources & References
 
 - [Wikipedia: Tamil 99 Layout](https://en.wikipedia.org/wiki/Tamil_99)
@@ -200,5 +216,3 @@ MIT — see [LICENSE](LICENSE)
 Free to use, share, and modify. Contributions welcome.
 
 ---
-
-Thank you for your time.

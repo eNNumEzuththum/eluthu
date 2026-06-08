@@ -8,11 +8,11 @@
 | style.css | 1.0.0 |
 | tamil99-keymap.json | 1.0.0 |
 | tamil99.js | 1.0.0 |
-| combination.js | 1.0.0 |
+| combination.js | 1.0.2 |
 | typing.js | 1.0.0 |
 | lessons.js | 1.0.0 |
 | app.js | 1.0.0 |
-| version.js | 1.0.0 |
+| version.js | 1.0.1 |
 | tamil99-tester.html | 1.0.0 |
 ---
 

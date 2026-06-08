@@ -17,7 +17,7 @@
  */
 
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.0.0';
+window.ELUTHU_VERSIONS['combination.js'] = '1.0.2';
 
 'use strict';
 
@@ -74,7 +74,8 @@ class CombinationEngine {
 
     // Engine pending consonant — set by app.js after each keystroke
     this._pendingConsonant = null;
-    this._pendingFromChain = false;  // true when pending came from consonant_chain
+    this._pendingFromSameChain  = false;  // true after same-consonant pulli chain (க்க)
+    this._pendingFromCrossChain = false;  // true after cross-consonant chain (க→ண)
 
     // Callbacks
     this.onUpdate   = null;
@@ -95,7 +96,8 @@ class CombinationEngine {
     this._wrongKey   = false;
     this._accuracyTarget     = accuracyTarget;
     this._pendingConsonant   = null;
-    this._pendingFromChain   = false;
+    this._pendingFromSameChain  = false;
+    this._pendingFromCrossChain = false;
     this._notify();
   }
 
@@ -169,13 +171,9 @@ class CombinationEngine {
     // Pending matches current cluster's consonant
     if (pending === d.consonant) {
 
-      // Rule 2a: Bare consonant, pending from chain.
-      // After a pulli chain (e.g. ப்ப), ப is pending. Decide next key:
-      // - No next target or next is space → Space (commits implicit அ + space)
-      // - Next target starts with same consonant → same key (continues chain)
-      // - Next target starts with different consonant → that consonant's key
-      //   (pressing it commits current pending and starts new pending)
-      if (d.marker === '' && this._pendingFromChain) {
+      // Rule 2a: Bare consonant, pending from same-consonant pulli chain (e.g. ப்பப்பா)
+      // The pending consonant carries over from the chain — user continues typing.
+      if (d.marker === '' && this._pendingFromSameChain) {
         const afterNext = this._target[cur + 1] ?? null;
         if (!afterNext || afterNext === ' ') {
           return 'Space';
@@ -185,10 +183,21 @@ class CombinationEngine {
           // Same consonant follows — continue chain
           return this._charToKey[pending] ?? null;
         }
-        // Different consonant follows — show next target's consonant key
-        // Pressing it will commit current pending via consonant_chain
+        // Different consonant follows — show next consonant key
         if (dAfter) return this._charToKey[dAfter.consonant] ?? null;
-        // Vowel or other — show Space to commit pending first
+        return 'Space';
+      }
+
+      // Rule 2a': Bare consonant, pending from cross-consonant chain (e.g. கணணி)
+      // Only show KeyA if the NEXT target starts with the SAME consonant as pending
+      // (கணணி: pending=ண, next=ணி, same → KeyA de-linker needed)
+      // Otherwise show the next consonant key directly (பணம்: pending=ண, next=ம் → KeyK)
+      if (d.marker === '' && this._pendingFromCrossChain) {
+        if (dNext && dNext.consonant === pending) {
+          return 'KeyA';
+        }
+        // Different consonant or end — show next key (or Space)
+        if (dNext) return this._charToKey[dNext.consonant] ?? null;
         return 'Space';
       }
 
@@ -218,6 +227,7 @@ class CombinationEngine {
       if (d.marker === '') {
         return dNext ? (this._charToKey[dNext.consonant] ?? 'Space') : 'Space';
       }
+      // (marker is non-empty — fall through to vowel key)
       return this._markerKey(d.marker);
     }
 
@@ -272,7 +282,8 @@ class CombinationEngine {
     // Consonant pending preview — no output to match yet
     // Don't count as a key towards accuracy — it's not a completed input
     if (result.type === 'consonant_pending') {
-      this._pendingFromChain = false;  // fresh consonant keypress
+      this._pendingFromSameChain  = false;
+      this._pendingFromCrossChain = false;
       this._notify();
       return;
     }
@@ -320,8 +331,21 @@ class CombinationEngine {
       clustersToMatch = outClusters;
     }
 
-    // Track whether new pending came from a chain (affects Rule 2 key guidance)
-    this._pendingFromChain = (result.type === 'consonant_chain' && !!result.pending);
+    // Track chain type — affects Rule 2 key guidance
+    if (result.type === 'consonant_chain' && result.pending) {
+      if (result.replace) {
+        // Same-consonant pulli (க்க) or soft+hard (ம்ப): pending continues same consonant
+        this._pendingFromSameChain  = true;
+        this._pendingFromCrossChain = false;
+      } else {
+        // Cross-consonant chain (க→ண): pending is a different consonant
+        this._pendingFromSameChain  = false;
+        this._pendingFromCrossChain = true;
+      }
+    } else {
+      this._pendingFromSameChain  = false;
+      this._pendingFromCrossChain = false;
+    }
     for (const cluster of clustersToMatch) {
       if (cluster === ' ' && this._matched.length === this._target.length) {
         this._finish(); return;
