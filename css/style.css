@@ -1,5 +1,17 @@
-/* @version 1.0.0 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&family=Inter:wght@400;500&display=swap');
+/* @version 1.0.1 */
+/* With this: */
+@font-face {
+  font-family: 'Noto Sans Tamil';
+  src: url('../assets/fonts/NotoSansTamil-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans Tamil';
+  src: url('../assets/fonts/NotoSansTamil-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -276,3 +288,100 @@ header {
   color: white;
   font-weight: 600;
 }
+
+/* ── Welcome modal ────────────────────────────────────────────────────────── */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.welcome-panel {
+  background: var(--bg-card);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.22);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-dim);
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+}
+.welcome-close:hover { background: var(--border); }
+
+.welcome-body {
+  padding: 28px 28px 24px;
+}
+
+.welcome-title {
+  font-family: var(--font-t);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 2px;
+}
+
+.welcome-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.welcome-section {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.welcome-lang {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.welcome-lang p { margin: 0 0 6px; }
+.welcome-lang p:last-child { margin-bottom: 0; }
+
+.tamil-text {
+  font-family: var(--font-t);
+  font-size: 15px;
+}
+
+.welcome-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 14px 0;
+}
+
+.welcome-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: var(--font-t);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.welcome-btn:hover { background: #3a8aee; }

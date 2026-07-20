@@ -1,200 +1,156 @@
-# eluthu: Learn Tamil Touch Typing
+[English](README.md) | [தமிழ்](README.ta.md)
 
-**[eluthu](https://github.com/eNNumEzuththum/eluthu)** is a free and open-source Tamil touch typing learning tool. The eluthu was created with the hope that it will help anyone looking to type in Tamil quickly, easily, and efficiently on a computer.
+# eluthu: Master Tamil Touch Typing
 
----
+**▶ [Let's Start Now](https://ennumezuththum.github.io/eluthu/)** — Free, runs entirely in your browser, nothing to install.
 
-## My Story
+![eluthu — Tamil touch typing lesson screen](assets/preview.png)
 
-Before learning to (English) touch type, I used to hunt-and-press with just two fingers while constantly staring down at the keyboard. This caused a few major issues:
+**eluthu** is a free, open-source Tamil touch typing tutor designed to help anyone type Tamil faster, accurately, and effortlessly.
 
-- **High Error Rate:** Because I was looking at the monitor and the keyboard back and forth, I made a massive number of mistakes.
-- **Mental Fatigue:** I had to consciously think about where the keys were instead of focusing on what I was actually trying to write.
-- **Slow Speed:** I was stuck typing at around 20 words per minute (WPM).
-
-Ten years ago, a friend introduced me to [TypingClub](https://www.typingclub.com/), a free English touch typing tool. After practicing for a few weeks, my typing transformed:
-
-- **Fewer Mistakes:** I never look down at the keyboard.
-- **Muscle Memory:** I no longer think about the keys; my fingers automatically move to the correct positions.
-- **Increased Speed:** My typing speed is above 50 WPM.
-
-My experience with TypingClub inspired me to build a similar tool for Tamil. I wanted to learn Tamil touch typing myself but couldn't find a dedicated tool for it. So, I decided to build **eluthu**.
+Ten years ago, [TypingClub](https://www.typingclub.com/) transformed my English typing skills. When I couldn't find a similar dedicated tool for Tamil, I decided to build **eluthu**.
 
 ---
 
 ## Why Touch Typing?
 
-You might wonder why we still need to type on a PC in the era of Smart phone, AI and voice-to-text tools.
+You might wonder why keyboard typing still matters in the era of smartphones and voice-to-text tools.
 
-While voice-to-text tools work well for basic dictation, they fall short for serious writing. To convey your message clearly, you often need to edit articles multiple times, or translate English text into Tamil and refine it. These tasks require manual editing. If you write a fair amount of articles, typing on keyboards remains absolutely essential.
+While voice dictation works well for quick notes, serious writing requires editing, refining, and restructuring—tasks that demand manual input. If you write regularly, typing efficiently on a physical keyboard remains essential.
 
-Efficient typing depends on
-1. Minimising keystrokes,
-2. Shortining finger displacement, and
-3. Avoiding complex key combinations (like heavy reliance on the `Shift` key).
+Efficient touch typing relies on three core principles:
+1. **Minimizing keystrokes**
+2. **Shortening finger movement distance**
+3. **Avoiding awkward key combinations** (such as heavy reliance on the `Shift` key)
 
-> **Did you know?** The little bumps on the **F** and **J** keys are there to help you find the "home row" position without looking. Traditional keyboard layouts are intentionally designed so that high-frequency letters require minimal finger movement.
+Most importantly, touch typing lets you keep your eyes on the screen, allowing you to focus completely on your thoughts rather than searching for keys.
 
 ---
 
 ## Why Tamil 99?
 
-There are several Tamil keyboard layouts available. You might already be familiar with the phonetic or Romanised layout (where writing **வணக்கம்** requires typing `vaNakkam`).
+While phonetic layouts (where typing **வணக்கம்** requires `vaNakkam`) are common among beginners, professional Tamil writers overwhelmingly prefer the **Tamil 99** layout. Standardized by the Tamil Nadu government, Tamil 99 relies on two key design principles:
 
-However, **Tamil 99** is the layout preferred by professional Tamil writers. It uses two key design principles to reduce keystrokes, finger movement, and key combinations:
+1. **Frequency-Based Layout:** Keys are arranged based on how frequently letters occur in the Tamil language.
+2. **Grammar-Optimized Flow:** It leverages natural Tamil grammar. For example, pure consonants (மெய்) are frequently followed by vowel-consonants (உயிர்மெய்), like **க்** and **க** in **வணக்கம்**. Tamil 99 makes these natural sequences fluid to type.
 
-1. **Frequency-Based Layout:** Keys are organised around the most frequently used letters in the Tamil language.
-2. **Grammar-Optimised Flow:** It exploits Tamil grammar patterns. For example, in many Tamil words a pure consonant (மெய்) is immediately followed by its corresponding vowel-consonant (உயிர்மெய்), such as **க்** and **க** in **வணக்கம்**. Tamil 99 is designed to make these natural sequences efficient to type.
+### Phonetic vs. Tamil 99 Comparison
 
-### Phonetic vs. Tamil 99
+Typing the word **வணக்கம்**:
 
-Typing the simple word **வணக்கம்**:
-
-| Layout | Keystrokes | Unique keys | Shift key? |
-|---|---|---|---|
-| Tamil 99 | 6 | 5 | No |
+| Layout | Keystrokes | Unique Keys | Requires `Shift` Key? |
+| :--- | :---: | :---: | :---: |
+| **Tamil 99** | **6** | **5** | **No** |
 | Phonetic | 7 | 6 | Yes |
 
-While this looks like a small difference for a single word, Tamil 99 becomes vastly more efficient when writing long-form essays, articles, or complex literature.
+While the difference seems minor for a single word, Tamil 99 saves massive unnecessary keystrokes when drafting longer articles.
 
 ---
 
-## Features
+## Key Features
 
-- **Progressive lessons** — builds muscle memory for the Tamil 99 layout step by step across 36 lessons
-- **Finger-position learning** — introduces keys in pairs based on finger positioning, not alphabetical order; the first two keys you learn are **ப** (J key) and **்** pulli (F key)
-- **Visual key guidance** — the keyboard highlights which key to press next, with finger position overlay
-- **Grammar integration** — once you practise basic vowels and core combinations, consonants are introduced using the natural, high-efficiency grammar flows of Tamil 99
-- **Accuracy targets** — 100% / 90% / 80% targets per exercise; cursor blocks on wrong key in introduction exercises
-- **Progress saved** — your lesson progress is saved automatically in the browser
-- **Free typing sandbox** — a dedicated practice space (`tamil99-tester.html`) where you can paste any Tamil reference text and practise typing it freely
-
----
-
-## How to Run
-
-### Step 1 — Download eluthu
-
-1. Go to **[github.com/eNNumEzuththum/eluthu](https://github.com/eNNumEzuththum/eluthu)** in your browser
-2. Click the green **Code** button near the top right
-3. Click **Download ZIP**
-4. Save the ZIP file to your computer
-
-Then extract it:
-
-- **Windows:** Right-click the ZIP file → **Extract All…** → choose a destination (e.g. `C:\Users\yourname\learning\`) → click **Extract**
-- **macOS:** Double-click the ZIP file — it extracts automatically to the same folder
-- **Linux:** Right-click the ZIP file → **Extract Here**, or run:
-  ```bash
-  unzip eluthu-main.zip -d ~/learning/
-  ```
-
-You should now have an `eluthu-main` folder (rename it to `eluthu` if you prefer).
+- **Progressive Lessons:** Step-by-step curriculum that builds muscle memory naturally.
+- **Finger-Position Learning:** Keys are introduced in ergonomic pairs based on home-row positioning rather than alphabetical order. (Your first two keys are **ப** via `J` and **்** pulli via `F`).
+- **Visual Keyboard Guidance:** Dynamic visual guides display key placement and finger overlays. Only unlocked or currently practicing keys are visible to prevent cognitive overload.
+- **Grammar Integration:** Consonants are introduced alongside high-efficiency grammar flows inherent to Tamil 99.
+- **Local Progress Saving:** Your progress is saved automatically in your browser.
+- **Free Typing Sandbox:** A dedicated space where you can paste custom Tamil text to practice freely.
 
 ---
 
-### Step 2 — Install Python 3 (if needed)
+## Privacy & Security
 
-- **Windows:** Download from [python.org](https://www.python.org/) — tick **"Add Python to PATH"** during installation
-- **macOS:** Python 3 comes pre-installed on modern Macs — no action needed
-- **Linux (Debian/Ubuntu):**
-  ```bash
-  sudo apt install python3
-  ```
+eluthu is designed to be completely private:
 
----
-
-### Step 3 — Run the app
-
-**Windows** — open Command Prompt and run:
-```cmd
-cd C:\Users\yourname\learning\eluthu-main
-python -m http.server 8080
-```
-
-**macOS / Linux** — open Terminal and run:
-```bash
-cd ~/learning/eluthu-main
-python3 -m http.server 8080
-```
-
-Then open your browser and go to: **http://localhost:8080**
-
-To stop the server press `Ctrl+C` in the terminal.
+- **Zero Data Transmission:** Nothing you type ever leaves your device. All processing happens in your browser.
+- **No Accounts Needed:** No registration, login, or personal details required.
+- **Local Storage Only:** Progress is saved locally in your browser (`localStorage`). Clearing your browser data resets your progress.
+- **Ad-Free & Tracker-Free:** No ads, analytics, or third-party tracking scripts.
+-  **Open Source:** Licensed under the MIT License — all source code is publicly auditable in this repository.
 
 ---
 
 ## Roadmap
 
-This is currently an alpha version. With enough community feedback and motivation, I plan to implement:
+eluthu is currently in **Alpha**. The following features are planned for future releases:
 
-1. Improvements -- remove space between same letters when the uyirmey is practice
-1. Detailed progress history and statistics over time (speed and accuracy graphs)
-2. Real-world practice material — Tamil poems, stories, and historical facts
-3. Guided audio and animations for introductory lessons
-4. Support for all Tamil special characters (ஸ, ஷ, ஜ, etc.)
-5. Numerical typing exercises
-6. A fully hosted online version (similar to TypingClub) so users don't have to run it locally
+1. Guided audio prompts and animation for introductory lessons.
+2. Full support for Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers.
 
 ---
 
 ## How You Can Help
 
-- **Test the tool** — use the application and share feedback, suggestions, or bug reports
-- **Spread the word** — share this project with anyone who would benefit from learning Tamil typing
-- **Contribute content** — help expand the word database by adding more Tamil words and exercises to `words.txt`
-- **Contribute code** — pull requests are very welcome; feel free to pick up a feature from the roadmap
+- **Use & Share:** Try eluthu and share it with students, writers, or anyone learning Tamil.
+- **Provide Feedback:** Submit bug reports or feature requests via our [Quick Feedback Form](https://forms.gle/uwwtEWPmU6NVf6QaA) or [GitHub Issues](https://github.com/eNNumEzuththum/eluthu/issues).
+- **Contribute Content:** Help expand our word database and lesson exercises.
+- **Contribute Code:** Pull requests are always welcome!
 
-**Contact:** enn.eluththu@gmail.com
-
----
-
-## Code Structure
-
-```text
-.
-├── index.html                # Main entry point for the web application
-├── tamil99-tester.html       # Free typing sandbox — paste any Tamil text and practise
-├── css/
-│   └── style.css             # Main stylesheet
-├── js/
-│   ├── tamil99.js            # Tamil 99 keyboard engine (combination rules, key map)
-│   ├── combination.js        # Combination mode typing engine (keystroke stream model)
-│   ├── typing.js             # Non-combination typing engine (character-by-character)
-│   ├── lessons.js            # Lesson loading and progression logic
-│   ├── app.js                # Main application controller
-│   └── version.js            # Version display
-├── assets/
-│   ├── keyboard.svg          # Keyboard diagram with Tamil labels and finger guides
-│   └── keyboard_all_keys.svg # Keyboard diagram showing both Tamil and English labels
-├── data/
-│   ├── lessons.json          # Lesson manifest — lesson order, names, exercise list
-│   ├── tamil99-keymap.json   # QWERTY to Tamil 99 key mapping
-│   └── exercises/
-│       └── XX-XX.json        # Individual exercise files (lesson-exercise numbered)
-├── lessons.py                # Lesson plan definition (imported by generator scripts)
-├── generate_lessons.py       # Regenerates all exercise JSON files from lessons.py
-├── add_words_to_lesson.py    # Injects frequent words from words.txt into lessons.py
-├── words.txt                 # Tamil frequent word database
-├── update-tests.sh           # Updates version table in TESTS.md from source files
-├── TESTS.md                  # Test suite documentation
-├── LICENSE                   # MIT licence
-└── README.md                 # This file
-```
+**Contact:** [enn.eluththu@gmail.com](mailto:enn.eluththu@gmail.com)
 
 ---
 
 ## FAQ
 
-**Q: I don't see any characters when I press keys — am I missing a font?**
+#### Q: I don't see any characters when I press keys. Do I need to install a Tamil font?
+**A:** No installation is required. The necessary Tamil fonts are bundled directly into the app and load automatically. 
 
-**A:** No font installation is needed — the Tamil font loads automatically from Google Fonts. If characters aren't appearing, here are two things to check:
+*Note:* **Keys unlock progressively.** Each lesson only displays characters introduced up to that point. The first two characters you learn are **ப** (`J` key) and **்** pulli (`F` key). You must complete earlier exercises to unlock new keys.
 
-1. **Characters unlock progressively** — each lesson only shows the characters introduced so far. The first two characters you learn are **ப** (J key) and **்** pulli (F key). Earlier characters must be practised before new ones are unlocked.
+#### Q: eluthu appears to be loading an older version. How can I update it?
+**A:** Your browser may have cached an earlier build. Perform a hard refresh to force-fetch the latest version:
+- **Windows / Linux:** Press `Ctrl` + `Shift` + `R` (or `Ctrl` + `F5`)
+- **Mac:** Press `Cmd` + `Shift` + `R`
 
-2. **Introduction exercises block wrong keys** — in the first exercise of each lesson, only the correct key advances the cursor. Pressing the wrong key flashes the character red but the cursor stays put. This is by design to build muscle memory.
+---
 
-If you're just starting out, make sure you're on Lesson 1 and press the **J key** to begin.
+## Developer Notes
+
+### Run locally
+
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/eNNumEzuththum/eluthu.git](https://github.com/eNNumEzuththum/eluthu.git)
+   cd eluthu
+```
+2.
+   ```bash
+python3 -m http.server 8080
+```
+
+3. Open http://localhost:8080 in your web browser.
+
+
+### Code Structure
+
+```text
+.
+├── index.html                # Main entry point for the web application
+├── tamil99-tester.html       # Free typing sandbox for custom Tamil text
+├── css/
+│   └── style.css             # Application styles
+├── js/
+│   ├── tamil99.js            # Tamil 99 layout rules and character mapping
+│   ├── combination.js        # Keystroke stream engine for combination typing
+│   ├── typing.js             # Standard character-by-character typing engine
+│   ├── lessons.js            # Lesson loader and progression controller
+│   ├── app.js                # Core application orchestrator
+│   └── version.js            # Application versioning tracker
+├── assets/
+│   ├── keyboard.svg          # Keyboard layout diagram with finger guides
+│   └── keyboard_all_keys.svg # Dual-labeled keyboard diagram (Tamil + English)
+├── data/
+│   ├── lessons.json          # Lesson manifest (ordering, metadata, exercise lists)
+│   ├── tamil99-keymap.json   # QWERTY to Tamil 99 key bindings
+│   └── exercises/
+│       └── XX-XX.json        # Individual exercise JSON data files
+├── words.txt                 # Frequently used Tamil word database
+├── add_words_to_lesson.py    # Injects frequent words from words.txt into lessons.py
+├── generate_lessons.py       # Rebuilds exercise JSON files from lessons.py
+├── lessons.py                # Lesson definitions used by generator scripts
+├── TESTS.md                  # Comprehensive test documentation
+└── update-tests.sh           # Script to sync version details in TESTS.md
+```
 
 ---
 
@@ -209,10 +165,10 @@ If you're just starting out, make sure you're on Lesson 1 and press the **J key*
 
 ---
 
-## Licence
+## License
 
-MIT — see [LICENSE](LICENSE)
+Distributed under the MIT License. See LICENSE for details.
 
-Free to use, share, and modify. Contributions welcome.
+Free to use, modify, and distribute. Contributions are welcome!
 
 ---

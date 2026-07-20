@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<!-- @version 1.0.0 -->
+<!-- @version 1.0.1 -->
 <html lang="ta">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <meta name="description" content="எழுது (eluthu) — free Tamil touch typing tutor using the Tamil 99 keyboard layout">
+  <meta name="description" content="எழுது (eluthu) — free Tamil touch typing tutor">
+
+<!-- Social preview (Open Graph: WhatsApp, Facebook, LinkedIn, Discord) -->
+  <meta property="og:title" content="எழுது · Learn to type Tamil">
+  <meta property="og:description" content="Free Tamil touch typing tutor. Nothing to install.">
+  <meta property="og:image" content="https://ennumezuththum.github.io/eluthu/assets/preview.png">
+  <meta property="og:url" content="https://ennumezuththum.github.io/eluthu/">
+  <meta property="og:type" content="website">
+
+  <!-- Social preview (Twitter/X) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="எழுது · Learn to type Tamil">
+  <meta name="twitter:description" content="Free Tamil touch typing tutor. Nothing to install.">
+  <meta name="twitter:image" content="https://ennumezuththum.github.io/eluthu/assets/preview.png">
   <title>எழுது · Learn to type Tamil</title>
-  <link rel="stylesheet" href="css/style.css?v=1.1.2">
+  <link rel="stylesheet" href="css/style.css?v=1.0.1">
 
   <script>
     window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
     // ── Non-JS files: update manually when file changes ──────────────────
-    window.ELUTHU_VERSIONS['index.html']          = '1.0.0';
-    window.ELUTHU_VERSIONS['style.css']           = '1.0.0';
+    window.ELUTHU_VERSIONS['index.html']          = '1.0.1';
+    window.ELUTHU_VERSIONS['style.css']           = '1.0.1';
     window.ELUTHU_VERSIONS['tamil99-keymap.json'] = '1.0.0';
   </script>
 </head>
@@ -23,15 +36,43 @@
 <!-- Header -->
 <header>
   <span class="logo">எழுது</span>
-  <span class="logo-sub">விரைவாகவும் இலகுவாகவும் கணணியில் எழுத பழகுங்கள்</span>
+<span class="logo-sub">வேகமாக,  துல்லியமாக விசைப்பலகையில் தட்டச்சு செய்யுங்கள்</span>
   <button id="btn-picker" title="நிலை தேர்வு">☰</button>
+  <button id="btn-welcome" title="Help / உதவி" style="margin-left:auto;background:none;border:1.5px solid var(--border);border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;color:var(--text-dim);flex-shrink:0;">?</button>
 </header>
+
+<!-- Welcome modal -->
+<div id="welcome-overlay" class="welcome-overlay hidden">
+  <div class="welcome-panel" role="dialog" aria-modal="true" aria-label="Welcome">
+    <button id="welcome-close" class="welcome-close" title="Close">✕</button>
+
+    <div class="welcome-body">
+      <div class="welcome-title">எழுது உங்களை வரவேற்கிறது | Welcome to Eluthu.! </div>
+      <div class="welcome-sub">தமிழ் தொடு-தட்டச்சுப் பயிற்சி | Tamil Touch Typing</div>
+    
+
+      <div class="welcome-section">
+        <div class="welcome-lang tamil-text">
+          <p> முக்கிய அம்சங்கள் (Key Features): </p>
+          <p>தமிழ் 99 விசைப்பலகை அமைப்பு | Tamil 99 layout</p>
+          <p>விரல்களுக்குத் தானாகவே பழகும் வகையில் (Muscle memory), நீங்கள் பழகும் அல்லது பழகிய விசைகள் மட்டுமே திரையில் தெரியும். (Displays only relevant keys to help build muscle memory.)</p>
+          <p>ஒவ்வொரு விசைகளும் அறிமுகம் (Introduction) , பயிற்சி (Practice), மற்றும் மீளாய்வு (Review) பகுதிகளைக்கொண்டது.</p>
+          <p>உங்களது தகவல்களின் பாதுகாப்புக்கு முழு உத்தரவாதம் -- நீங்கள் தட்டச்சு செய்வது எதுவும் உங்களது கணணியை விட்டு வெளியே போகாது (your privacy is completely guaranteed  --Nothing you type ever leaves your computer).</p>
+          <p>பயிற்சியை முடிச்சதும் அடுத்த கட்டத்துக்குப் போக ஏதேனும் ஒரு விசையை அழுத்துங்கோ.
+(Press any key to complete an exercise and continue.)</p>
+        </div>
+      </div>
+
+      <button id="welcome-start" class="welcome-btn">தொடங்குவோம்! &nbsp;/&nbsp; Let's start →</button>
+    </div>
+  </div>
+</div>
 
 <!-- Lesson/Exercise picker overlay -->
 <div id="picker-overlay" class="picker-overlay hidden">
   <div class="picker-panel">
     <div class="picker-header">
-      <span class="picker-title">நிலை தேர்வு</span>
+      <span class="picker-title">விசைநிலை தேர்வு</span>
       <button id="btn-picker-close">✕</button>
     </div>
     <div class="picker-list" id="picker-list"></div>

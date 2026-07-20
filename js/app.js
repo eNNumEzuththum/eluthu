@@ -1,11 +1,11 @@
 /**
  * app.js — எழுது
+ * @version 1.0.5
  * Loads lessons from manifest + separate exercise files.
  * Two sections: lesson char row + keyboard.
  */
-
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.0';
+window.ELUTHU_VERSIONS['app.js'] = '1.0.5';
 
 'use strict';
 
@@ -324,8 +324,8 @@ function updateLabel() {
   if (!manifest) return;
   const lesson = manifest.lessons[lessonIdx];
   const displayName = lesson.name.replace(' ', '␣');
-  $lessonName.textContent   = `நிலை ${lessonIdx + 1} — ${displayName}`;
-  $exerciseName.textContent = `பயிற்ச்சி ${exerciseIdx + 1}`;
+  $lessonName.textContent   = `விசை நிலை: ${lessonIdx + 1} — ${displayName}`;
+  $exerciseName.textContent = `பயிற்சி: ${exerciseIdx + 1}`;
   updateProgressDots();
 }
 
@@ -539,39 +539,46 @@ function _handleKeyCombination(e) {
 
   if (e.code === 'Space') {
     e.preventDefault();
-    // If engine has a pending consonant, commit it as implicit அ first,
-    // regardless of whether it came from a fresh keypress or a chain.
-    if (tamilEngine.pendingConsonant) {
-      const pending = tamilEngine.pendingConsonant;
-      const snap2 = comboEngine.snapshot();
-      const nextChar = snap2.target[snap2.cursor] ?? null;
-      const d = nextChar ? decomposeCluster_app(nextChar) : null;
-      if (d && d.consonant === pending && d.marker === '') {
-        // Commit bare consonant via implicit_a
-        const implicitResult = { type: 'implicit_a', output: pending, replace: true, pending: null };
-        tamilEngine.reset();
-        comboEngine.setPending(null);
-        comboEngine.handleEngineResult(implicitResult);
-        // Now check if next target is space
-        const snap3 = comboEngine.snapshot();
-        const nextChar3 = snap3.target[snap3.cursor] ?? null;
-        if (nextChar3 === ' ') {
-          comboEngine.handleEngineResult({ type: 'space', output: ' ', replace: false, pending: null });
-        }
-        return;
-      }
-    }
     const cur = snap.cursor;
     const nextChar = snap.target[cur] ?? null;
+    const d = nextChar ? decomposeCluster_app(nextChar) : null;
+
+    // Case 1: engine has pending consonant AND next target is that bare consonant
+    // → commit as implicit அ, then handle space for the word boundary
+    if (tamilEngine.pendingConsonant && d &&
+        d.consonant === tamilEngine.pendingConsonant && d.marker === '') {
+      const pending = tamilEngine.pendingConsonant;
+      const implicitResult = { type: 'implicit_a', output: pending, replace: true, pending: null };
+      tamilEngine.reset();
+      comboEngine.setPending(null);
+      comboEngine.handleEngineResult(implicitResult);
+      const snap3 = comboEngine.snapshot();
+      const nextChar3 = snap3.target[snap3.cursor] ?? null;
+      if (nextChar3 === ' ') {
+        comboEngine.handleEngineResult({ type: 'space', output: ' ', replace: false, pending: null });
+      }
+      return;
+    }
+
+    // Case 2: next target is a space → advance correctly
     if (nextChar === ' ') {
       tamilEngine.reset();
       comboEngine.setPending(null);
       comboEngine.handleEngineResult({ type: 'space', output: ' ', replace: false, pending: null });
-    } else if (snap.accuracyTarget === 100) {
+      return;
+    }
+
+    // Case 3: Space is wrong (mid-uyirmei or wrong position)
+    // Do NOT touch engine pending — just flash/advance cursor
+    if (snap.accuracyTarget === 100) {
       comboEngine.flashWrong();
     } else {
-      comboEngine.pushWrong(' ');
+      // Reset pending FIRST so cursor getter is correct when _notify fires inside pushWrong
+      tamilEngine.reset();
+      comboEngine.setPending(null);
+      comboEngine.pushWrong(nextChar ?? ' ');
     }
+    const snapAfter = comboEngine.snapshot();
     return;
   }
 
@@ -582,10 +589,11 @@ function _handleKeyCombination(e) {
       comboEngine.flashWrong();
       return;
     } else {
-      // Advance with error — reset engine pending
+      // Reset pending FIRST so cursor getter is correct when _notify fires inside pushWrong
       tamilEngine.reset();
       comboEngine.setPending(null);
       comboEngine.pushWrong(e.code);
+      const snapW = comboEngine.snapshot();
       return;
     }
   }
@@ -745,7 +753,7 @@ function buildPicker() {
 
     const name = document.createElement('div');
     name.className = 'picker-lesson-name';
-    name.innerHTML = `<span>நிலை ${li + 1}</span>${lesson.name}`;
+    name.innerHTML = `<span>விசை நிலை: ${li + 1} </span>${lesson.name}`;
     block.appendChild(name);
 
     const exWrap = document.createElement('div');
@@ -783,9 +791,18 @@ function closePicker() {
 document.getElementById('btn-picker').addEventListener('click', openPicker);
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
 
-// Close on overlay background click
+// Close when clicking the overlay background or outside the panel
 $pickerOverlay.addEventListener('click', e => {
-  if (e.target === $pickerOverlay) closePicker();
+  if (!e.target.closest('.picker-panel')) closePicker();
+});
+
+// Also close when clicking anywhere outside the picker overlay
+document.addEventListener('click', e => {
+  if (!$pickerOverlay.classList.contains('hidden') &&
+      !e.target.closest('#picker-overlay') &&
+      !e.target.closest('#btn-picker')) {
+    closePicker();
+  }
 });
 
 // ── Key activation ───────────────────────────────────────────────────────────

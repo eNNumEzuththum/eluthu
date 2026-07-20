@@ -1,5 +1,6 @@
 /**
  * combination.js
+ * @version 1.0.2
  * Combination mode typing engine for eluthu
  *
  * Handles uyirmei lessons where keystrokes form a stream rather than
@@ -15,9 +16,8 @@
  *
  * Interface is identical to TypingEngine so app.js can swap between them.
  */
-
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.0.2';
+window.ELUTHU_VERSIONS['combination.js'] = '1.0.4';
 
 'use strict';
 
@@ -406,9 +406,15 @@ class CombinationEngine {
     this._errors++;
     this._totalKeys++;
     this._wrongKey = false;
-    const pos = this._matched.length;
-    if (pos < this._target.length) {
-      this._matched.push({ char: cluster, correct: false });
+    // Push wrong at the CURSOR position (not just matched.length)
+    // When pending shifts cursor ahead, fill up to cursor position
+    const cursorPos = this.cursor;
+    while (this._matched.length < cursorPos && this._matched.length < this._target.length) {
+      this._matched.push({ char: this._target[this._matched.length], correct: false });
+    }
+    if (this._matched.length < this._target.length) {
+      // Always push the target char (not the raw key code) for clean display
+      this._matched.push({ char: this._target[this._matched.length], correct: false });
     }
     if (this._matched.length >= this._target.length) {
       this._finish();
