@@ -53,6 +53,9 @@ While the difference seems minor for a single word, Tamil 99 saves massive unnec
 - **Finger-Position Learning:** Keys are introduced in ergonomic pairs based on home-row positioning rather than alphabetical order. (Your first two keys are **ப** via `J` and **்** pulli via `F`).
 - **Visual Keyboard Guidance:** Dynamic visual guides display key placement and finger overlays. Only unlocked or currently practicing keys are visible to prevent cognitive overload.
 - **Grammar Integration:** Consonants are introduced alongside high-efficiency grammar flows inherent to Tamil 99.
+- **Interactive Messages:** Instructional screens between lessons guide you through the learning journey
+- **Introduction, Practice & Review:** Each lesson has dedicated exercise phases — introduction (100% accuracy required), practice (90%), and review (80%) — so you build confidence before moving on.
+- **Real Tamil Words:** Combination lessons use real Tamil words and phrases derived strictly from characters you have learned so far (capped at 50 words per exercise for optimal learning pace).
 - **Local Progress Saving:** Your progress is saved automatically in your browser.
 - **Free Typing Sandbox:** A dedicated space where you can paste custom Tamil text to practice freely.
 
@@ -72,10 +75,9 @@ eluthu is designed to be completely private:
 
 ## Roadmap
 
-eluthu is currently in **Alpha**. The following features are planned for future releases:
+eluthu is currently in **v1.1.0**. The following features are planned for future releases:
 
-1. Guided audio prompts and animation for introductory lessons.
-2. Full support for Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers.
+1. Full support for Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers.
 
 ---
 
@@ -87,20 +89,6 @@ eluthu is currently in **Alpha**. The following features are planned for future 
 - **Contribute Code:** Pull requests are always welcome!
 
 **Contact:** [enn.eluththu@gmail.com](mailto:enn.eluththu@gmail.com)
-
----
-
-## FAQ
-
-#### Q: I don't see any characters when I press keys. Do I need to install a Tamil font?
-**A:** No installation is required. The necessary Tamil fonts are bundled directly into the app and load automatically. 
-
-*Note:* **Keys unlock progressively.** Each lesson only displays characters introduced up to that point. The first two characters you learn are **ப** (`J` key) and **்** pulli (`F` key). You must complete earlier exercises to unlock new keys.
-
-#### Q: eluthu appears to be loading an older version. How can I update it?
-**A:** Your browser may have cached an earlier build. Perform a hard refresh to force-fetch the latest version:
-- **Windows / Linux:** Press `Ctrl` + `Shift` + `R` (or `Ctrl` + `F5`)
-- **Mac:** Press `Cmd` + `Shift` + `R`
 
 ---
 
@@ -144,10 +132,11 @@ python3 -m http.server 8080
 │   ├── tamil99-keymap.json   # QWERTY to Tamil 99 key bindings
 │   └── exercises/
 │       └── XX-XX.json        # Individual exercise JSON data files
+├── lesson_plan.json          # Minimal hand-edited lesson definitions
 ├── words.txt                 # Frequently used Tamil word database
-├── add_words_to_lesson.py    # Injects frequent words from words.txt into lessons.py
-├── generate_lessons.py       # Rebuilds exercise JSON files from lessons.py
-├── lessons.py                # Lesson definitions used by generator scripts
+├── add_words_to_lesson.py    # Reads lesson_plan.json + words.txt → lesson_words.json
+├── lesson_words.json         # Generated: lesson metadata + matched words per lesson
+├── generate_lessons.py       # Reads lesson_words.json → data/lessons.json + exercises/
 ├── TESTS.md                  # Comprehensive test documentation
 └── update-tests.sh           # Script to sync version details in TESTS.md
 ```

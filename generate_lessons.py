@@ -123,12 +123,15 @@ def make_practice_words(pool, target=30):
     random.shuffle(conclusion)
     words += conclusion[:4]
 
-    # Strict 3-5 char filter
+    # Strict 3-5 char filter and final truncation to target
     words = [w for w in words if 3 <= len(w) <= 5]
     while len(words) < target:
         w = ''.join(random.choice(pool) for _ in range(random.randint(3, 5)))
         if 3 <= len(w) <= 5:
             words.append(w)
+
+    # Final truncation to target
+    words = words[:target]
 
     # Return as flat char list with spaces
     result = []
@@ -153,7 +156,7 @@ def make_non_combo_exercises(chars, lesson_id):
 
     if not chars:
         if len(practice_pool) >= 2:
-            word_target = 25 + lesson_id // 2
+            word_target = max_words(chars)
             text = make_practice_words(practice_pool, target=word_target)
             exercises.append(smart_join(text, False))
         return exercises
@@ -179,9 +182,9 @@ def make_non_combo_exercises(chars, lesson_id):
             text += [c1, c2, ' '] * 2
         exercises.append(smart_join(text, False))
 
-    # Practice: random words from all chars
+    # Practice: random words from lesson chars
     if len(practice_pool) >= 2:
-        word_target = 25 + lesson_id // 2
+        word_target = max_words(chars)
         text = make_practice_words(practice_pool, target=word_target)
         exercises.append(smart_join(text, False))
 
@@ -190,8 +193,8 @@ def make_non_combo_exercises(chars, lesson_id):
 # ── Combo exercise generator ──────────────────────────────────────────────────
 
 def max_words(chars):
-    """N = 50 + (number of chars - 1) × 5, capped at 100"""
-    return min(100, 50 + (len(chars) - 1) * 5)
+    """N = 25 + (number of chars - 1) × 2, capped at 50"""
+    return min(50, 25 + (len(chars) - 1) * 2)
 
 def make_combo_exercises(consonants, words, lesson_id, has_words=True):
     """

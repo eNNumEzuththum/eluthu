@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
-  "combination_mode": false,
+  "exercise_type": "message",
+  "combination_mode": true,
   "accuracy_target": 100,
-  "text": "்்"
+  "text": "💡 விரல்கள் தடுமாறினால் கவலைப்படாதீர்கள்!\nதினமும் 15 நிமிடம் தொடர் பயிற்சி செய்தால், மூளை விரல்களுக்குத் தானாகக் கட்டளையிடப் (Muscle Memory) பழகிவிடும்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
+  "key": "any"
 }

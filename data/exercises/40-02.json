@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
-  "combination_mode": true,
-  "accuracy_target": 90,
-  "text": "தா தா தீ தீ தூ தூ தே தே தை தை நா நா நீ நீ நே நே நை நை நோ நோ எதை எதை எது எது இது இது உது உது ஐந்து ஐந்து ஊதா ஊதா நீ நை ஐந்து தீ ஊதா உது தே இது நா தா எது நே தூ நோ தை எதை தை தா தே நா தீ நோ எதை"
+  "exercise_type": "introduction",
+  "combination_mode": false,
+  "accuracy_target": 100,
+  "text": ".."
 }

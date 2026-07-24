@@ -102,7 +102,7 @@ header {
 
 .char-row {
   font-family: var(--font-t);
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1.8;
   display: flex;
   flex-wrap: wrap;
@@ -117,7 +117,7 @@ header {
 
 .char-box .tamil {
   font-family: var(--font-t);
-  font-size: 28px;
+  font-size: 24px;
   color: var(--text);
 }
 
@@ -148,7 +148,7 @@ header {
   display: inline-block;
   width: 0.4em;
   color: transparent;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 /* Space wrong — show red underline */

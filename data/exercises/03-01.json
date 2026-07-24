@@ -3,6 +3,6 @@
   "exercise_type": "message",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "பயிற்சியை முடிச்சதும் அடுத்த கட்டத்துக்குப் போக ஏதேனும் ஒரு விசையை அழுத்துங்கோ. (Press any key to complete an exercise and continue.)",
-  "key": "any"
+  "text": "📢 இடது பக்கத்து முகட்டு விசை (Key F) விசைப்பலகையைப் பார்க்காம அழுத்தவும்!",
+  "key": "KeyF"
 }

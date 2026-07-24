@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "practice",
-  "combination_mode": true,
-  "accuracy_target": 80,
-  "text": "தீ தா தை அதை தா. தே தூ ஊதா எது எதை உது இது தூ தா ஊதா உது தீ எதை அதை தா. எது தை இது தே உது தா எதை இது தை அதை தா. எது தீ தே ஊதா தூ தை தூ எதை தா எது தே உது ஊதா தீ இது அதை தா. எதை தே தா எது இது ஊதா"
+  "exercise_type": "introduction",
+  "combination_mode": false,
+  "accuracy_target": 100,
+  "text": "ஓஓஓஓ....ஓஓ..ஓ..ஓ....ஓஓஓஓ..ஓஓ.ஓஓ."
 }

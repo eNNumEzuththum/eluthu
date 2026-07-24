@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "practice",
-  "combination_mode": true,
-  "accuracy_target": 80,
-  "text": "நோ நை உது தை நா எது ஊதா நீ தா இது எதை நே ஐந்து தீ தே அதை தா. தூ இது அதை தா. தை எதை தீ தூ நா ஊதா நை தா நே எது தே உது நீ ஐந்து நோ எதை நோ தா ஐந்து உது நே எது ஊதா தை தூ நீ அதை தா. தீ இது தே நை நா ஐந்து அதை தா. தை தா"
+  "exercise_type": "introduction",
+  "combination_mode": false,
+  "accuracy_target": 100,
+  "text": "ஔஔ"
 }
