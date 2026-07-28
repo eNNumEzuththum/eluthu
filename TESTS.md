@@ -8,7 +8,7 @@
 | style.css | 1.0.1 |
 | tamil99-keymap.json | 1.0.0 |
 | tamil99.js | 1.0.0 |
-| combination.js | 1.0.4 |
+| combination.js | 1.1.0 |
 | typing.js | 1.0.0 |
 | lessons.js | 1.0.0 |
 | app.js | 1.0.5 |
