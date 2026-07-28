@@ -17,7 +17,7 @@
  * Interface is identical to TypingEngine so app.js can swap between them.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.1.0';
+window.ELUTHU_VERSIONS['combination.js'] = '1.1.5';
 
 'use strict';
 
@@ -170,8 +170,10 @@ class CombinationEngine {
     if (pending === d.consonant) {
 
       // Rule 2a: Bare consonant, pending from chain (e.g. அப்பப்பா, அப்பம்)
-      // Pending carries over — decide next key based on what follows.
-      if (d.marker === '' && this._pendingFromChain) {
+      // Only applies mid-word — Tamil words never start with a pure consonant,
+      // so chain carry-over at word start is handled by normal rules.
+      const isWordStart = cur === 0 || this._target[cur - 1] === ' ';
+      if (d.marker === '' && this._pendingFromChain && !isWordStart) {
         const afterNext = this._target[cur + 1] ?? null;
         if (!afterNext || afterNext === ' ') return 'Space';
         const dAfter = decomposeCluster(afterNext);
@@ -180,10 +182,8 @@ class CombinationEngine {
         return 'Space';
       }
 
-      // Rule 2b: Bare consonant, fresh keypress, next starts with same consonant → KeyA
-      if (d.marker === '' && dNext && dNext.consonant === pending) {
-        return 'KeyA';
-      }
+      // Rule 2b removed: Tamil words never start with a pure consonant, so
+      // the same-consonant chain handles bare consonant + same consonant naturally.
 
       // Rule 3: Pure consonant (pulli marker)
       if (d.marker === COMBO_PULLI) {
@@ -296,7 +296,8 @@ class CombinationEngine {
       // Just a preview — nothing to match yet
       clustersToMatch = [];
     } else if (result.pending && result.replace) {
-      // consonant_chain with pulli: e.g. 'ப்ப' → match ['ப்'], leave 'ப' as pending
+      // consonant_chain with replace=true (same-consonant pulli or soft+hard).
+      // e.g. 'ப்ப' → match ['ப்'], leave 'ப' as pending
       clustersToMatch = outClusters.slice(0, -1);
     } else if (result.type === 'consonant_chain' && result.pending && !result.replace) {
       // Regular consonant chain: previous pending committed as bare consonant.
@@ -308,8 +309,10 @@ class CombinationEngine {
       clustersToMatch = outClusters;
     }
 
-    // Track whether pending came from a chain (affects Rule 2a key guidance)
-    this._pendingFromChain = (result.type === 'consonant_chain' && !!result.pending);
+    // Chain length is max 2 letters.
+    // replace=true: chain just fired (ப்ப) → pending carries over, fromChain=true
+    // replace=false or non-chain: fresh pending → fromChain=false
+    this._pendingFromChain = (result.type === 'consonant_chain' && !!result.replace && !!result.pending);
     for (const cluster of clustersToMatch) {
       if (cluster === ' ' && this._matched.length === this._target.length) {
         this._finish(); return;

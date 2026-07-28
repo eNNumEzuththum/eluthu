@@ -1,11 +1,11 @@
 /**
  * app.js — எழுது
- * @version 1.0.5
+ * @version 1.12.4
  * Loads lessons from manifest + separate exercise files.
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.5';
+window.ELUTHU_VERSIONS['app.js'] = '1.12.4';
 
 'use strict';
 
@@ -325,7 +325,7 @@ function updateLabel() {
   const lesson = manifest.lessons[lessonIdx];
   const displayName = lesson.name.replace(' ', '␣');
   $lessonName.textContent   = `விசை நிலை: ${lessonIdx + 1} — ${displayName}`;
-  $exerciseName.textContent = `பயிற்சி: ${exerciseIdx + 1}`;
+  $exerciseName.textContent = `பயிற்ச்சி: ${exerciseIdx + 1}`;
   updateProgressDots();
 }
 
@@ -604,6 +604,29 @@ function _handleKeyCombination(e) {
 
   // Capture prevPending before updating — needed for cross-consonant chain matching
   const prevPending = comboEngine.snapshot().pending;
+
+  // Word-start rule: if consonant_pending fires at word start, commit immediately
+  // as implicit அ (bare consonant). Tamil words never start with a pure consonant,
+  // so the first letter always carries an implicit அ sound.
+  // This allows பப்பாளி = KeyJ KeyJ KeyJ KeyQ KeyY KeyS (no KeyA needed).
+  if (result.type === 'consonant_pending') {
+    const snap2 = comboEngine.snapshot();
+    const matchPos = snap2.typed.length;
+    const isWordStart = matchPos === 0 || snap2.target[matchPos - 1] === ' ';
+    // Only commit immediately if the target is a bare consonant (no vowel marker).
+    // For uyirmei targets (பா, பி etc.) let normal pending flow handle it.
+    const targetChar = snap2.target[snap2.cursor] ?? null;
+    const d = targetChar ? decomposeCluster_app(targetChar) : null;
+    if (isWordStart && d && d.marker === '') {
+      // Commit bare consonant immediately as implicit அ
+      const implicitResult = { type: 'implicit_a', output: result.output, replace: false, pending: null };
+      tamilEngine.reset();
+      comboEngine.setPending(null);
+      comboEngine.handleEngineResult(implicitResult, null);
+      return;
+    }
+  }
+
   // Update pending FIRST so getNextKey() inside _notify() uses correct new state
   comboEngine.setPending(tamilEngine.pendingConsonant);
   // Then handle result, passing prevPending explicitly for matching
@@ -791,18 +814,9 @@ function closePicker() {
 document.getElementById('btn-picker').addEventListener('click', openPicker);
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
 
-// Close when clicking the overlay background or outside the panel
+// Close on overlay background click
 $pickerOverlay.addEventListener('click', e => {
-  if (!e.target.closest('.picker-panel')) closePicker();
-});
-
-// Also close when clicking anywhere outside the picker overlay
-document.addEventListener('click', e => {
-  if (!$pickerOverlay.classList.contains('hidden') &&
-      !e.target.closest('#picker-overlay') &&
-      !e.target.closest('#btn-picker')) {
-    closePicker();
-  }
+  if (e.target === $pickerOverlay) closePicker();
 });
 
 // ── Key activation ───────────────────────────────────────────────────────────
