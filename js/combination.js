@@ -17,7 +17,7 @@
  * Interface is identical to TypingEngine so app.js can swap between them.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.1.5';
+window.ELUTHU_VERSIONS['combination.js'] = '1.1.7';
 
 'use strict';
 
@@ -265,6 +265,9 @@ class CombinationEngine {
       return;
     }
 
+    // Tag implicit_a commits so backspace knows to reset fully
+    const isImplicit = result.type === 'implicit_a';
+
     // Backspace
     if (result.type === 'backspace' || result.type === 'backspace_pending') {
       this._doBackspace();
@@ -317,7 +320,7 @@ class CombinationEngine {
       if (cluster === ' ' && this._matched.length === this._target.length) {
         this._finish(); return;
       }
-      this._matchCluster(cluster);
+      this._matchCluster(cluster, isImplicit);
     }
 
     if (this._matched.length >= this._target.length) {
@@ -330,11 +333,11 @@ class CombinationEngine {
   /**
    * Match one output cluster against the next expected target cluster.
    */
-  _matchCluster(cluster) {
+  _matchCluster(cluster, implicit = false) {
     // Skip ZWNJ
     while (this._matched.length < this._target.length &&
            this._target[this._matched.length] === COMBO_ZWNJ) {
-      this._matched.push({ char: COMBO_ZWNJ, correct: true });
+      this._matched.push({ char: COMBO_ZWNJ, correct: true, implicit: false });
     }
 
     const pos = this._matched.length;
@@ -352,7 +355,7 @@ class CombinationEngine {
       }
     }
 
-    this._matched.push({ char: cluster, correct });
+    this._matched.push({ char: cluster, correct, implicit });
   }
 
   /**
@@ -368,7 +371,7 @@ class CombinationEngine {
     this._notify();
   }
 
-  pushWrong(cluster) {
+  pushWrong(cluster, hadPendingConsonant = false) {
     if (this._state === 'complete') return;
     this._errors++;
     this._totalKeys++;
@@ -381,7 +384,8 @@ class CombinationEngine {
     }
     if (this._matched.length < this._target.length) {
       // Always push the target char (not the raw key code) for clean display
-      this._matched.push({ char: this._target[this._matched.length], correct: false });
+      // wrongKey=false when consonant was correct but vowel wrong (T45 backspace applies)
+      this._matched.push({ char: this._target[this._matched.length], correct: false, implicit: false, wrongKey: !hadPendingConsonant });
     }
     if (this._matched.length >= this._target.length) {
       this._finish();

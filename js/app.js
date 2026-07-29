@@ -1,11 +1,11 @@
 /**
  * app.js — எழுது
- * @version 1.12.4
+ * @version 1.0.17
  * Loads lessons from manifest + separate exercise files.
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.12.4';
+window.ELUTHU_VERSIONS['app.js'] = '1.0.17';
 
 'use strict';
 
@@ -524,11 +524,25 @@ function _handleKeyCombination(e) {
       comboEngine._notify();      // refresh display
     } else {
       // Un-commit last matched cluster; get back its consonant
+      // Capture the entry BEFORE handleBackspace pops it (typed is a live reference)
+      const typed = comboEngine.snapshot().typed;
+      const removedEntry = typed.length > 0 ? { ...typed[typed.length - 1] } : null;
       const restoredConsonant = comboEngine.handleBackspace();
       if (restoredConsonant) {
-        // Restore consonant as engine pending so next key is the vowel
-        tamilEngine.reset();
-        tamilEngine._pending = restoredConsonant;
+        const removedD = removedEntry ? decomposeCluster_app(removedEntry.char) : null;
+        const wasBareCons = removedD && removedD.marker === '';
+        const wasImplicit = removedEntry?.implicit ?? false;
+        const wasWrongKey = removedEntry?.wrongKey ?? false;
+        if (wasBareCons || wasImplicit || wasWrongKey) {
+          // Bare consonant, word-start implicit, or wrong key push — reset fully
+          tamilEngine.reset();
+          comboEngine.setPending(null);
+          comboEngine._notify();
+        } else {
+          // Correctly typed uyirmei — restore consonant pending (T45)
+          tamilEngine.reset();
+          tamilEngine._pending = restoredConsonant;
+        }
       }
     }
     return;
@@ -590,9 +604,11 @@ function _handleKeyCombination(e) {
       return;
     } else {
       // Reset pending FIRST so cursor getter is correct when _notify fires inside pushWrong
+      // Track if consonant was pending (correct consonant typed, wrong vowel)
+      const hadPendingConsonant = !!tamilEngine.pendingConsonant;
       tamilEngine.reset();
       comboEngine.setPending(null);
-      comboEngine.pushWrong(e.code);
+      comboEngine.pushWrong(e.code, hadPendingConsonant);
       const snapW = comboEngine.snapshot();
       return;
     }
