@@ -323,8 +323,12 @@ function activateKey(keyCode) {
 function updateLabel() {
   if (!manifest) return;
   const lesson = manifest.lessons[lessonIdx];
+  if (lesson.name === '─') { $lessonName.textContent = ''; return; }
+  // Count only non-message lessons for display numbering
+  const visibleIdx = manifest.lessons.slice(0, lessonIdx + 1)
+    .filter(l => l.name !== '─').length;
   const displayName = lesson.name.replace(' ', '␣');
-  $lessonName.textContent   = `விசை நிலை: ${lessonIdx + 1} — ${displayName}`;
+  $lessonName.textContent = `விசை நிலை: ${visibleIdx} — ${displayName}`;
   $exerciseName.textContent = `பயிற்ச்சி: ${exerciseIdx + 1}`;
   updateProgressDots();
 }
@@ -786,13 +790,18 @@ function buildPicker() {
   if (!manifest) return;
   $pickerList.innerHTML = '';
 
+  let visibleLessonCount = 0;
   manifest.lessons.forEach((lesson, li) => {
+    // Skip message lessons — not shown in picker
+    if (lesson.name === '─') return;
+    visibleLessonCount++;
+
     const block = document.createElement('div');
     block.className = 'picker-lesson';
 
     const name = document.createElement('div');
     name.className = 'picker-lesson-name';
-    name.innerHTML = `<span>விசை நிலை: ${li + 1} </span>${lesson.name}`;
+    name.innerHTML = `<span>விசை நிலை: ${visibleLessonCount} </span>${lesson.name}`;
     block.appendChild(name);
 
     const exWrap = document.createElement('div');
@@ -830,9 +839,18 @@ function closePicker() {
 document.getElementById('btn-picker').addEventListener('click', openPicker);
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
 
-// Close on overlay background click
+// Close on overlay background click or anywhere outside the panel
 $pickerOverlay.addEventListener('click', e => {
-  if (e.target === $pickerOverlay) closePicker();
+  if (!e.target.closest('.picker-panel')) closePicker();
+});
+
+// Also close when clicking anywhere outside the picker overlay
+document.addEventListener('click', e => {
+  if (!$pickerOverlay.classList.contains('hidden') &&
+      !e.target.closest('#picker-overlay') &&
+      !e.target.closest('#btn-picker')) {
+    closePicker();
+  }
 });
 
 // ── Key activation ───────────────────────────────────────────────────────────

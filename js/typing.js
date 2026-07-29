@@ -135,21 +135,6 @@ class TypingEngine {
     this._notify();
   }
 
-  /**
-   * T45: Vowel-strip backspace — called when user is mid-uyirmei (step=1)
-   * and presses Backspace. Un-commits the last typed character so the cursor
-   * returns to it, ready for a different vowel. No error penalty.
-   */
-  handleVowelBackspace() {
-    if (this._state === 'complete') return;
-    if (this._typed.length === 0) return;
-    // Pop last entry without counting it as an error
-    const removed = this._typed.pop();
-    // If it was correct we don't subtract errors (errors only count wrong presses)
-    this._wrongChar = null;
-    this._notify();
-  }
-
   // ── Internal ───────────────────────────────────────────────────────────────
 
   _pushCluster(cluster) {
@@ -158,7 +143,6 @@ class TypingEngine {
 
     const expected = this._target[pos];
     const correct  = cluster === expected;
-    console.log(`_pushCluster: cluster=${JSON.stringify(cluster)} expected=${JSON.stringify(expected)} correct=${correct} pos=${pos}`);
 
     this._totalKeys++;
 
@@ -203,7 +187,6 @@ class TypingEngine {
     this._endTime = Date.now();
     this._state   = 'complete';
     this._notify();
-    console.log(`_finish: errors=${this._errors} typed=${this._typed.length} target=${this._target.length}`);
     if (this.onComplete) this.onComplete(this.stats());
   }
 

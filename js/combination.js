@@ -1,6 +1,5 @@
 /**
  * combination.js
- * @version 1.0.2
  * Combination mode typing engine for eluthu
  *
  * Handles uyirmei lessons where keystrokes form a stream rather than
@@ -38,7 +37,6 @@ function isConsonant(ch) {
   return cp >= 0x0B95 && cp <= 0x0BB9;
 }
 
-function isPulli(ch) { return ch === COMBO_PULLI; }
 
 /**
  * Decompose a target cluster into { consonant, marker }.
@@ -63,7 +61,7 @@ class CombinationEngine {
     this._softHard   = softHardPairs || COMBO_SOFT_HARD;
 
     this._target     = [];   // array of grapheme clusters
-    this._matched    = [];   // array of { char, correct } — matched clusters
+    this._matched    = [];   // array of { char, correct, implicit, wrongKey } — matched clusters
     this._startTime  = null;
     this._endTime    = null;
     this._state      = 'idle'; // idle | typing | complete
@@ -138,14 +136,15 @@ class CombinationEngine {
    * Returns the key code the user should press next, or null.
    *
    * Rules (in order):
-   * 1. No pending, cursor on a cluster → show consonant key of that cluster
-   * 2. Pending = cursor cluster's consonant, cluster is bare consonant,
-   *    next cluster starts with same consonant → show KeyA (de-linker)
-   * 3. Pending = cursor cluster's consonant, cluster is pure consonant (்):
-   *    a. Next cluster's consonant is hard pair of pending → show hard key
-   *    b. Otherwise → show same consonant key (same-consonant rule)
-   * 4. Pending = next cluster's consonant (carried over) → show vowel key
-   * 5. Pending = cursor cluster's consonant, cluster is uyirmei → show vowel key
+   * 1. No pending → show consonant key of cursor cluster
+   * 2a. Pending from chain, bare consonant target, mid-word → show next key
+   *     (same consonant: repeat key; different: that key; end/space: Space)
+   * 3. Pending matches pure consonant (்) target:
+   *    3a. Next = soft+hard pair → show hard consonant key
+   *    3b. Next = same consonant → show same key (same-consonant rule)
+   *    3c. Otherwise → show KeyF (explicit pulli)
+   * 4. Pending matches next cluster's consonant → show vowel key of current
+   * 5. Pending matches uyirmei target → show vowel key
    */
   getNextKey() {
     const cur = this.cursor;
@@ -169,9 +168,9 @@ class CombinationEngine {
     // Pending matches current cluster's consonant
     if (pending === d.consonant) {
 
-      // Rule 2a: Bare consonant, pending from chain (e.g. அப்பப்பா, அப்பம்)
-      // Only applies mid-word — Tamil words never start with a pure consonant,
-      // so chain carry-over at word start is handled by normal rules.
+      // Rule 2a: Bare consonant, pending from chain, mid-word only.
+      // Tamil words never start with a pure consonant — word-start
+      // bare consonants are committed immediately as implicit அ by app.js.
       const isWordStart = cur === 0 || this._target[cur - 1] === ' ';
       if (d.marker === '' && this._pendingFromChain && !isWordStart) {
         const afterNext = this._target[cur + 1] ?? null;
@@ -182,8 +181,6 @@ class CombinationEngine {
         return 'Space';
       }
 
-      // Rule 2b removed: Tamil words never start with a pure consonant, so
-      // the same-consonant chain handles bare consonant + same consonant naturally.
 
       // Rule 3: Pure consonant (pulli marker)
       if (d.marker === COMBO_PULLI) {

@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
-  "combination_mode": false,
+  "exercise_type": "message",
+  "combination_mode": true,
   "accuracy_target": 100,
-  "text": "பப"
+  "text": "வரவேற்கிறோம்! ப மற்றும் ் விசைகளிலிருந்து தொடங்குவோம்.\nEnter அழுத்துங்கள்."
 }

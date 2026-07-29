@@ -111,22 +111,6 @@ function generateExercises(levelIdx) {
   return exercises;
 }
 
-/**
- * Load a lesson from a JSON file.
- * Usage: await loadLesson('lessons/lesson-01.json')
- * Returns { chars, exercises } or null on error.
- */
-async function loadLesson(path) {
-  try {
-    const res  = await fetch(path);
-    const data = await res.json();
-    return { chars: data.chars, exercises: data.exercises };
-  } catch(e) {
-    console.warn('எழுது: could not load lesson', path, e);
-    return null;
-  }
-}
-
 // ── Progress Storage ──────────────────────────────────────────────────────────
 const STORAGE_KEY = 'eluthu_progress';
 

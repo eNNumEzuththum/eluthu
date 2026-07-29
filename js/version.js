@@ -2,7 +2,6 @@
  * version.js — எழுது
  * Collects versions registered by all files and displays them.
  * This file holds no version numbers — each file owns its own.
- * @version 1.0.3
  */
 
 // ── Welcome modal ─────────────────────────────────────────────────────────────
