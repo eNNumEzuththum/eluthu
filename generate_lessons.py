@@ -140,17 +140,16 @@ def make_practice_words(pool, target=30):
 
 # ── Non-combo exercise generator ──────────────────────────────────────────────
 
-def make_non_combo_exercises(chars, review_chars, lesson_id):
+def make_non_combo_exercises(chars, lesson_id):
     """
     Generate exercises for a non-combination lesson.
     Ex 1-N : Introduction — one per new char, repeated
-    Ex N+1 : Review — alternating patterns
-    Ex N+2 : Review — with spaces
-    Ex N+3 : Practice — random words from all chars
+    Ex N+1 : Review — alternating patterns with no spaces
+    Ex N+2 : Review — alternating patterns with spaces
+    Ex N+3 : Practice — random words from lesson chars only
     """
     exercises     = []
-    all_chars     = chars + review_chars
-    practice_pool = [c for c in all_chars if c != ' ']
+    practice_pool = [c for c in chars if c != ' ']
 
     if not chars:
         if len(practice_pool) >= 2:
@@ -191,10 +190,10 @@ def make_non_combo_exercises(chars, review_chars, lesson_id):
 # ── Combo exercise generator ──────────────────────────────────────────────────
 
 def max_words(chars):
-    """N = 50 + (number of chars - 1) × 5"""
-    return 50 + (len(chars) - 1) * 5
+    """N = 50 + (number of chars - 1) × 5, capped at 100"""
+    return min(100, 50 + (len(chars) - 1) * 5)
 
-def make_combo_exercises(consonants, review_chars, words, lesson_id, has_words=True):
+def make_combo_exercises(consonants, words, lesson_id, has_words=True):
     """
     Generate exercises for a combination (uyirmei) lesson.
 
@@ -270,7 +269,6 @@ def main():
     words_iter = iter(lesson_words)
 
     manifest_lessons   = []
-    all_previous_chars = []
     lesson_counter     = 0
 
     for plan_entry in lesson_plan:
@@ -311,18 +309,15 @@ def main():
         words        = lesson.get('words', [])
         consonants   = [ch for ch in chars if is_consonant(ch)]
 
-        review_chars = [c for c in all_previous_chars if c not in chars]
-        all_chars    = chars + review_chars
-
         mode_label = 'combination' if combo else 'non-combination'
         print(f"\nLesson {lid} — {name}  [{mode_label}]")
 
         if combo and consonants:
             word_count = lesson.get('word_count', 0)  # from lesson_words.json
-            texts        = make_combo_exercises(consonants, review_chars, words, lesson_id=lesson_counter, has_words=word_count > 0)
+            texts        = make_combo_exercises(consonants, words, lesson_id=lesson_counter, has_words=word_count > 0)
             accuracy_map = {1: 100, 2: 90, 3: 80} if word_count > 0 else {1: 100}
         else:
-            texts        = make_non_combo_exercises(chars, review_chars, lesson_id=lesson_counter)
+            texts        = make_non_combo_exercises(chars, lesson_id=lesson_counter)
             accuracy_map = {1:100, 2:100, 3:100, 4:100, 5:90, 6:80}
 
         exercise_ids = []
@@ -346,12 +341,12 @@ def main():
 
         # Manifest chars: for combo show all uyirmei combinations
         if combo and consonants:
-            manifest_chars = []
-            for cons in consonants:
-                manifest_chars += make_uyirmei_chars(cons)
-            manifest_chars += review_chars
+            # Include consonants + all vowels so keyboard shows all relevant keys
+            manifest_chars = list(consonants)
+            for vowel in VOWEL_TO_MARKER:
+                manifest_chars.append(vowel)
         else:
-            manifest_chars = all_chars
+            manifest_chars = chars
 
         manifest_lessons.append({
             'id':               lid,
@@ -361,9 +356,7 @@ def main():
             'exercises':        exercise_ids,
         })
 
-        for ch in chars:
-            if ch not in all_previous_chars:
-                all_previous_chars.append(ch)
+
 
     manifest = {
         '_version':     '1.0.0',
