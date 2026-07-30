@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
-  "combination_mode": true,
+  "exercise_type": "introduction",
+  "combination_mode": false,
   "accuracy_target": 100,
-  "text": "சிறப்பு! இனி உயிர்மெய் எழுத்துகளை கற்கப் போகிறீர்கள்!\nEnter அழுத்துங்கள்."
+  "text": "ஔஔ"
 }

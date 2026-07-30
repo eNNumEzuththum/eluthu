@@ -280,6 +280,7 @@ def main():
         # ── Message entry ─────────────────────────────────────────────────────
         if 'message' in plan_entry:
             message_text = plan_entry['message']
+            message_key  = plan_entry.get('key', 'Enter')
             ex_id   = f"{lid}-01"
             data    = {
                 '_version':         '1.0.0',
@@ -287,6 +288,7 @@ def main():
                 'combination_mode': True,
                 'accuracy_target':  100,
                 'text':             message_text,
+                'key':              message_key,
             }
             ex_file = os.path.join(EXERCISES_DIR, f"{ex_id}.json")
             with open(ex_file, 'w', encoding='utf-8') as f:

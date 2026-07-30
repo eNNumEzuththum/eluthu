@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.17';
+window.ELUTHU_VERSIONS['app.js'] = '1.0.20';
 
 'use strict';
 
@@ -324,12 +324,11 @@ function updateLabel() {
   if (!manifest) return;
   const lesson = manifest.lessons[lessonIdx];
   if (lesson.name === '─') { $lessonName.textContent = ''; return; }
-  // Count only non-message lessons for display numbering
   const visibleIdx = manifest.lessons.slice(0, lessonIdx + 1)
     .filter(l => l.name !== '─').length;
   const displayName = lesson.name.replace(' ', '␣');
   $lessonName.textContent = `விசை நிலை: ${visibleIdx} — ${displayName}`;
-  $exerciseName.textContent = `பயிற்ச்சி: ${exerciseIdx + 1}`;
+  $exerciseName.textContent = `பயிற்சி: ${exerciseIdx + 1}`;
   updateProgressDots();
 }
 
@@ -735,6 +734,46 @@ async function loadExercise() {
 
   // Set engine combine mode from exercise JSON (default: false)
   combineMode = data.combination_mode === true;
+
+  // ── Message exercise ────────────────────────────────────────────────────
+  if (data.exercise_type === 'message') {
+    $statsBar.classList.add('hidden');
+    $charRow.innerHTML = '';
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'message-box';
+    msgDiv.innerHTML = data.text.replace(/\n/g, '<br>');
+    $charRow.appendChild(msgDiv);
+    // Highlight required key with correct finger
+    const msgKey = data.key || 'Enter';
+    if (msgKey !== 'Enter') {
+      activateKey(msgKey);
+    } else {
+      updateKeyboard();
+    }
+    $capture.focus();
+    // Wait for specified key to advance — block all other keys
+    function onMsgKey(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const expected = msgKey === 'Enter' ? 'Enter' : msgKey;
+      if ((expected === 'Enter' && e.key === 'Enter') ||
+          (expected !== 'Enter' && e.code === expected)) {
+        document.removeEventListener('keydown', onMsgKey, true);
+        const lesson = manifest.lessons[lessonIdx];
+        exerciseIdx++;
+        if (exerciseIdx >= lesson.exercises.length) {
+          exerciseIdx = 0;
+          lessonIdx++;
+        }
+        if (lessonIdx < manifest.lessons.length) {
+          saveProgress();
+          loadExercise();
+        }
+      }
+    }
+    document.addEventListener('keydown', onMsgKey, true);  // capture phase — intercepts before exercise handler
+    return;
+  }
   tamilEngine.setCombine(combineMode);
   console.log(`loadExercise: combination_mode=${data.combination_mode} combineMode=${combineMode} engine.combine=${tamilEngine.combine}`);
 

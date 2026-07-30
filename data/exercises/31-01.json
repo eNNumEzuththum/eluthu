@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
+  "exercise_type": "message",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "ப ப ப் ப் பு பு பி பி பெ பெ பை பை பூ பூ பீ பீ பா பா பே பே பொ பொ போ போ பௌ பௌ"
+  "text": "சிறப்பு! இனி உயிர்மெய் எழுத்துகளை கற்கப் போகிறீர்கள்!\nதொடர F விசை அழுத்துங்கள் — இது புள்ளி (்) விசை.",
+  "key": "KeyF"
 }
