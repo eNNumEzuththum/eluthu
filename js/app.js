@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.20';
+window.ELUTHU_VERSIONS['app.js'] = '1.0.21';
 
 'use strict';
 
@@ -744,8 +744,8 @@ async function loadExercise() {
     msgDiv.innerHTML = data.text.replace(/\n/g, '<br>');
     $charRow.appendChild(msgDiv);
     // Highlight required key with correct finger
-    const msgKey = data.key || 'Enter';
-    if (msgKey !== 'Enter') {
+    const msgKey = data.key || 'any';
+    if (msgKey !== 'Enter' && msgKey !== 'any') {
       activateKey(msgKey);
     } else {
       updateKeyboard();
@@ -756,7 +756,9 @@ async function loadExercise() {
       e.preventDefault();
       e.stopPropagation();
       const expected = msgKey === 'Enter' ? 'Enter' : msgKey;
-      if ((expected === 'Enter' && e.key === 'Enter') ||
+      const anyKey   = msgKey === 'any';
+      if (anyKey ||
+          (expected === 'Enter' && e.key === 'Enter') ||
           (expected !== 'Enter' && e.code === expected)) {
         document.removeEventListener('keydown', onMsgKey, true);
         const lesson = manifest.lessons[lessonIdx];

@@ -3,6 +3,6 @@
   "exercise_type": "message",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "வரவேற்கிறோம்! ் விசை (F) அழுத்துங்கள் — இது உங்கள் வலது கை ஆட்காட்டி விரலின் முகட்டு விசை.",
-  "key": "KeyF"
+  "text": "ஒவ்வொரு விசைகளும் அறிமுகம் (Introduction) , பயிற்சி (Practice), மற்றும் மீளாய்வு (Review) பகுதிகளைக்கொண்டது.  Press any key to continue",
+  "key": "any"
 }

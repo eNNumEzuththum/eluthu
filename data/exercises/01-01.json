@@ -3,6 +3,6 @@
   "exercise_type": "message",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "வரவேற்கிறோம்! ப விசை (J) அழுத்துங்கள் — இது உங்கள் வலது கை ஆட்காட்டி விரலின் முகட்டு விசை.",
-  "key": "KeyJ"
+  "text": "விரல்களுக்குத் தானாகவே பழகும் வகையில் (Muscle memory), நீங்கள் பழகும் அல்லது பழகிய விசைகள் மட்டுமே திரையில் தெரியும். (Displays only relevant keys to help build muscle memory. Press any key to continue",
+  "key": "any"
 }

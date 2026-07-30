@@ -278,7 +278,7 @@ def main():
         # ── Message entry ─────────────────────────────────────────────────────
         if 'message' in plan_entry:
             message_text = plan_entry['message']
-            message_key  = plan_entry.get('key', 'Enter')
+            message_key  = plan_entry.get('key', 'any')
             ex_id   = f"{lid}-01"
             data    = {
                 '_version':         '1.0.0',

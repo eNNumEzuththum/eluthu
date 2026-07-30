@@ -1,4 +1,13 @@
 [
+ {
+    "message": "விரல்களுக்குத் தானாகவே பழகும் வகையில் (Muscle memory), நீங்கள் பழகும் அல்லது பழகிய விசைகள் மட்டுமே திரையில் தெரியும். (Displays only relevant keys to help build muscle memory. Press any key to continue"
+  },
+ {
+    "message": "ஒவ்வொரு விசைகளும் அறிமுகம் (Introduction) , பயிற்சி (Practice), மற்றும் மீளாய்வு (Review) பகுதிகளைக்கொண்டது.  Press any key to continue"
+  },
+{
+    "message": "பயிற்சியை முடிச்சதும் அடுத்த கட்டத்துக்குப் போக ஏதேனும் ஒரு விசையை அழுத்துங்கோ. (Press any key to complete an exercise and continue.)"
+  },
   {
     "message": "வரவேற்கிறோம்! ப விசை (J) அழுத்துங்கள் — இது உங்கள் வலது கை ஆட்காட்டி விரலின் முகட்டு விசை.",
     "key": "KeyJ"
