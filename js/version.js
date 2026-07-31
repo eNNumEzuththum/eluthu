@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Single app version + free typing link (left side) ──────────────────
   wrap.innerHTML = `
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;flex:1;">
-      <span>எழுது <b>v1.0.0</b> <span style="opacity:0.6;font-size:10px;">(updated 23 July 2026)</span></span>
+      <span>எழுது <b>v1.1.1</b> <span style="opacity:0.6;font-size:10px;">(updated 01 August 2026)</span></span>
       <a href="tamil99-tester.html"
          title="எழுது விசைப்பலகை பயிற்சி"
          target="_blank"
