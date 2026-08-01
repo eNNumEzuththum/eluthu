@@ -748,7 +748,10 @@ async function loadExercise() {
     if (msgKey !== 'Enter' && msgKey !== 'any') {
       activateKey(msgKey);
     } else {
+      // Show home position fingers for any-key messages
       updateKeyboard();
+      const _doc = svgDoc();
+      if (_doc) resetFingers(_doc);
     }
     $capture.focus();
     // Wait for specified key to advance — block all other keys
