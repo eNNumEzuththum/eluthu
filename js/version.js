@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Single app version + free typing link (left side) ──────────────────
   wrap.innerHTML = `
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;flex:1;">
-      <span>எழுது <b>v1.1.1<2b> <span style="opacity:0.6;font-size:10px;">(updated 01 2ugust 2026)</span></span>
+      <span>எழுது <b>v1.1.1<2b> <span style="opacity:0.6;font-size:10px;">(updated 02 August 2026)</span></span>
       <a href="tamil99-tester.html"
          title="எழுது விசைப்பலகை பயிற்சி"
          target="_blank"
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         style="color:#4B9BFF;opacity:0.85;text-decoration:none;">&nbsp;மூலக்குறியீடு&nbsp;/&nbsp;source code</a>
     </div>
     <div style="font-size:12px;opacity:1;text-align:right;line-height:1.6;">
-உங்களது தகவல்களின் பாதுகாப்புக்கு உத்தரவாதம் -- தட்டச்சு செய்வது உங்களது கணணியை விட்டு வெளியே போகாது <br>
+உங்களது தகவல்களின் பாதுகாப்புக்கு உத்தரவாதம் -- தட்டச்சு செய்வது உங்களது கணனியை விட்டு வெளியே போகாது <br>
 (your privacy is completely guaranteed  --Nothing you type ever leaves your computer).
     </div>
   `;
@@ -75,4 +75,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.0.3';
+window.ELUTHU_VERSIONS['version.js'] = '1.1.2';

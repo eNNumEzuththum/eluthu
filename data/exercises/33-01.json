@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
-  "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "🎉 மேல் வரிசை எழுத்துகளை பழகிவிட்டீர்கள்! அவற்றை மீள பயிற்சி செய்வோம்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
-  "key": "any"
+  "exercise_type": "review",
+  "combination_mode": false,
+  "accuracy_target": 80,
+  "text": "ஞஞஞ ளளள சசச ஏஏஏ ஏஏள ளஏஏ ஏளஏள ளளச சளள ளசளச சசஞ ஞசச சஞசஞ ஞஞஏ ஏஞஞ ஞஏஞஏ ஏஞஏ ளளளஞஞ ஏஞளஞ சஏச சசஞளஏ ஏஏசஏ ளளஞளச ஞஏஏ ஞஏஞஞள சளஞச ஏசளஞ சஞஞ ஞஏஞ ளஞளச ஞளளஞ"
 }

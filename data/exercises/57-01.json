@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "🎉 நடு வரிசை உயிர்மெய் எழுத்துகளை பழகிவிட்டீர்கள்! அவற்றை மீள பயிற்சி செய்வோம்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
-  "key": "any"
+  "accuracy_target": 80,
+  "text": "கொய்யா அக்கா"
 }

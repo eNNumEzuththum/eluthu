@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "📝 சொந்த வாக்கியங்களைப் பழகக் கீழே உள்ள Free Typing Sandbox ஐப் பயன்படுத்தலாம்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
-  "key": "any"
+  "accuracy_target": 80,
+  "text": "உச்ச விளைச்சலை உறுதிப்படுத்துவது மண் பரிசோதனை செய்து அதற்கு ஏற்ப உரம் இடுவதே. தளைச்சத்து, மணிச்சத்து, சாம்பல்சத்துடன் கட்டாயமாக கந்தகச்சத்து சேர்ந்த உரம் இடுங்கள்."
 }

@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
-  "combination_mode": true,
+  "exercise_type": "introduction",
+  "combination_mode": false,
   "accuracy_target": 100,
-  "text": "💡 Backspace Tip:\n\nபிழை விட்டால், Backspace அடிச்சு, சரியான விசையைத் திரையில் பார்த்து அழுத்தவும்!\n\nதொடர J விசை அழுத்தவும். Press J to continue.",
-  "key": "KeyJ"
+  "text": "பப"
 }
