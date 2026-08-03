@@ -52,25 +52,25 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!wrap) return;
 
   // ── Single app version + free typing link (left side) ──────────────────
-  wrap.innerHTML = `
-    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;flex:1;">
-      <span>எழுது <b>v1.1.1<2b> <span style="opacity:0.6;font-size:10px;">(updated 02 August 2026)</span></span>
-      <a href="tamil99-tester.html"
-         title="எழுது விசைப்பலகை பயிற்சி"
-         target="_blank"
-         style="color:#4B9BFF;opacity:0.85;text-decoration:none;">⌨&nbsp;சுய தட்டச்சுப் பயிற்சி&nbsp;/&nbsp;type anything</a>
-      <a href="https://forms.gle/uwwtEWPmU6NVf6QaA"
-         target="_blank"
-         style="color:#4B9BFF;opacity:0.85;text-decoration:none;">📝&nbsp;கருத்து&nbsp;/&nbsp;Feedback</a>
-      <a href="https://github.com/eNNumEzuththum/eluthu"
-         target="_blank"
-        style="color:#4B9BFF;opacity:0.85;text-decoration:none;">&nbsp;மூலக்குறியீடு&nbsp;/&nbsp;source code</a>
-    </div>
-    <div style="font-size:12px;opacity:1;text-align:right;line-height:1.6;">
-உங்களது தகவல்களின் பாதுகாப்புக்கு உத்தரவாதம் -- தட்டச்சு செய்வது உங்களது கணனியை விட்டு வெளியே போகாது <br>
-(your privacy is completely guaranteed  --Nothing you type ever leaves your computer).
-    </div>
-  `;
+wrap.innerHTML = `
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;flex:1;">
+    <span>எழுது <b>v1.1.3</b> <span style="opacity:0.6;font-size:10px;">(updated 04 August 2026)</span></span>
+    <a href="tamil99-tester.html"
+       title="எழுது விசைப்பலகை பயிற்சி"
+       target="_blank"
+       style="color:#4B9BFF;opacity:0.85;text-decoration:none;">⌨&nbsp;சுய தட்டச்சுப் பயிற்சி&nbsp;/&nbsp;Type anything</a>
+    <a href="https://forms.gle/uwwtEWPmU6NVf6QaA"
+       target="_blank"
+       style="color:#4B9BFF;opacity:0.85;text-decoration:none;">📝&nbsp;கருத்து&nbsp;/&nbsp;Feedback</a>
+    <a href="https://github.com/eNNumEzuththum/eluthu"
+       target="_blank"
+      style="color:#4B9BFF;opacity:0.85;text-decoration:none;">&nbsp;மூலக்குறியீடு&nbsp;/&nbsp;Source code</a>
+  </div>
+  <div style="font-size:12px;opacity:1;text-align:right;line-height:1.6;">
+உங்கள் தகவல்களின் பாதுகாப்புக்கு உத்தரவாதம் — நீங்கள் தட்டச்சு செய்வது எதுவும் உங்களது கணினியை விட்டு வெளியே போகாது <br>
+(Your privacy is completely guaranteed — nothing you type ever leaves your computer).
+  </div>
+`;
 });
 
 // Self-register

@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.21';
+window.ELUTHU_VERSIONS['app.js'] = '1.0.25';
 
 'use strict';
 
@@ -326,7 +326,7 @@ function updateLabel() {
   if (lesson.name === '─') { $lessonName.textContent = ''; return; }
   const visibleIdx = manifest.lessons.slice(0, lessonIdx + 1)
     .filter(l => l.name !== '─').length;
-  const displayName = lesson.name.replace(' ', '␣');
+  const displayName = lesson.name;
   $lessonName.textContent = `விசை நிலை: ${visibleIdx} — ${displayName}`;
   $exerciseName.textContent = `பயிற்சி: ${exerciseIdx + 1}`;
   updateProgressDots();
@@ -369,7 +369,7 @@ function showResultBanner(stats, passed, completionTarget) {
   }
   $resultBanner.className = `result-banner ${passed ? 'pass' : 'fail'}`;
   if (passed) {
-    $resultMessage.textContent = 'பயிற்ச்சி முடிந்தது!';
+    $resultMessage.textContent = 'பயிற்சி முடிந்தது!';
     $resultStats.innerHTML =
       `<span>துல்லியம் <strong>${Math.round(stats.accuracy)}%</strong></span>
        <span>வேகம் <strong>${stats.wpm} சொற்கள்/நிமிடம்</strong></span>`;
@@ -732,6 +732,9 @@ async function loadExercise() {
 
   exerciseText = data.text;
 
+  // Update lessonChars for current lesson — must happen before updateKeyboard()
+  lessonChars = lesson.chars ?? [];
+
   // Set engine combine mode from exercise JSON (default: false)
   combineMode = data.combination_mode === true;
 
@@ -801,7 +804,7 @@ async function loadExercise() {
     $statsBar.classList.add('hidden');
   } else {
     $statsBar.classList.remove('hidden');
-    $statAccuracy.textContent = 'தட்டச்சு செய்யத் தொடங்குங்கள்';
+    $statAccuracy.textContent = '';
     $statCpm.textContent = '';
     $statTarget.textContent = '';
     $statsBar.dataset.started = 'false';
@@ -855,7 +858,7 @@ function buildPicker() {
       const btn = document.createElement('button');
       btn.className = 'picker-ex-btn';
       if (li === lessonIdx && ei === exerciseIdx) btn.classList.add('current');
-      btn.textContent = `பயிற்ச்சி ${ei + 1}`;
+      btn.textContent = `பயிற்சி ${ei + 1}`;
       btn.addEventListener('click', () => {
         lessonIdx   = li;
         exerciseIdx = ei;
