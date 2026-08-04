@@ -51,28 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const wrap = document.getElementById('version-info');
   if (!wrap) return;
 
-  // ── Single app version + free typing link (left side) ──────────────────
-wrap.innerHTML = `
-  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;flex:1;">
-    <span>எழுது <b>v1.1.3</b> <span style="opacity:0.6;font-size:10px;">(updated 04 August 2026)</span></span>
-    <a href="tamil99-tester.html"
-       title="எழுது விசைப்பலகை பயிற்சி"
-       target="_blank"
-       style="color:#4B9BFF;opacity:0.85;text-decoration:none;">⌨&nbsp;சுய தட்டச்சுப் பயிற்சி&nbsp;/&nbsp;Type anything</a>
-    <a href="https://forms.gle/uwwtEWPmU6NVf6QaA"
-       target="_blank"
-       style="color:#4B9BFF;opacity:0.85;text-decoration:none;">📝&nbsp;கருத்து&nbsp;/&nbsp;Feedback</a>
-    <a href="https://github.com/eNNumEzuththum/eluthu"
-       target="_blank"
-      style="color:#4B9BFF;opacity:0.85;text-decoration:none;">&nbsp;மூலக்குறியீடு&nbsp;/&nbsp;Source code</a>
-  </div>
-  <div style="font-size:12px;opacity:1;text-align:right;line-height:1.6;">
-உங்கள் தகவல்களின் பாதுகாப்புக்கு உத்தரவாதம் — நீங்கள் தட்டச்சு செய்வது எதுவும் உங்களது கணினியை விட்டு வெளியே போகாது <br>
-(Your privacy is completely guaranteed — nothing you type ever leaves your computer).
-  </div>
-`;
+  // ── Footer: Tamil-primary, A1 quiet gloss ───────────────────────────────
+  wrap.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;text-align:center;">
+      <div style="font-size:13px;color:#555;">🔒 100% Offline &amp; Private</div>
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
+        <a href="tamil99-tester.html" target="_blank"
+           style="color:#4B9BFF;text-decoration:none;font-family:'Noto Sans Tamil',serif;">⌨️ சொந்தப் பயிற்சி</a>
+        <a href="https://forms.gle/uwwtEWPmU6NVf6QaA" target="_blank"
+           style="color:#4B9BFF;text-decoration:none;font-family:'Noto Sans Tamil',serif;">📝 பின்னூட்டம்</a>
+        <a href="https://github.com/eNNumEzuththum/eluthu" target="_blank"
+           style="color:#4B9BFF;text-decoration:none;">💻 GitHub</a>
+      </div>
+      <div style="font-size:11px;color:#aaa;">v1.2.3 (04 Aug 2026)</div>
+    </div>
+  `;
 });
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.1.2';
+window.ELUTHU_VERSIONS['version.js'] = '1.2.3';

@@ -1,4 +1,4 @@
-/* @version 1.0.2 */
+/* @version 1.1.0 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -24,7 +24,8 @@
   --blue:      #4B9BFF;
   --blue-bg:   #e8f1ff;
   --correct:   #27ae60;
-  --incorrect: #e74c3c;
+  --incorrect: #900C3F;
+  --incorrect-bg: #FFD2D2;
   --font-t:    'Noto Sans Tamil', serif;
   --font-ui:   'Inter', sans-serif;
 }
@@ -109,10 +110,11 @@ header {
   align-items: baseline;
 }
 
-/* Each character — inline, no box */
+/* Each character — inline, consistent sizing to prevent reflow */
 .char-box {
   display: inline;
   position: relative;
+  -webkit-font-smoothing: antialiased;
 }
 
 .char-box .tamil {
@@ -121,32 +123,32 @@ header {
   color: var(--text);
 }
 
-/* Current — blue underline */
-.char-box.current .tamil { color: var(--blue); }
-.char-box.current::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
+/* Current — solid blue block (no padding to avoid layout shift) */
+.char-box.current .tamil {
+  color: white;
   background: var(--blue);
-  border-radius: 1px;
+  border-radius: 3px;
 }
 
 /* Correct — green */
 .char-box.correct .tamil { color: var(--correct); }
 
-/* Incorrect — red */
-.char-box.incorrect .tamil { color: var(--incorrect); }
+/* Incorrect — red text, underline decoration (no pill to avoid layout shift) */
+.char-box.incorrect .tamil {
+  color: var(--incorrect);
+  text-decoration: underline;
+  text-decoration-color: var(--incorrect);
+  text-underline-offset: 3px;
+}
 
 /* Wrong flash — red */
 .char-box.wrong-flash .tamil { color: var(--incorrect); }
 
-/* Space — standard width, invisible normally */
+/* Space — fixed width matching Tamil char width to prevent jitter */
 .char-box.space-box .space-sym {
   display: inline-block;
-  width: 0.4em;
+  width: 0.6em;
+  min-width: 0.6em;
   color: transparent;
   font-size: 24px;
 }
@@ -167,24 +169,6 @@ header {
 }
 #capture { position:fixed; top:-9999px; left:-9999px; opacity:0; width:0; height:0; border:none; }
 
-/* ── Progress dots ────────────────────────────────────────────────────────── */
-.progress-dots {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  margin-left: 8px;
-}
-
-.prog-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.2s;
-}
-
-.prog-dot.done    { background: var(--correct); }
-.prog-dot.current { background: var(--blue); }
 
 /* ── Stats bar ────────────────────────────────────────────────────────────── */
 .stats-bar {
@@ -263,6 +247,79 @@ header {
 .result-stats span { color: var(--text-dim); }
 .result-stats strong { color: var(--text); }
 
+/* ── Picker grid & tiers ────────────────────────────────────────────────── */
+.picker-tier-header {
+  font-family: var(--font-t);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 12px 0 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.picker-tier-header:first-child { border-top: none; margin-top: 0; }
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.picker-lesson {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--bg-card);
+}
+
+.picker-lesson.picker-lesson-current {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+.picker-lesson-name {
+  font-family: var(--font-t);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+/* ── Character chips ────────────────────────────────────────────────────── */
+.picker-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.picker-chip {
+  font-family: var(--font-t);
+  font-size: 13px;
+  background: var(--blue-bg);
+  color: var(--blue);
+  border-radius: 12px;
+  padding: 1px 7px;
+  border: 1px solid var(--blue);
+}
+
+.picker-chip-more {
+  background: var(--bg);
+  color: var(--text-dim);
+  border-color: var(--border);
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+
+.picker-chip-special {
+  background: var(--blue-bg);
+  color: var(--blue);
+  border-color: var(--blue);
+  font-family: var(--font-t);
+  font-size: 12px;
+}
+
 /* ── Picker exercise buttons ─────────────────────────────────────────────── */
 .picker-ex-btn {
   padding: 6px 14px;
@@ -288,6 +345,22 @@ header {
   color: white;
   font-weight: 600;
 }
+
+.picker-ex-btn.passed {
+  border-color: var(--correct);
+  color: var(--correct);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.picker-score {
+  font-size: 10px;
+  opacity: 0.8;
+  font-family: var(--font-ui);
+}
+
 
 /* ── Welcome modal ────────────────────────────────────────────────────────── */
 .welcome-overlay {
@@ -385,6 +458,36 @@ header {
   transition: background 0.15s;
 }
 .welcome-btn:hover { background: #3a8aee; }
+
+/* ── Welcome feature cards ───────────────────────────────────────────────── */
+.welcome-cards {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.welcome-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  background: var(--bg);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.welcome-card-icon {
+  font-size: 24px;
+}
+
+.welcome-card-label {
+  font-family: var(--font-t);
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+}
 
 /* ── Message exercise ─────────────────────────────────────────────────────── */
 .message-box {

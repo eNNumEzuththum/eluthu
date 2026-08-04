@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.0.25';
+window.ELUTHU_VERSIONS['app.js'] = '1.2.3';
 
 'use strict';
 
@@ -327,23 +327,11 @@ function updateLabel() {
   const visibleIdx = manifest.lessons.slice(0, lessonIdx + 1)
     .filter(l => l.name !== '─').length;
   const displayName = lesson.name;
-  $lessonName.textContent = `விசை நிலை: ${visibleIdx} — ${displayName}`;
-  $exerciseName.textContent = `பயிற்சி: ${exerciseIdx + 1}`;
-  updateProgressDots();
+  const totalEx = manifest.lessons[lessonIdx].exercises.length;
+  $lessonName.textContent = `நிலை ${visibleIdx}: ${displayName}`;
+  $exerciseName.textContent = `(பயிற்சி ${exerciseIdx + 1}/${totalEx})`;
 }
 
-function updateProgressDots() {
-  if (!manifest) return;
-  const lesson = manifest.lessons[lessonIdx];
-  $progressDots.innerHTML = '';
-  lesson.exercises.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.className = 'prog-dot';
-    if (i < exerciseIdx)       dot.classList.add('done');
-    else if (i === exerciseIdx) dot.classList.add('current');
-    $progressDots.appendChild(dot);
-  });
-}
 
 function updateStats(snap) {
   if (currentExerciseType === 'introduction') return;
@@ -353,7 +341,9 @@ function updateStats(snap) {
   // First keypress — switch from prompt to live stats
   if ($statsBar.dataset.started !== 'true') {
     $statsBar.dataset.started = 'true';
-    $statTarget.textContent = `இலக்கு ${snap.accuracyTarget}%`;
+    const targetPct = snap.accuracyTarget;
+    const badgeColor = snap.stats.accuracy >= targetPct ? '#27ae60' : '#f39c12';
+    $statTarget.innerHTML = `<span style="background:${badgeColor};color:white;border-radius:4px;padding:1px 5px;font-size:10px;">${targetPct}%</span>`;
   }
   $statAccuracy.textContent = `${Math.round(stats.accuracy)}%`;
   const wpm = stats.elapsed > 0
@@ -372,7 +362,7 @@ function showResultBanner(stats, passed, completionTarget) {
     $resultMessage.textContent = 'பயிற்சி முடிந்தது!';
     $resultStats.innerHTML =
       `<span>துல்லியம் <strong>${Math.round(stats.accuracy)}%</strong></span>
-       <span>வேகம் <strong>${stats.wpm} சொற்கள்/நிமிடம்</strong></span>`;
+       <span>வேகம் <strong>${stats.wpm} WPM</strong></span>`;
   } else {
     const got    = Math.round(stats.accuracy);
     const target = completionTarget;
@@ -681,6 +671,11 @@ function _onComplete(stats) {
   const completionTarget = stats.accuracyTarget === 100 ? 80 : stats.accuracyTarget;
   const passed = stats.accuracy >= completionTarget;
 
+  // Save score BEFORE advancing indices
+  // Only save WPM if elapsed > 5 seconds (avoid inflated WPM on short exercises)
+  const saveWpm = stats.elapsed > (5 / 60) ? stats.wpm : null;
+  if (passed) saveExercisePass(lessonIdx, exerciseIdx, saveWpm, stats.accuracy);
+
   if (passed) {
     // Advance to next exercise or next lesson
     const lesson = manifest.lessons[lessonIdx];
@@ -701,7 +696,6 @@ function _onComplete(stats) {
   } else {
     console.log(`Accuracy ${stats.accuracy}% below target ${stats.accuracyTarget}% — repeating`);
   }
-
   saveProgress();
   showResultBanner(stats, passed, completionTarget);
   // Wait for any keypress then load next exercise
@@ -833,23 +827,86 @@ async function boot() {
 
 // ── Picker ───────────────────────────────────────────────────────────────────
 
+// Tier classification based on lesson type
+function getLessonTier(lesson) {
+  if (!lesson.combination_mode) return 'basic';
+  const name = lesson.name;
+  if (name.startsWith('வாக்கியங்கள்') || name.startsWith('பந்தி')) return 'advanced';
+  return 'intermediate';
+}
+
+const TIER_INFO = {
+  basic:        { label: '🟢 ஆரம்ப நிலை',  order: 0 },
+  intermediate: { label: '🟡 இடைநிலை',      order: 1 },
+  advanced:     { label: '🔴 உயர் நிலை',    order: 2 },
+};
+
 function buildPicker() {
   if (!manifest) return;
   $pickerList.innerHTML = '';
 
   let visibleLessonCount = 0;
+  let currentTier = null;
+  let currentGrid = null;
+  let currentScrollTarget = null;
+
   manifest.lessons.forEach((lesson, li) => {
-    // Skip message lessons — not shown in picker
     if (lesson.name === '─') return;
     visibleLessonCount++;
 
+    const tier = getLessonTier(lesson);
+
+    // Insert tier header when tier changes
+    if (tier !== currentTier) {
+      currentTier = tier;
+      const header = document.createElement('div');
+      header.className = 'picker-tier-header';
+      header.textContent = TIER_INFO[tier].label;
+      $pickerList.appendChild(header);
+
+      currentGrid = document.createElement('div');
+      currentGrid.className = 'picker-grid';
+      $pickerList.appendChild(currentGrid);
+    }
+
     const block = document.createElement('div');
     block.className = 'picker-lesson';
+    if (li === lessonIdx) block.classList.add('picker-lesson-current');
 
     const name = document.createElement('div');
     name.className = 'picker-lesson-name';
-    name.innerHTML = `<span>விசை நிலை: ${visibleLessonCount} </span>${lesson.name}`;
+    name.textContent = `நிலை ${visibleLessonCount}`;
     block.appendChild(name);
+
+    // Character chips or lesson name label for special lessons
+    const chips = document.createElement('div');
+    chips.className = 'picker-chips';
+
+    const specialNames = { 'சொற்கள்': 'சொற்கள்', 'வாக்கியங்கள்': 'வாக்கியங்கள்', 'பந்தி': 'பந்தி' };
+    const specialKey = Object.keys(specialNames).find(k => lesson.name.startsWith(k));
+
+    if (specialKey) {
+      // Show lesson name as a single chip
+      const chip = document.createElement('span');
+      chip.className = 'picker-chip picker-chip-special';
+      chip.textContent = lesson.name;
+      chips.appendChild(chip);
+    } else {
+      // Show up to 6 key chars (consonants + standalone vowels + pulli)
+      const keyChars = lesson.chars
+        .filter(c => (c >= 'க' && c <= 'ஹ') ||
+                     (c >= 'அ' && c <= 'ஔ') ||
+                      c === '்')
+        .slice(0, 18);
+      keyChars.forEach(ch => {
+        const chip = document.createElement('span');
+        chip.className = 'picker-chip';
+        chip.textContent = ch;
+        chips.appendChild(chip);
+      });
+
+    }
+    block.appendChild(chips);
 
     const exWrap = document.createElement('div');
     exWrap.className = 'picker-exercises';
@@ -857,8 +914,24 @@ function buildPicker() {
     lesson.exercises.forEach((exId, ei) => {
       const btn = document.createElement('button');
       btn.className = 'picker-ex-btn';
-      if (li === lessonIdx && ei === exerciseIdx) btn.classList.add('current');
-      btn.textContent = `பயிற்சி ${ei + 1}`;
+
+      const isCurrent = li === lessonIdx && ei === exerciseIdx;
+      const isPassed  = hasPassedExercise(li, ei);
+
+      if (isCurrent) {
+        btn.classList.add('current');
+        currentScrollTarget = block;
+        btn.textContent = `🟡 பயிற்சி ${ei + 1}`;
+      } else if (isPassed) {
+        const score = getExerciseScore(li, ei);
+        btn.classList.add('passed');
+        const hasScore = score && typeof score === 'object' && score.accuracy !== undefined;
+        btn.innerHTML = `✅ பயிற்சி ${ei + 1}`
+          + (hasScore ? `<span class="picker-score">${score.accuracy}%${score.wpm ? ` · ${score.wpm} WPM` : ''}</span>` : '');
+      } else {
+        btn.textContent = `பயிற்சி ${ei + 1}`;
+      }
+
       btn.addEventListener('click', () => {
         lessonIdx   = li;
         exerciseIdx = ei;
@@ -870,8 +943,14 @@ function buildPicker() {
     });
 
     block.appendChild(exWrap);
-    $pickerList.appendChild(block);
+    currentGrid.appendChild(block);
   });
+
+  // Auto-scroll to current lesson
+  if (currentScrollTarget) {
+    setTimeout(() => currentScrollTarget.scrollIntoView(
+      { behavior: 'smooth', block: 'center' }), 100);
+  }
 }
 
 function openPicker() {
@@ -913,6 +992,40 @@ function activateNextKey(char) {
 function saveProgress() {
   localStorage.setItem('eluthu_lesson',   lessonIdx);
   localStorage.setItem('eluthu_exercise', exerciseIdx);
+}
+
+// ── Exercise pass/fail state ──────────────────────────────────────────────────
+const SCORES_KEY = 'eluthu_scores';
+
+function loadScores() {
+  try { return JSON.parse(localStorage.getItem(SCORES_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveExercisePass(lessonIdx, exerciseIdx, wpm, accuracy) {
+  const scores = loadScores();
+  const key    = `${lessonIdx}-${exerciseIdx}`;
+  // Keep best score
+  const prev   = scores[key];
+  if (!prev || accuracy > prev.accuracy || (accuracy === prev.accuracy && wpm > prev.wpm)) {
+    scores[key] = { wpm, accuracy: Math.round(accuracy) };
+  }
+  localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
+}
+
+function getExerciseScore(lessonIdx, exerciseIdx) {
+  return loadScores()[`${lessonIdx}-${exerciseIdx}`] ?? null;
+}
+
+function hasPassedExercise(lessonIdx, exerciseIdx) {
+  return !!getExerciseScore(lessonIdx, exerciseIdx);
+}
+
+// Max reachable lesson/exercise (for locked state)
+function maxReachedIdx() {
+  const l = parseInt(localStorage.getItem('eluthu_lesson')   ?? '0');
+  const e = parseInt(localStorage.getItem('eluthu_exercise') ?? '0');
+  return { l, e };
 }
 
 function loadProgress() {
