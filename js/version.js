@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
   wrap.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:8px 0;">
       <div style="font-size:12px;color:#888;">🔒 100% Offline &amp; Private</div>
-      <div style="font-size:11px;color:#aaa;">v1.1.3 (04 Aug 2026)</div>
+      <div style="font-size:11px;color:#aaa;">v1.2.4 (05 Aug 2026)</div>
     </div>
   `;
 });
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.2.0';
+window.ELUTHU_VERSIONS['version.js'] = '1.2.4';
