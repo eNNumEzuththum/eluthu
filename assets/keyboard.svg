@@ -50,7 +50,11 @@
        effect="spiro"
        id="path-effect62"
        is_visible="true"
-       lpeversion="1" /></defs><sodipodi:namedview
+       lpeversion="1" />
+    <filter id="keyShadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs><sodipodi:namedview
      id="namedview61"
      pagecolor="#ffffff"
      bordercolor="#000000"
@@ -71,13 +75,13 @@
      inkscape:current-layer="layer1"
      showguides="true" /><!-- Background --><style
      id="style1">
-    .key { fill: #ffffff; stroke: #2d3436; stroke-width: 2; }
-    .special-key { fill: #b2bec3; }
+    .key { stroke: #2d3436; stroke-width: 2; }
+    .special-key { stroke: #2d3436; }
     .text { display: none; }
     .dark-text { fill: #2d3436; display: block; }
     .tamil-label { visibility: hidden; }
     .tamil-label.visible { visibility: visible; }
-    [data-key].key-lesson { fill: #ffffff; }
+    [data-key].key-lesson { opacity: 1; }
     [data-key].key-active  { fill: #deeeff; stroke: #4B9BFF; stroke-width: 2; }
   </style><!-- Row 1: Numbers --><!-- Row 2: QWERTY --><!-- Row 3: ASDF --><!-- Row 4: ZXCV --><!-- Row 5: Bottom Row --><g
      inkscape:groupmode="layer"
@@ -100,7 +104,9 @@
        id="rect2"
        x="10"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="70"
        width="55"
@@ -108,7 +114,9 @@
        rx="5"
        id="rect3"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="130"
        width="55"
@@ -116,7 +124,9 @@
        rx="5"
        id="rect4"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFE0C8"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="190"
        width="55"
@@ -124,7 +134,9 @@
        rx="5"
        id="rect5"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFF5AA"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="250"
        width="55"
@@ -132,7 +144,9 @@
        rx="5"
        id="rect6"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#C8DCFF"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="310"
        width="55"
@@ -140,7 +154,9 @@
        rx="5"
        id="rect7"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#C8DCFF"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="370"
        width="55"
@@ -148,7 +164,9 @@
        rx="5"
        id="rect8"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#C8FFE0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="430"
        width="55"
@@ -156,7 +174,9 @@
        rx="5"
        id="rect9"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#C8FFE0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="490"
        width="55"
@@ -164,7 +184,9 @@
        rx="5"
        id="rect10"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFF5AA"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="550"
        width="55"
@@ -172,7 +194,9 @@
        rx="5"
        id="rect11"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFE0C8"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="610"
        width="55"
@@ -180,7 +204,9 @@
        rx="5"
        id="rect12"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="670"
        width="55"
@@ -188,7 +214,9 @@
        rx="5"
        id="rect13"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key"
        x="730"
        width="55"
@@ -196,7 +224,9 @@
        rx="5"
        id="rect14"
        y="10"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key special-key"
        x="790"
        width="105"
@@ -204,8 +234,10 @@
        rx="5"
        id="rect15"
        y="10"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="842"
        y="42"
        text-anchor="middle"
@@ -218,8 +250,10 @@
        id="rect16"
        x="10"
        y="70"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="52"
        y="102"
        text-anchor="middle"
@@ -233,7 +267,8 @@
        id="rect17"
        data-key="KeyQ"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="160"
        width="55"
@@ -242,7 +277,8 @@
        id="rect18"
        data-key="KeyW"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="220"
        width="55"
@@ -251,7 +287,8 @@
        id="rect19"
        data-key="KeyE"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="280"
        width="55"
@@ -260,7 +297,8 @@
        id="rect20"
        data-key="KeyR"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="340"
        width="55"
@@ -269,7 +307,8 @@
        id="rect21"
        data-key="KeyT"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="400"
        width="55"
@@ -278,7 +317,8 @@
        id="rect22"
        data-key="KeyY"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="460"
        width="55"
@@ -287,7 +327,8 @@
        id="rect23"
        data-key="KeyU"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="520"
        width="55"
@@ -296,7 +337,8 @@
        id="rect24"
        data-key="KeyI"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="580"
        width="55"
@@ -305,7 +347,8 @@
        id="rect25"
        data-key="KeyO"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="640"
        width="55"
@@ -314,7 +357,8 @@
        id="rect26"
        data-key="KeyP"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="700"
        width="55"
@@ -323,7 +367,8 @@
        id="rect27"
        data-key="BracketLeft"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="760"
        width="55"
@@ -332,7 +377,8 @@
        id="rect28"
        data-key="BracketRight"
        y="70"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="820"
        width="75"
@@ -340,7 +386,9 @@
        rx="5"
        id="rect29"
        y="70"
-       ry="5" /><rect
+       ry="5"
+       fill="#FFD0D0"
+       filter="url(#keyShadow)" /><rect
        class="key special-key"
        width="105"
        height="55"
@@ -348,8 +396,10 @@
        id="rect30"
        x="10"
        y="130"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="62"
        y="162"
        text-anchor="middle"
@@ -363,7 +413,8 @@
        id="rect31"
        data-key="KeyA"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="180"
        width="55"
@@ -372,7 +423,8 @@
        id="rect32"
        data-key="KeyS"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="240"
        width="55"
@@ -381,7 +433,8 @@
        id="rect33"
        data-key="KeyD"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="300"
        width="55"
@@ -390,7 +443,8 @@
        id="rect34"
        data-key="KeyF"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="360"
        width="55"
@@ -399,7 +453,8 @@
        id="rect35"
        data-key="KeyG"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="420"
        width="55"
@@ -408,7 +463,8 @@
        id="rect36"
        data-key="KeyH"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="480"
        width="55"
@@ -417,7 +473,8 @@
        id="rect37"
        data-key="KeyJ"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="540"
        width="55"
@@ -426,7 +483,8 @@
        id="rect38"
        data-key="KeyK"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="600"
        width="55"
@@ -435,7 +493,8 @@
        id="rect39"
        data-key="KeyL"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="660"
        width="55"
@@ -444,7 +503,8 @@
        id="rect40"
        data-key="Semicolon"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="720"
        width="55"
@@ -453,7 +513,8 @@
        id="rect41"
        data-key="Quote"
        y="130"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key special-key"
        x="780"
        width="115"
@@ -461,8 +522,10 @@
        rx="5"
        id="rect42"
        y="130"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="837"
        y="162"
        text-anchor="middle"
@@ -476,8 +539,10 @@
        id="rect43"
        x="10"
        y="190"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="77.248047"
        y="221.97363"
        text-anchor="middle"
@@ -491,7 +556,8 @@
        id="rect44"
        data-key="KeyZ"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key"
        x="210"
        width="55"
@@ -500,7 +566,8 @@
        id="rect45"
        data-key="KeyX"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="270"
        width="55"
@@ -509,7 +576,8 @@
        id="rect46"
        data-key="KeyC"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="330"
        width="55"
@@ -518,7 +586,8 @@
        id="rect47"
        data-key="KeyV"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="390"
        width="55"
@@ -527,7 +596,8 @@
        id="rect48"
        data-key="KeyB"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8DCFF" filter="url(#keyShadow)" /><rect
        class="key"
        x="450"
        width="55"
@@ -536,7 +606,8 @@
        id="rect49"
        data-key="KeyN"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="510"
        width="55"
@@ -545,7 +616,8 @@
        id="rect50"
        data-key="KeyM"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#C8FFE0" filter="url(#keyShadow)" /><rect
        class="key"
        x="570"
        width="55"
@@ -554,7 +626,8 @@
        id="rect51"
        y="190"
        ry="5"
-       data-key="Comma" /><rect
+       data-key="Comma" 
+       fill="#FFF5AA" filter="url(#keyShadow)" /><rect
        class="key"
        x="630"
        width="55"
@@ -563,7 +636,8 @@
        id="rect52"
        y="190"
        ry="5"
-       data-key="Period" /><rect
+       data-key="Period" 
+       fill="#FFE0C8" filter="url(#keyShadow)" /><rect
        class="key"
        x="690.00537"
        width="55"
@@ -572,7 +646,8 @@
        id="rect53"
        data-key="Slash"
        y="190"
-       ry="5" /><rect
+       ry="5" 
+       fill="#FFD0D0" filter="url(#keyShadow)" /><rect
        class="key special-key"
        x="750"
        width="145"
@@ -580,8 +655,10 @@
        rx="5"
        id="rect54"
        y="190"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="822"
        y="222"
        text-anchor="middle"
@@ -595,8 +672,10 @@
        id="rect55"
        x="10"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="50"
        y="282"
        text-anchor="middle"
@@ -609,8 +688,10 @@
        rx="5"
        id="rect56"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#E8E8E8"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#E8E8E8" /><text
        x="125"
        y="282"
        text-anchor="middle"
@@ -623,8 +704,10 @@
        rx="5"
        id="rect57"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#E8E8E8"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#E8E8E8" /><text
        x="197"
        y="282"
        text-anchor="middle"
@@ -638,7 +721,8 @@
        id="rect58"
        data-key="Space"
        y="250"
-       ry="5" /><rect
+       ry="5" 
+       fill="#E8E8E8" filter="url(#keyShadow)" /><rect
        class="key special-key"
        x="595"
        width="75"
@@ -646,8 +730,10 @@
        rx="5"
        id="rect59"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#E8E8E8"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#E8E8E8" /><text
        x="632"
        y="282"
        text-anchor="middle"
@@ -660,8 +746,10 @@
        rx="5"
        id="rect60"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#E8E8E8"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#E8E8E8" /><text
        x="705"
        y="282"
        text-anchor="middle"
@@ -674,8 +762,10 @@
        rx="5"
        id="rect61"
        y="250"
-       style="fill:#ffffff"
-       ry="5" /><text
+       style="fill:#FFD0D0"
+       ry="5"
+       filter="url(#keyShadow)" 
+       fill="#FFD0D0" /><text
        x="817"
        y="282"
        text-anchor="middle"
@@ -1513,4 +1603,56 @@
        d="m 729.76889,301.23996 c -9.28299,-24.93041 -4.4004,-53.67717 -16.64661,-86.96099 -49.41962,-9.75967 -3.76776,-1.4612 -56.38285,-11.87613 -6.17573,0.75855 -11.16631,-7.38556 -19.04928,1.1263 -7.88297,8.51186 8.15166,14.63325 14.8653,19.16941 l 28.36178,20.28274 c 3.09891,11.26919 4.39199,28.26878 6.0999,43.91841"
        id="path25"
        inkscape:label="R3_."
-       sodipodi:nodetypes="ccczccc" /></g></svg>
+       sodipodi:nodetypes="ccczccc" /></g>
+  <!-- QWERTY sub-labels -->
+  <text x="151.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">Q</text>
+  <text x="211.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">W</text>
+  <text x="271.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">E</text>
+  <text x="331.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">R</text>
+  <text x="391.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">T</text>
+  <text x="451.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">Y</text>
+  <text x="511.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">U</text>
+  <text x="571.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">I</text>
+  <text x="631.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">O</text>
+  <text x="691.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">P</text>
+  <text x="751.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">[</text>
+  <text x="811.0" y="82.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">]</text>
+  <text x="171.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">A</text>
+  <text x="231.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">S</text>
+  <text x="291.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">D</text>
+  <text x="351.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">F</text>
+  <text x="411.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">G</text>
+  <text x="471.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">H</text>
+  <text x="531.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">J</text>
+  <text x="591.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">K</text>
+  <text x="651.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">L</text>
+  <text x="711.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">;</text>
+  <text x="771.0" y="142.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">'</text>
+  <text x="201.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">Z</text>
+  <text x="261.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">X</text>
+  <text x="321.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">C</text>
+  <text x="381.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">V</text>
+  <text x="441.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">B</text>
+  <text x="501.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">N</text>
+  <text x="561.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">M</text>
+  <text x="621.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">,</text>
+  <text x="681.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">.</text>
+  <text x="741.0" y="202.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">/</text>
+  <text x="586.0" y="262.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">_</text>
+
+  <!-- Number row sub-labels -->
+  <text x="61.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">`</text>
+  <text x="121.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">1</text>
+  <text x="181.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">2</text>
+  <text x="241.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">3</text>
+  <text x="301.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">4</text>
+  <text x="361.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">5</text>
+  <text x="421.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">6</text>
+  <text x="481.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">7</text>
+  <text x="541.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">8</text>
+  <text x="601.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">9</text>
+  <text x="661.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">0</text>
+  <text x="721.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">-</text>
+  <text x="781.0" y="22.0" font-size="11" fill="#999999" font-family="sans-serif" text-anchor="end">=</text>
+
+</svg>
