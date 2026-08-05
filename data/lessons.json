@@ -88,6 +88,13 @@
         "09-03",
         "09-04",
         "09-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -113,6 +120,13 @@
         "11-03",
         "11-04",
         "11-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -136,6 +150,9 @@
       "combination_mode": false,
       "exercises": [
         "13-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -161,6 +178,13 @@
         "15-03",
         "15-04",
         "15-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -177,6 +201,13 @@
         "16-03",
         "16-04",
         "16-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -191,6 +222,9 @@
       "combination_mode": false,
       "exercises": [
         "17-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -218,6 +252,9 @@
       "combination_mode": false,
       "exercises": [
         "19-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -234,6 +271,13 @@
         "20-03",
         "20-04",
         "20-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -250,6 +294,13 @@
         "21-03",
         "21-04",
         "21-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -263,6 +314,9 @@
       "combination_mode": false,
       "exercises": [
         "22-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -293,6 +347,9 @@
       "combination_mode": false,
       "exercises": [
         "24-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -309,6 +366,13 @@
         "25-03",
         "25-04",
         "25-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -325,6 +389,13 @@
         "26-03",
         "26-04",
         "26-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -339,6 +410,9 @@
       "combination_mode": false,
       "exercises": [
         "27-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -355,6 +429,13 @@
         "28-03",
         "28-04",
         "28-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -371,6 +452,13 @@
         "29-03",
         "29-04",
         "29-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -385,6 +473,9 @@
       "combination_mode": false,
       "exercises": [
         "30-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -401,6 +492,13 @@
         "31-03",
         "31-04",
         "31-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -417,6 +515,13 @@
         "32-03",
         "32-04",
         "32-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -431,6 +536,9 @@
       "combination_mode": false,
       "exercises": [
         "33-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -462,6 +570,9 @@
       "combination_mode": false,
       "exercises": [
         "35-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -478,6 +589,13 @@
         "36-03",
         "36-04",
         "36-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -494,6 +612,13 @@
         "37-03",
         "37-04",
         "37-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -508,6 +633,9 @@
       "combination_mode": false,
       "exercises": [
         "38-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -524,6 +652,13 @@
         "39-03",
         "39-04",
         "39-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -540,6 +675,13 @@
         "40-03",
         "40-04",
         "40-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -554,6 +696,9 @@
       "combination_mode": false,
       "exercises": [
         "41-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -570,6 +715,13 @@
         "42-03",
         "42-04",
         "42-05"
+      ],
+      "exercise_types": [
+        "introduction",
+        "introduction",
+        "introduction",
+        "introduction",
+        "practice"
       ]
     },
     {
@@ -599,6 +751,9 @@
       "combination_mode": false,
       "exercises": [
         "44-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -651,6 +806,11 @@
         "48-01",
         "48-02",
         "48-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -676,6 +836,11 @@
         "49-01",
         "49-02",
         "49-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -700,6 +865,9 @@
       "combination_mode": true,
       "exercises": [
         "50-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -725,6 +893,11 @@
         "51-01",
         "51-02",
         "51-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -748,6 +921,9 @@
       "combination_mode": true,
       "exercises": [
         "52-01"
+      ],
+      "exercise_types": [
+        "introduction"
       ]
     },
     {
@@ -772,6 +948,9 @@
       "combination_mode": true,
       "exercises": [
         "53-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -798,6 +977,9 @@
       "combination_mode": true,
       "exercises": [
         "54-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -823,6 +1005,11 @@
         "55-01",
         "55-02",
         "55-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -846,6 +1033,9 @@
       "combination_mode": true,
       "exercises": [
         "56-01"
+      ],
+      "exercise_types": [
+        "introduction"
       ]
     },
     {
@@ -870,6 +1060,9 @@
       "combination_mode": true,
       "exercises": [
         "57-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -907,6 +1100,9 @@
       "combination_mode": true,
       "exercises": [
         "59-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -932,6 +1128,11 @@
         "60-01",
         "60-02",
         "60-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -957,6 +1158,11 @@
         "61-01",
         "61-02",
         "61-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -981,6 +1187,9 @@
       "combination_mode": true,
       "exercises": [
         "62-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1006,6 +1215,11 @@
         "63-01",
         "63-02",
         "63-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1031,6 +1245,11 @@
         "64-01",
         "64-02",
         "64-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1055,6 +1274,9 @@
       "combination_mode": true,
       "exercises": [
         "65-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1081,6 +1303,9 @@
       "combination_mode": true,
       "exercises": [
         "66-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1106,6 +1331,11 @@
         "67-01",
         "67-02",
         "67-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1131,6 +1361,11 @@
         "68-01",
         "68-02",
         "68-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1154,6 +1389,9 @@
       "combination_mode": true,
       "exercises": [
         "69-01"
+      ],
+      "exercise_types": [
+        "introduction"
       ]
     },
     {
@@ -1178,6 +1416,9 @@
       "combination_mode": true,
       "exercises": [
         "70-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1216,6 +1457,9 @@
       "combination_mode": true,
       "exercises": [
         "72-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1241,6 +1485,11 @@
         "73-01",
         "73-02",
         "73-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1266,6 +1515,11 @@
         "74-01",
         "74-02",
         "74-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1290,6 +1544,9 @@
       "combination_mode": true,
       "exercises": [
         "75-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1313,6 +1570,9 @@
       "combination_mode": true,
       "exercises": [
         "76-01"
+      ],
+      "exercise_types": [
+        "introduction"
       ]
     },
     {
@@ -1338,6 +1598,11 @@
         "77-01",
         "77-02",
         "77-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1363,6 +1628,9 @@
       "combination_mode": true,
       "exercises": [
         "78-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1389,6 +1657,9 @@
       "combination_mode": true,
       "exercises": [
         "79-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1414,6 +1685,11 @@
         "80-01",
         "80-02",
         "80-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
@@ -1450,6 +1726,9 @@
       "combination_mode": true,
       "exercises": [
         "82-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {
@@ -1490,6 +1769,9 @@
       "combination_mode": true,
       "exercises": [
         "83-01"
+      ],
+      "exercise_types": [
+        "review"
       ]
     },
     {

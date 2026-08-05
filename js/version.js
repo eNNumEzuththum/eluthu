@@ -51,23 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const wrap = document.getElementById('version-info');
   if (!wrap) return;
 
-  // ── Footer: Tamil-primary, A1 quiet gloss ───────────────────────────────
+  // ── Minimal footer ───────────────────────────────────────────────────────────
   wrap.innerHTML = `
-    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;text-align:center;">
-      <div style="font-size:13px;color:#555;">🔒 100% Offline &amp; Private</div>
-      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:center;">
-        <a href="tamil99-tester.html" target="_blank"
-           style="color:#4B9BFF;text-decoration:none;font-family:'Noto Sans Tamil',serif;">⌨️ சொந்தப் பயிற்சி</a>
-        <a href="https://forms.gle/uwwtEWPmU6NVf6QaA" target="_blank"
-           style="color:#4B9BFF;text-decoration:none;font-family:'Noto Sans Tamil',serif;">📝 பின்னூட்டம்</a>
-        <a href="https://github.com/eNNumEzuththum/eluthu" target="_blank"
-           style="color:#4B9BFF;text-decoration:none;">💻 GitHub</a>
-      </div>
-      <div style="font-size:11px;color:#aaa;">v1.2.3 (04 Aug 2026)</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:8px 0;">
+      <div style="font-size:12px;color:#888;">🔒 100% Offline &amp; Private</div>
+      <div style="font-size:11px;color:#aaa;">v1.1.3 (04 Aug 2026)</div>
     </div>
   `;
 });
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.2.3';
+window.ELUTHU_VERSIONS['version.js'] = '1.2.0';

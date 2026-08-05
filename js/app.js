@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.2.3';
+window.ELUTHU_VERSIONS['app.js'] = '1.3.7';
 
 'use strict';
 
@@ -327,9 +327,11 @@ function updateLabel() {
   const visibleIdx = manifest.lessons.slice(0, lessonIdx + 1)
     .filter(l => l.name !== '─').length;
   const displayName = lesson.name;
-  const totalEx = manifest.lessons[lessonIdx].exercises.length;
+  const totalEx  = manifest.lessons[lessonIdx].exercises.length;
+  const exType   = manifest.lessons[lessonIdx].exercise_types?.[exerciseIdx] ?? 'practice';
+  const exLabel  = EXERCISE_LABELS[exType] ?? `பயிற்சி ${exerciseIdx + 1}`;
   $lessonName.textContent = `நிலை ${visibleIdx}: ${displayName}`;
-  $exerciseName.textContent = `(பயிற்சி ${exerciseIdx + 1}/${totalEx})`;
+  $exerciseName.textContent = `(${exLabel} ${exerciseIdx + 1}/${totalEx})`;
 }
 
 
@@ -346,7 +348,8 @@ function updateStats(snap) {
     $statTarget.innerHTML = `<span style="background:${badgeColor};color:white;border-radius:4px;padding:1px 5px;font-size:10px;">${targetPct}%</span>`;
   }
   $statAccuracy.textContent = `${Math.round(stats.accuracy)}%`;
-  const wpm = stats.elapsed > 0
+  // Show 0 WPM for first 2 keypresses
+  const wpm = (stats.elapsed > 0 && snap.typed.length > 2)
     ? Math.round((snap.typed.length / 5) / stats.elapsed)
     : 0;
   $statCpm.textContent = wpm || '0';
@@ -441,6 +444,7 @@ document.addEventListener('keydown', e => {
 
 // ── Non-combination mode keydown ──────────────────────────────────────────────
 function _handleKeyNonCombination(e) {
+  if (isPaused) return;
   if (e.code === 'Backspace') {
     e.preventDefault();
     tamilEngine.processKey(e);
@@ -508,6 +512,7 @@ function decomposeCluster_app(cluster) {
 
 // ── Combination mode keydown ──────────────────────────────────────────────────
 function _handleKeyCombination(e) {
+  if (isPaused) return;
   if (e.code === 'Backspace') {
     e.preventDefault();
     if (tamilEngine.pendingConsonant) {
@@ -728,14 +733,16 @@ async function loadExercise() {
 
   // Update lessonChars for current lesson — must happen before updateKeyboard()
   lessonChars = lesson.chars ?? [];
+  document.querySelector('.char-row-wrap')?.classList.remove('full-width');
 
   // Set engine combine mode from exercise JSON (default: false)
   combineMode = data.combination_mode === true;
 
   // ── Message exercise ────────────────────────────────────────────────────
   if (data.exercise_type === 'message') {
-    $statsBar.classList.add('hidden');
+    // stats-bar always visible in left panel
     $charRow.innerHTML = '';
+    $charRow.closest('.char-row-wrap')?.classList.add('full-width');
     const msgDiv = document.createElement('div');
     msgDiv.className = 'message-box';
     msgDiv.innerHTML = data.text.replace(/\n/g, '<br>');
@@ -795,9 +802,9 @@ async function loadExercise() {
   // Show/hide stats bar based on exercise type
   currentExerciseType = data.exercise_type ?? 'introduction';
   if (currentExerciseType === 'introduction') {
-    $statsBar.classList.add('hidden');
+    // stats-bar always visible in left panel
   } else {
-    $statsBar.classList.remove('hidden');
+    // stats-bar always visible
     $statAccuracy.textContent = '';
     $statCpm.textContent = '';
     $statTarget.textContent = '';
@@ -839,6 +846,14 @@ const TIER_INFO = {
   basic:        { label: '🟢 ஆரம்ப நிலை',  order: 0 },
   intermediate: { label: '🟡 இடைநிலை',      order: 1 },
   advanced:     { label: '🔴 உயர் நிலை',    order: 2 },
+};
+
+// Exercise type → Tamil label
+const EXERCISE_LABELS = {
+  'introduction': 'அறிமுகம்',
+  'practice':     'பயிற்சி',
+  'review':       'மதிப்பாய்வு',
+  'message':      'செய்தி',
 };
 
 function buildPicker() {
@@ -892,11 +907,12 @@ function buildPicker() {
       chip.textContent = lesson.name;
       chips.appendChild(chip);
     } else {
-      // Show up to 6 key chars (consonants + standalone vowels + pulli)
+      // Combo lessons: consonants only (vowels appear inside combo notation)
+      // Non-combo lessons: consonants + vowels + pulli
       const keyChars = lesson.chars
-        .filter(c => (c >= 'க' && c <= 'ஹ') ||
-                     (c >= 'அ' && c <= 'ஔ') ||
-                      c === '்')
+        .filter(c => lesson.combination_mode
+          ? (c >= 'க' && c <= 'ஹ')
+          : (c >= 'க' && c <= 'ஹ') || (c >= 'அ' && c <= 'ஔ') || c === '்')
         .slice(0, 18);
       keyChars.forEach(ch => {
         const chip = document.createElement('span');
@@ -918,18 +934,21 @@ function buildPicker() {
       const isCurrent = li === lessonIdx && ei === exerciseIdx;
       const isPassed  = hasPassedExercise(li, ei);
 
+      const exType  = lesson.exercise_types?.[ei] ?? 'practice';
+      const exLabel = EXERCISE_LABELS[exType] ?? `பயிற்சி ${ei + 1}`;
+
       if (isCurrent) {
         btn.classList.add('current');
         currentScrollTarget = block;
-        btn.textContent = `🟡 பயிற்சி ${ei + 1}`;
+        btn.textContent = `🟡 ${exLabel}`;
       } else if (isPassed) {
         const score = getExerciseScore(li, ei);
         btn.classList.add('passed');
         const hasScore = score && typeof score === 'object' && score.accuracy !== undefined;
-        btn.innerHTML = `✅ பயிற்சி ${ei + 1}`
+        btn.innerHTML = `✅ ${exLabel}`
           + (hasScore ? `<span class="picker-score">${score.accuracy}%${score.wpm ? ` · ${score.wpm} WPM` : ''}</span>` : '');
       } else {
-        btn.textContent = `பயிற்சி ${ei + 1}`;
+        btn.textContent = exLabel;
       }
 
       btn.addEventListener('click', () => {
@@ -963,6 +982,26 @@ function closePicker() {
 }
 
 document.getElementById('btn-picker').addEventListener('click', openPicker);
+document.getElementById('btn-restart')?.addEventListener('click', restartExercise);
+document.getElementById('btn-pause')?.addEventListener('click', togglePause);
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  const pickerHidden = document.getElementById('picker-overlay')?.classList.contains('hidden');
+  if (!pickerHidden) return;
+  // Esc — pause (if not already paused)
+  if (e.code === 'Escape' && !isPaused) {
+    e.preventDefault();
+    togglePause();
+    return;
+  }
+  // Space — resume when paused
+  if (e.code === 'Space' && isPaused) {
+    e.preventDefault();
+    togglePause();
+    return;
+  }
+}, true);
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
 
 // Close on overlay background click or anywhere outside the panel
@@ -982,9 +1021,33 @@ document.addEventListener('click', e => {
 // ── Key activation ───────────────────────────────────────────────────────────
 // In non-combination mode, called from loadExercise for first char highlight.
 // In combination mode, comboEngine.getNextKey() drives the keyboard via onUpdate.
+
+
 function activateNextKey(char) {
   if (!char || char === ' ') { activateKey('Space'); return; }
   activateKey(CHAR_TO_KEY[char] ?? null);
+}
+
+// ── Restart & Pause ──────────────────────────────────────────────────────────
+let isPaused = false;
+
+function restartExercise() {
+  isPaused = false;
+  const btn = document.getElementById('btn-pause');
+  if (btn) { btn.textContent = '⏸ இடைநிறுத்து'; btn.classList.remove('paused'); }
+  loadExercise();
+}
+
+function togglePause() {
+  isPaused = !isPaused;
+  const btn = document.getElementById('btn-pause');
+  if (isPaused) {
+    typingEngine.pause?.();
+    if (btn) { btn.innerHTML = '▶ தொடர் <kbd>Space</kbd>'; btn.classList.add('paused'); }
+  } else {
+    typingEngine.resume?.();
+    if (btn) { btn.innerHTML = '⏸ இடைநிறுத்து <kbd>Esc</kbd>'; btn.classList.remove('paused'); }
+  }
 }
 
 // ── Progress persistence ─────────────────────────────────────────────────────

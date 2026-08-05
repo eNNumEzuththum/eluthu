@@ -356,6 +356,11 @@ def main():
         manifest_lessons.append({
             'id': lid, 'name': name, 'chars': manifest_chars,
             'combination_mode': combo, 'exercises': exercise_ids,
+            'exercise_types': [
+                {100: 'introduction', 90: 'practice', 80: 'review'}.get(
+                    accuracy_map.get(i, 80), 'review')
+                for i in range(1, len(texts) + 1)
+            ],
         })
 
     manifest = {
