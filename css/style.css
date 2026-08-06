@@ -73,6 +73,8 @@ body {
 /* ── Section 1: Exercise panel ────────────────────────────────────────────── */
 .char-row-wrap {
   width: 100%;
+  max-width: 1252px;  /* 900px keyboard + 160px*2 panels + 16px*2 gaps */
+  margin: 0 auto;
 }
 
 .char-row {
@@ -182,39 +184,6 @@ body {
   color: var(--text-dim);
 }
 
-/* ── Result banner ────────────────────────────────────────────────────────── */
-.result-banner {
-  width: 100%;
-  border-radius: 8px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.result-banner.pass {
-  background: #f0faf4;
-  border: 1px solid var(--correct);
-}
-
-.result-banner.fail {
-  background: #fef5f5;
-  border: 1px solid var(--incorrect);
-}
-
-.result-message {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.result-banner.pass .result-message { color: var(--correct); }
-.result-banner.fail .result-message { color: var(--incorrect); }
-
-.result-stats {
-  display: flex;
-  gap: 20px;
-  font-size: 13px;
-}
 
 .result-stats span { color: var(--text-dim); }
 .result-stats strong { color: var(--text); }

@@ -29,9 +29,6 @@ const $statAccuracy  = document.getElementById('stat-accuracy');
 const $statTarget    = document.getElementById('stat-target');
 const $statCpm       = document.getElementById('stat-cpm');
 const $progressDots  = document.getElementById('progress-dots');
-const $resultBanner  = document.getElementById('result-banner');
-const $resultMessage = document.getElementById('result-message');
-const $resultStats   = document.getElementById('result-stats');
 
 let currentExerciseType = 'introduction';  // set per exercise
 let combineMode         = false;           // true when exercise is combination mode
@@ -355,28 +352,6 @@ function updateStats(snap) {
   $statCpm.textContent = wpm || '0';
 }
 
-function showResultBanner(stats, passed, completionTarget) {
-  if (currentExerciseType === 'introduction') {
-    $resultBanner.classList.add('hidden');
-    return;
-  }
-  $resultBanner.className = `result-banner ${passed ? 'pass' : 'fail'}`;
-  if (passed) {
-    $resultMessage.textContent = 'பயிற்சி முடிந்தது!';
-    $resultStats.innerHTML =
-      `<span>துல்லியம் <strong>${Math.round(stats.accuracy)}%</strong></span>
-       <span>வேகம் <strong>${stats.wpm} WPM</strong></span>`;
-  } else {
-    const got    = Math.round(stats.accuracy);
-    const target = completionTarget;
-    $resultMessage.textContent = 'மீண்டும் முயற்சி செய்க';
-    $resultStats.innerHTML =
-      `<span>துல்லியம் <strong>${got}%</strong></span>
-       <span>இலக்கு <strong>${target}%</strong> — இன்னும் <strong>${target - got}%</strong> தேவை</span>`;
-  }
-  $resultBanner.classList.remove('hidden');
-  // Banner stays visible until keypress (see waitForKeypress in onComplete)
-}
 
 // ── Section 1: char row ───────────────────────────────────────────────────────
 function renderCharRow(snap) {
@@ -702,7 +677,6 @@ function _onComplete(stats) {
     console.log(`Accuracy ${stats.accuracy}% below target ${stats.accuracyTarget}% — repeating`);
   }
   saveProgress();
-  showResultBanner(stats, passed, completionTarget);
   // Wait for any keypress then load next exercise
   // 300ms delay prevents the last typed key from triggering immediately
   setTimeout(() => {
@@ -724,7 +698,6 @@ async function fetchJSON(path) {
 }
 
 async function loadExercise() {
-  $resultBanner.classList.add('hidden');
   const lesson  = manifest.lessons[lessonIdx];
   const exId    = lesson.exercises[exerciseIdx];
   const data    = await fetchJSON(`data/exercises/${exId}.json`);
