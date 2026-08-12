@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
-  "combination_mode": false,
-  "accuracy_target": 80,
-  "text": "எஎஎ ககக யயய எஎக கஎஎ எகஎக ககய யகக கயகய யயஎ எயய யஎயஎ கஎயஎ கஎஎ கஎஎகய யககயக ககயஎ கயஎ ககய எககக எஎஎஎ எகஎ யஎகய எஎஎக எகக கஎயக யஎயகக யகயயக எஎஎய"
+  "exercise_type": "message",
+  "combination_mode": true,
+  "accuracy_target": 100,
+  "text": "🎉 விரல்களின் ஓய்வு வரிசை எழுத்துகளைப் பழகிவிட்டீர்கள்! அவற்றை மீண்டும் ஒரு முறை பயிற்சி செய்வோம்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
+  "key": "any"
 }

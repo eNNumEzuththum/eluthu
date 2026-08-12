@@ -29,21 +29,28 @@ Most importantly, touch typing lets you keep your eyes on the screen, allowing y
 
 ## Why Tamil 99?
 
-While phonetic layouts (where typing **வணக்கம்** requires `vaNakkam`) are common among beginners, professional Tamil writers overwhelmingly prefer the **Tamil 99** layout. Standardized by the Tamil Nadu government, Tamil 99 relies on two key design principles:
+There are several Tamil keyboard layouts in use today. The three best-known are **Tamil 99**, **Bamini**, and **Anjal Phonetic**.
+
+- **Tamil 99** optimizes key placement for fast, logical typing on standard QWERTY keyboards, using a consonant-vowel pattern (for example, கா = க [Key H] + ஆ [Key Q]).
+- **Bamini** closely follows traditional Tamil typewriter conventions (for example, கா = க [Key i] + ா [Key m]).
+- **Anjal Phonetic** follows a "type as you speak" approach — English letters map to similar-sounding Tamil characters (for example, கா = k + A [Key K + Shift + Key A]), making it intuitive for beginners.
+
+For speed and efficiency, both Tamil 99 and Bamini are strong choices. **eluthu** teaches **Tamil 99** — standardized by the Tamil Nadu government and preferred by most professional Tamil writers. It relies on two key design principles:
 
 1. **Frequency-Based Layout:** Keys are arranged based on how frequently letters occur in the Tamil language.
 2. **Grammar-Optimized Flow:** It leverages natural Tamil grammar. For example, pure consonants (மெய்) are frequently followed by vowel-consonants (உயிர்மெய்), like **க்** and **க** in **வணக்கம்**. Tamil 99 makes these natural sequences fluid to type.
 
-### Phonetic vs. Tamil 99 Comparison
+### Layout Comparison
 
 Typing the word **வணக்கம்**:
 
 | Layout | Keystrokes | Unique Keys | Requires `Shift` Key? |
 | :--- | :---: | :---: | :---: |
 | **Tamil 99** | **6** | **5** | **No** |
-| Phonetic | 7 | 6 | Yes |
+| Bamini | 6 | 5 | No |
+| Phonetic (Anjal) | 7 | 6 | Yes |
 
-While the difference seems minor for a single word, Tamil 99 saves massive unnecessary keystrokes when drafting longer articles.
+While the difference seems minor for a single word, Tamil 99 and Bamini are closely matched on raw keystroke count. Tamil 99's advantage lies in *how* its keys are assigned: each key maps predictably to a Tamil grammar rule rather than needing to be memorized from typewriter-era conventions, which most learners find easier to reason about and retain. Against phonetic typing, the gap is more dramatic — Tamil 99 saves substantial unnecessary keystrokes when drafting longer articles.
 
 ---
 
@@ -75,7 +82,7 @@ eluthu is designed to be completely private:
 
 ## Roadmap
 
-eluthu is currently in **v1.1.0**. The following features are planned for future releases:
+The following features are planned for future releases:
 
 1. Full support for Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers.
 
@@ -98,13 +105,13 @@ eluthu is currently in **v1.1.0**. The following features are planned for future
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/eNNumEzuththum/eluthu.git](https://github.com/eNNumEzuththum/eluthu.git)
+   git clone https://github.com/eNNumEzuththum/eluthu.git
    cd eluthu
-```
-2.
+   ```
+2. Start a local server:
    ```bash
-python3 -m http.server 8080
-```
+   python3 -m http.server 8080
+   ```
 
 3. Open http://localhost:8080 in your web browser.
 

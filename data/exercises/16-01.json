@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
-  "combination_mode": false,
+  "exercise_type": "message",
+  "combination_mode": true,
   "accuracy_target": 100,
-  "text": "அஅ"
+  "text": "💡 துல்லியத்தில் (Accuracy) கவனம் செலுத்தவும், பழகப் பழக வேகம் தானாகவே கூடும்!\n\n📝 அடுத்த கட்டத்திற்குச் செல்ல பயிற்சியில் 90%+ உம் மதிப்பாய்விற்கு 80%+ உம் எடுக்க வேண்டும்.\n\nதொடர F விசையை அழுத்தவும். Press F to continue.",
+  "key": "KeyF"
 }

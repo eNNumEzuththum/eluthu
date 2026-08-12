@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
-  "combination_mode": false,
+  "exercise_type": "message",
+  "combination_mode": true,
   "accuracy_target": 100,
-  "text": "பப"
+  "text": "🛑 Touch typing-இன் ஒரே ஒரு விதி: எக்காரணத்தைக் கொண்டும் விசைப்பலகையைப் பார்க்கக் கூடாது!.\n\nதொடர F விசையை அழுத்தவும். Press F to continue.",
+  "key": "KeyF"
 }

@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
-  "combination_mode": false,
-  "accuracy_target": 80,
-  "text": "வவவ ஒஒஒ ரரர ,,, ஒஒவ வஒஒ ஒவஒவ வவர ரவவ வரவர ரர, ,ரர ர,ர, ,,ஒ ஒ,, ,ஒ,ஒ ரவஒவ ,,ஒவஒ ஒவவ, ர,ஒ வ,ரர, ,ஒவர வவவ வவரஒ வ,வ வவவ ரஒ,வஒ வ,,வ ,ஒவஒ ஒஒஒவ, ர,ர,"
+  "exercise_type": "message",
+  "combination_mode": true,
+  "accuracy_target": 100,
+  "text": "🎉 மேல் வரிசை எழுத்துகளைப் பழகிவிட்டீர்கள்! அவற்றை மீண்டும் ஒரு முறை பயிற்சி செய்வோம்.\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
+  "key": "any"
 }
