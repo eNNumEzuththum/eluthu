@@ -643,6 +643,32 @@ comboEngine.onUpdate = snap => {
   // renderCharRow calls activateKey(snap.nextKey)
 };
 
+// ── Version check ────────────────────────────────────────────────────────────
+let _lastVersionCheck = 0;
+
+async function checkForUpdate() {
+  // Only check once per 5 minutes
+  const now = Date.now();
+  if (now - _lastVersionCheck < 5 * 60 * 1000) return;
+  _lastVersionCheck = now;
+
+  try {
+    // Fetch version.js with cache-bust — it's always updated on any deploy
+    const res  = await fetch(`js/version.js?_=${now}`);
+    const text = await res.text();
+    // Extract version string e.g. ELUTHU_VERSIONS['version.js'] = '1.2.0';
+    const m = text.match(/ELUTHU_VERSIONS\['version\.js'\]\s*=\s*'([^']+)'/);
+    if (!m) return;
+    const remote = m[1];
+    if (!window._bootVersionJs) window._bootVersionJs = remote;
+    if (remote !== window._bootVersionJs) {
+      window.location.reload(true);
+    }
+  } catch (e) {
+    // Ignore network errors silently
+  }
+}
+
 function _onComplete(stats) {
   console.log(`exercise complete: errors=${stats.errors} accuracy=${stats.accuracy}% target=${stats.accuracyTarget}% lesson=${lessonIdx+1} exercise=${exerciseIdx+1}`);
 
