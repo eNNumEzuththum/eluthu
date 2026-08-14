@@ -12,7 +12,7 @@
 | typing.js | 1.0.0 |
 | lessons.js | 1.0.0 |
 | app.js | 1.3.7 |
-| version.js | 1.3.5 |
+| version.js | 1.4.6 |
 | tamil99-tester.html | 1.0.0 |
 ---
 
