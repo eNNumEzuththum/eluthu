@@ -9,6 +9,9 @@ window.ELUTHU_VERSIONS['app.js'] = '1.3.7';
 
 'use strict';
 
+// ── DEMO MODE — remove before shipping ───────────────────────────────────────
+const DEMO_MODE = false;
+
 const tamilEngine   = new Tamil99Engine();
 const typingEngine  = new TypingEngine();
 const comboEngine   = new CombinationEngine(
@@ -341,10 +344,10 @@ function updateStats(snap) {
   if ($statsBar.dataset.started !== 'true') {
     $statsBar.dataset.started = 'true';
     const targetPct = snap.accuracyTarget;
-    const badgeColor = snap.stats.accuracy >= targetPct ? '#27ae60' : '#f39c12';
+    const badgeColor = (DEMO_MODE || snap.stats.accuracy >= targetPct) ? '#27ae60' : '#f39c12';
     $statTarget.innerHTML = `<span style="background:${badgeColor};color:white;border-radius:4px;padding:1px 5px;font-size:10px;">${targetPct}%</span>`;
   }
-  $statAccuracy.textContent = `${Math.round(stats.accuracy)}%`;
+  $statAccuracy.textContent = DEMO_MODE ? '100%' : `${Math.round(stats.accuracy)}%`;
   // Show 0 WPM for first 2 keypresses
   const wpm = (stats.elapsed > 0 && snap.typed.length > 2)
     ? Math.round((snap.typed.length / 5) / stats.elapsed)
@@ -371,9 +374,9 @@ function renderCharRow(snap) {
     if (ch === ' ') {
       span.classList.add('space-box');
       if (isMatched) {
-        span.classList.add(typed[i].correct ? 'correct' : 'incorrect');
+        span.classList.add((DEMO_MODE || typed[i].correct) ? 'correct' : 'incorrect');
       } else if (isCursor) {
-        span.classList.add(wrongChar ? 'wrong-flash' : 'current');
+        span.classList.add((DEMO_MODE && wrongChar) ? 'current' : (wrongChar ? 'wrong-flash' : 'current'));
       }
       const sym = document.createElement('span');
       sym.className = 'space-sym';
@@ -381,9 +384,9 @@ function renderCharRow(snap) {
       span.appendChild(sym);
     } else {
       if (isMatched) {
-        span.classList.add(typed[i].correct ? 'correct' : 'incorrect');
+        span.classList.add((DEMO_MODE || typed[i].correct) ? 'correct' : 'incorrect');
       } else if (isCursor) {
-        span.classList.add(wrongChar ? 'wrong-flash' : 'current');
+        span.classList.add((DEMO_MODE && wrongChar) ? 'current' : (wrongChar ? 'wrong-flash' : 'current'));
       }
       const tamil = document.createElement('span');
       tamil.className = 'tamil';
@@ -438,6 +441,11 @@ function _handleKeyNonCombination(e) {
 
   if (e.code === 'Space') {
     e.preventDefault();
+    if (DEMO_MODE && nextChar && nextChar !== ' ') {
+      // Demo mode: Space advances cursor by typing the correct char
+      typingEngine.handleEngineResult({ output: nextChar, replace: false, type: 'char' });
+      return;
+    }
     if (nextChar === ' ') {
       typingEngine.handleEngineResult({ output: ' ', replace: false, type: 'space' });
     } else if (snap.accuracyTarget === 100) {
@@ -529,6 +537,14 @@ function _handleKeyCombination(e) {
     const cur = snap.cursor;
     const nextChar = snap.target[cur] ?? null;
     const d = nextChar ? decomposeCluster_app(nextChar) : null;
+
+    // Demo mode: Space types the correct char and advances cursor
+    if (DEMO_MODE && nextChar && nextChar !== ' ') {
+      tamilEngine.reset();
+      comboEngine.setPending(null);
+      comboEngine.handleEngineResult({ type: 'char', output: nextChar, replace: false, pending: null });
+      return;
+    }
 
     // Case 1: engine has pending consonant AND next target is that bare consonant
     // → commit as implicit அ, then handle space for the word boundary
@@ -642,32 +658,6 @@ comboEngine.onUpdate = snap => {
   // Combination: key guidance comes from snap.nextKey (set by comboEngine.getNextKey())
   // renderCharRow calls activateKey(snap.nextKey)
 };
-
-// ── Version check ────────────────────────────────────────────────────────────
-let _lastVersionCheck = 0;
-
-async function checkForUpdate() {
-  // Only check once per 5 minutes
-  const now = Date.now();
-  if (now - _lastVersionCheck < 5 * 60 * 1000) return;
-  _lastVersionCheck = now;
-
-  try {
-    // Fetch version.js with cache-bust — it's always updated on any deploy
-    const res  = await fetch(`js/version.js?_=${now}`);
-    const text = await res.text();
-    // Extract version string e.g. ELUTHU_VERSIONS['version.js'] = '1.2.0';
-    const m = text.match(/ELUTHU_VERSIONS\['version\.js'\]\s*=\s*'([^']+)'/);
-    if (!m) return;
-    const remote = m[1];
-    if (!window._bootVersionJs) window._bootVersionJs = remote;
-    if (remote !== window._bootVersionJs) {
-      window.location.reload(true);
-    }
-  } catch (e) {
-    // Ignore network errors silently
-  }
-}
 
 function _onComplete(stats) {
   console.log(`exercise complete: errors=${stats.errors} accuracy=${stats.accuracy}% target=${stats.accuracyTarget}% lesson=${lessonIdx+1} exercise=${exerciseIdx+1}`);
