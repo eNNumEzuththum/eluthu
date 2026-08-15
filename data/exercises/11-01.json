@@ -3,6 +3,6 @@
   "exercise_type": "message",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "📝 ஒவ்வொரு விசைக்கும் மூன்று பிரிவுகள் உள்ளன:\n1. அறிமுகம்\n2. பயிற்சி\n3. மதிப்பாய்வு\n\n🟢 பச்சை = சரியான விசை | 🔴 சிவப்பு = பிழையான விசை\nஅறிமுகத்தில் பிழையான விசையை அழுத்தினால் cursor நகராது.\n\nஅடுத்த பிரிவுக்குச் செல்ல ஏதாவது விசையை அழுத்தவும். Press any key to proceed to next section.",
-  "key": "any"
+  "text": "📢 ப (J) & ் (F) விசைகளைப் பழகத் தொடங்க, J விசையை அழுத்தவும். Press J to start.",
+  "key": "KeyJ"
 }

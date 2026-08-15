@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
+  "exercise_type": "introduction",
   "combination_mode": true,
   "accuracy_target": 100,
-  "text": "📝 விரல்கள் உளையாமல் இருக்க <b>தமிழ் 99</b>-இல் Shift பயன்பாடு மிகக் குறைவு. வடமொழி (Grantha) & அரிதான குறியீடுகளுக்கு மட்டுமே Shift தேவைப்படும்!\n\nதொடர ஏதாவது விசையை அழுத்தவும். Press any key to continue.",
-  "key": "any"
+  "text": "ம ம ம் ம் மு மு மி மி மெ மெ மை மை மூ மூ மீ மீ மா மா மே மே மொ மொ மோ மோ மௌ மௌ"
 }

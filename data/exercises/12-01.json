@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "message",
-  "combination_mode": true,
+  "exercise_type": "introduction",
+  "combination_mode": false,
   "accuracy_target": 100,
-  "text": "📢 ப (J) & ் (F) விசைகளைப் பழகத் தொடங்க, J விசையை அழுத்தவும். Press J to start.",
-  "key": "KeyJ"
+  "text": "பப"
 }

@@ -31,14 +31,17 @@ Most importantly, touch typing lets you keep your eyes on the screen, allowing y
 
 There are several Tamil keyboard layouts in use today. The three best-known are **Tamil 99**, **Bamini**, and **Anjal Phonetic**.
 
-- **Tamil 99** optimizes key placement for fast, logical typing on standard QWERTY keyboards, using a consonant-vowel pattern (for example, கா = க [Key H] + ஆ [Key Q]).
+- **Anjal ** follows a "type as you speak" approach — English letters map to similar-sounding Tamil characters (for example, கா = k + A [Key K + Shift + Key A]). This makes it intuitive for beginners.
+
 - **Bamini** closely follows traditional Tamil typewriter conventions (for example, கா = க [Key i] + ா [Key m]).
-- **Anjal Phonetic** follows a "type as you speak" approach — English letters map to similar-sounding Tamil characters (for example, கா = k + A [Key K + Shift + Key A]), making it intuitive for beginners.
 
-For speed and efficiency, both Tamil 99 and Bamini are strong choices. **eluthu** teaches **Tamil 99** — standardized by the Tamil Nadu government and preferred by most professional Tamil writers. It relies on two key design principles:
+- **Tamil 99** optimizes key placement for fast, logical typing on standard QWERTY keyboards, using a consonant-vowel pattern (for example, கா = க [Key H] + ஆ [Key Q]). It relies on three key design principles:
 
-1. **Frequency-Based Layout:** Keys are arranged based on how frequently letters occur in the Tamil language.
-2. **Grammar-Optimized Flow:** It leverages natural Tamil grammar. For example, pure consonants (மெய்) are frequently followed by vowel-consonants (உயிர்மெய்), like **க்** and **க** in **வணக்கம்**. Tamil 99 makes these natural sequences fluid to type.
+   1. **Frequency-Based Layout:** Keys are arranged based on how frequently letters occur in the Tamil language.
+   2. **Grammar-Optimized Flow:** It leverages natural Tamil grammar. For example, pure consonants (மெய்) are frequently followed by vowel-consonants (உயிர்மெய்), like **க்** and **க** in **வணக்கம்**. Tamil 99 makes these natural sequences fluid to type.
+   3. **Minimal Shift Usage:** The `Shift` key is reserved for non-native Tamil sounds and rare special characters, so your hands rarely need to leave the home row.
+
+For speed and efficiency, both Tamil 99 and Bamini are strong choices. Due to its Tamil-grammar-based design, **Tamil 99** is preferred by most professional Tamil writers.
 
 ### Layout Comparison
 
