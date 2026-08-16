@@ -643,6 +643,30 @@ comboEngine.onUpdate = snap => {
   // renderCharRow calls activateKey(snap.nextKey)
 };
 
+// ── Version check ────────────────────────────────────────────────────────────
+let _lastVersionCheck = 0;
+
+async function checkForUpdate() {
+  const now = Date.now();
+  if (now - _lastVersionCheck < 5 * 60 * 1000) return;
+  _lastVersionCheck = now;
+  console.log('[eluthu] checking for update...');
+  try {
+    const res  = await fetch('./js/version.js?_=' + now);
+    const text = await res.text();
+    const m = text.match(/ELUTHU_VERSIONS\['version\.js'\]\s*=\s*'([^']+)'/);
+    if (!m) return;
+    const remote = m[1];
+    console.log('[eluthu] boot:', window._bootVersionJs, 'remote:', remote);
+    if (!window._bootVersionJs) { window._bootVersionJs = remote; return; }
+    if (remote !== window._bootVersionJs) {
+      window.location.href = window.location.href.split("?")[0] + "?v=" + remote;
+    }
+  } catch (e) {
+    console.log('version check failed:', e);
+  }
+}
+
 function _onComplete(stats) {
   console.log(`exercise complete: errors=${stats.errors} accuracy=${stats.accuracy}% target=${stats.accuracyTarget}% lesson=${lessonIdx+1} exercise=${exerciseIdx+1}`);
 
@@ -677,6 +701,7 @@ function _onComplete(stats) {
     console.log(`Accuracy ${stats.accuracy}% below target ${stats.accuracyTarget}% — repeating`);
   }
   saveProgress();
+  checkForUpdate();
   // Wait for any keypress then load next exercise
   // 300ms delay prevents the last typed key from triggering immediately
   setTimeout(() => {

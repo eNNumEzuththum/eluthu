@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnHelp) btnHelp.addEventListener('click', showWelcome);
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+function renderFooter() {
   const wrap = document.getElementById('version-info');
   if (!wrap) return;
 
@@ -55,11 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
   wrap.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:8px 0;">
       <div style="font-size:12px;color:#888;">🔒 100% Offline &amp; Private</div>
-      <div style="font-size:11px;color:#aaa;">v1.4.6 (14 Aug 2026)</div>
+      <div style="font-size:11px;color:#aaa;">v1.4.10 (16 Aug 2026)</div>
     </div>
   `;
-});
+}
+
+// Run immediately if DOM ready, otherwise wait
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderFooter);
+} else {
+  renderFooter();
+}
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.4.6';
+window.ELUTHU_VERSIONS['version.js'] = '1.4.10';

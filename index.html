@@ -54,6 +54,10 @@
     <span class="label-sep">·</span>
     <span id="exercise-name"></span>
   </div>
+
+  <!-- Result banner -->
+  <div class="result-banner hidden" id="result-banner">
+    <div class="result-message" id="result-message"></div>
     <div class="result-stats" id="result-stats"></div>
   </div>
 
@@ -95,7 +99,7 @@
   <div class="panel panel-right">
     <button id="btn-picker" class="nav-btn">📚 பாடங்கள்</button>
     <a href="tamil99-tester.html" target="_blank" class="nav-btn">⌨️ சொந்தப் பயிற்சி</a>
-    <a href="https://forms.gle/uwwtEWPmU6NVf6QaA" target="_blank" class="nav-btn">📝 கருத்து</a>
+    <a href="https://forms.gle/uwwtEWPmU6NVf6QaA" target="_blank" class="nav-btn">📝 பின்னூட்டம்</a>
     <a href="https://github.com/eNNumEzuththum/eluthu" target="_blank" class="nav-btn">💻 GitHub</a>
   </div>
 
@@ -113,6 +117,14 @@
 <script src="js/typing.js"></script>
 <script src="js/lessons.js"></script>
 <script src="js/app.js"></script>
-<script src="js/version.js"></script>
+<script>
+  // Load version.js with cache-bust from URL parameter
+  (function() {
+    var v = new URLSearchParams(window.location.search).get('v') || Date.now();
+    var s = document.createElement('script');
+    s.src = 'js/version.js?_=' + v;
+    document.currentScript.parentNode.insertBefore(s, document.currentScript.nextSibling);
+  })();
+</script>
 </body>
 </html>
