@@ -778,7 +778,10 @@ async function loadExercise() {
         }
       }
     }
-    document.addEventListener('keydown', onMsgKey, true);  // capture phase — intercepts before exercise handler
+    // Delay attaching listener so current keypress doesn't immediately trigger next message
+    setTimeout(() => {
+      document.addEventListener('keydown', onMsgKey, true);
+    }, 300);
     return;
   }
   tamilEngine.setCombine(combineMode);
