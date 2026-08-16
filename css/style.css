@@ -1,4 +1,4 @@
-/* @version 1.2.0 */
+/* @version 1.2.1 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -425,7 +425,6 @@ body {
 }
 
 .ctrl-btn:hover { background: var(--blue-bg); }
-.ctrl-btn.paused { border-color: var(--blue); color: var(--blue); }
 
 .ctrl-btn kbd, .nav-btn kbd {
   font-family: var(--font-ui);

@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.3.7';
+window.ELUTHU_VERSIONS['app.js'] = '1.3.8';
 
 'use strict';
 
@@ -419,7 +419,6 @@ document.addEventListener('keydown', e => {
 
 // ── Non-combination mode keydown ──────────────────────────────────────────────
 function _handleKeyNonCombination(e) {
-  if (isPaused) return;
   if (e.code === 'Backspace') {
     e.preventDefault();
     tamilEngine.processKey(e);
@@ -487,7 +486,6 @@ function decomposeCluster_app(cluster) {
 
 // ── Combination mode keydown ──────────────────────────────────────────────────
 function _handleKeyCombination(e) {
-  if (isPaused) return;
   if (e.code === 'Backspace') {
     e.preventDefault();
     if (tamilEngine.pendingConsonant) {
@@ -1023,25 +1021,8 @@ function closePicker() {
 
 document.getElementById('btn-picker').addEventListener('click', openPicker);
 document.getElementById('btn-restart')?.addEventListener('click', restartExercise);
-document.getElementById('btn-pause')?.addEventListener('click', togglePause);
 
-// Keyboard shortcuts
-document.addEventListener('keydown', e => {
-  const pickerHidden = document.getElementById('picker-overlay')?.classList.contains('hidden');
-  if (!pickerHidden) return;
-  // Esc — pause (if not already paused)
-  if (e.code === 'Escape' && !isPaused) {
-    e.preventDefault();
-    togglePause();
-    return;
-  }
-  // Space — resume when paused
-  if (e.code === 'Space' && isPaused) {
-    e.preventDefault();
-    togglePause();
-    return;
-  }
-}, true);
+// Keyboard shortcuts removed (pause feature removed)
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
 
 // Close on overlay background click or anywhere outside the panel
@@ -1069,26 +1050,11 @@ function activateNextKey(char) {
 }
 
 // ── Restart & Pause ──────────────────────────────────────────────────────────
-let isPaused = false;
 
 function restartExercise() {
-  isPaused = false;
-  const btn = document.getElementById('btn-pause');
-  if (btn) { btn.textContent = '⏸ இடைநிறுத்து'; btn.classList.remove('paused'); }
   loadExercise();
 }
 
-function togglePause() {
-  isPaused = !isPaused;
-  const btn = document.getElementById('btn-pause');
-  if (isPaused) {
-    typingEngine.pause?.();
-    if (btn) { btn.innerHTML = '▶ தொடர் <kbd>Space</kbd>'; btn.classList.add('paused'); }
-  } else {
-    typingEngine.resume?.();
-    if (btn) { btn.innerHTML = '⏸ இடைநிறுத்து <kbd>Esc</kbd>'; btn.classList.remove('paused'); }
-  }
-}
 
 // ── Progress persistence ─────────────────────────────────────────────────────
 
