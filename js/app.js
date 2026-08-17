@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.3.8';
+window.ELUTHU_VERSIONS['app.js'] = '1.3.10';
 
 'use strict';
 
@@ -703,12 +703,13 @@ function _onComplete(stats) {
   // Wait for any keypress then load next exercise
   // 300ms delay prevents the last typed key from triggering immediately
   setTimeout(() => {
-    function onKey(e) {
+    _completeKeyHandler = e => {
       if (['Shift','Control','Alt','Meta','CapsLock'].includes(e.key)) return;
-      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('keydown', _completeKeyHandler);
+      _completeKeyHandler = null;
       loadExercise();
-    }
-    document.addEventListener('keydown', onKey);
+    };
+    document.addEventListener('keydown', _completeKeyHandler);
   }, 300);
 }
 typingEngine.onComplete = _onComplete;
@@ -720,7 +721,22 @@ async function fetchJSON(path) {
   return res.json();
 }
 
+// Pending "press any key to continue" listeners — must be cleared whenever
+// loadExercise() is entered by any path other than the one that armed them
+// (Back, Restart, or the picker), or they leak and swallow/duplicate future keypresses.
+let _completeKeyHandler = null;
+let _msgKeyHandler       = null;
+
 async function loadExercise() {
+  if (_completeKeyHandler) {
+    document.removeEventListener('keydown', _completeKeyHandler);
+    _completeKeyHandler = null;
+  }
+  if (_msgKeyHandler) {
+    document.removeEventListener('keydown', _msgKeyHandler, true);
+    _msgKeyHandler = null;
+  }
+
   const lesson  = manifest.lessons[lessonIdx];
   const exId    = lesson.exercises[exerciseIdx];
   const data    = await fetchJSON(`data/exercises/${exId}.json`);
@@ -755,7 +771,7 @@ async function loadExercise() {
     }
     $capture.focus();
     // Wait for specified key to advance — block all other keys
-    function onMsgKey(e) {
+    _msgKeyHandler = e => {
       e.preventDefault();
       e.stopPropagation();
       const expected = msgKey === 'Enter' ? 'Enter' : msgKey;
@@ -763,7 +779,8 @@ async function loadExercise() {
       if (anyKey ||
           (expected === 'Enter' && e.key === 'Enter') ||
           (expected !== 'Enter' && e.code === expected)) {
-        document.removeEventListener('keydown', onMsgKey, true);
+        document.removeEventListener('keydown', _msgKeyHandler, true);
+        _msgKeyHandler = null;
         const lesson = manifest.lessons[lessonIdx];
         exerciseIdx++;
         if (exerciseIdx >= lesson.exercises.length) {
@@ -775,10 +792,10 @@ async function loadExercise() {
           loadExercise();
         }
       }
-    }
+    };
     // Delay attaching listener so current keypress doesn't immediately trigger next message
     setTimeout(() => {
-      document.addEventListener('keydown', onMsgKey, true);
+      document.addEventListener('keydown', _msgKeyHandler, true);
     }, 300);
     return;
   }
@@ -787,6 +804,7 @@ async function loadExercise() {
 
   updateLabel();
   updateKeyboard();
+  updateBackButton();
 
   tamilEngine.reset();
 
@@ -1021,6 +1039,7 @@ function closePicker() {
 
 document.getElementById('btn-picker').addEventListener('click', openPicker);
 document.getElementById('btn-restart')?.addEventListener('click', restartExercise);
+document.getElementById('btn-back')?.addEventListener('click', goBack);
 
 // Keyboard shortcuts removed (pause feature removed)
 document.getElementById('btn-picker-close').addEventListener('click', closePicker);
@@ -1049,10 +1068,28 @@ function activateNextKey(char) {
   activateKey(CHAR_TO_KEY[char] ?? null);
 }
 
-// ── Restart & Pause ──────────────────────────────────────────────────────────
+// ── Restart & Back ────────────────────────────────────────────────────────────
 
 function restartExercise() {
   loadExercise();
+}
+
+function goBack() {
+  if (!manifest) return;
+  let li = lessonIdx;
+  let ei = exerciseIdx - 1;
+  if (ei < 0) { li--; if (li < 0) return; ei = manifest.lessons[li].exercises.length - 1; }
+  lessonIdx = li; exerciseIdx = ei;
+  lessonChars = manifest.lessons[li].chars ?? [];
+  saveProgress(); loadExercise();
+}
+
+function updateBackButton() {
+  const btn = document.getElementById('btn-back');
+  if (!btn) return;
+  const isFirst = lessonIdx === 0 && exerciseIdx === 0;
+  btn.disabled = isFirst;
+  btn.classList.toggle('ctrl-btn-disabled', isFirst);
 }
 
 
