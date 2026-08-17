@@ -4,15 +4,15 @@
 ## File Versions
 | File | Version |
 |---|---|
-| index.html | 1.0.1 |
-| style.css | 1.2.0 |
+| index.html | 1.1.3 |
+| style.css | 1.3.3 |
 | tamil99-keymap.json | 1.0.0 |
 | tamil99.js | 1.0.0 |
 | combination.js | 1.1.7 |
 | typing.js | 1.0.0 |
 | lessons.js | 1.0.0 |
-| app.js | 1.3.7 |
-| version.js | 1.4.6 |
+| app.js | 1.4.2 |
+| version.js | 1.5.13 |
 | tamil99-tester.html | 1.0.0 |
 ---
 
