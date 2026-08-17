@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- @version 1.0.3 -->
+<!-- @version 1.1.2 -->
 <html lang="ta">
 <head>
   <meta charset="UTF-8">
@@ -21,13 +21,13 @@
   <meta name="twitter:description" content="Free Tamil touch typing tutor. Nothing to install.">
   <meta name="twitter:image" content="https://ennumezuththum.github.io/eluthu/assets/preview.png">
   <title>எழுது · Learn to type Tamil</title>
-  <link rel="stylesheet" href="css/style.css?v=1.2.2">
+  <link rel="stylesheet" href="css/style.css?v=1.3.2">
 
   <script>
     window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
     // ── Non-JS files: update manually when file changes ──────────────────
-    window.ELUTHU_VERSIONS['index.html']          = '1.0.3';
-    window.ELUTHU_VERSIONS['style.css']           = '1.2.2';
+    window.ELUTHU_VERSIONS['index.html']          = '1.1.2';
+    window.ELUTHU_VERSIONS['style.css']           = '1.3.2';
     window.ELUTHU_VERSIONS['tamil99-keymap.json'] = '1.0.0';
   </script>
 </head>
@@ -44,6 +44,17 @@
       <button id="btn-picker-close">✕</button>
     </div>
     <div class="picker-list" id="picker-list"></div>
+  </div>
+</div>
+
+<!-- Streak heatmap: day-detail popup -->
+<div id="day-detail-overlay" class="picker-overlay hidden">
+  <div class="picker-panel day-detail-panel">
+    <div class="picker-header">
+      <span class="picker-title" id="day-detail-date"></span>
+      <button id="day-detail-close">✕</button>
+    </div>
+    <div class="day-detail-body" id="day-detail-body"></div>
   </div>
 </div>
 
@@ -82,6 +93,12 @@
         <span class="stat-target" id="stat-target"></span>
       </div>
     </div>
+
+    <!-- Practice streak heatmap — click a day for details -->
+    <div class="streak-panel" id="streak-panel">
+      <div class="heatmap" id="heatmap"></div>
+    </div>
+
     <div class="controls">
     </div>
   </div>

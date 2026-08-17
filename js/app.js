@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.3.10';
+window.ELUTHU_VERSIONS['app.js'] = '1.4.2';
 
 'use strict';
 
@@ -673,6 +673,10 @@ function _onComplete(stats) {
   const completionTarget = stats.accuracyTarget === 100 ? 80 : stats.accuracyTarget;
   const passed = stats.accuracy >= completionTarget;
 
+  // Record today's practice activity for the streak / heatmap, regardless of
+  // pass/fail — the exercise was completed (typed through to the end).
+  recordActivity(stats);
+
   // Save score BEFORE advancing indices
   // Only save WPM if elapsed > 5 seconds (avoid inflated WPM on short exercises)
   const saveWpm = stats.elapsed > (5 / 60) ? stats.wpm : null;
@@ -858,6 +862,7 @@ async function boot() {
 
   loadProgress();
   lessonChars = manifest.lessons[lessonIdx].chars;
+  renderStreakWidget();
   await loadExercise();
 }
 
@@ -1145,6 +1150,281 @@ function loadProgress() {
     exerciseIdx = exercise < exCount ? exercise : 0;
   }
 }
+
+// ── Practice streak / heatmap / achievement badges ─────────────────────────────
+//
+// localStorage['eluthu_activity']: { 'YYYY-MM-DD': { exercises, accuracy_avg, wpm_avg, minutes } }
+// localStorage['eluthu_badges']:   { 'YYYY-MM-DD': [ { id, unlocked_at } ] }
+//
+// All reads/writes are wrapped in try/catch so a missing or disabled
+// localStorage degrades to "streak shows 0" rather than throwing.
+
+const ACTIVITY_KEY = 'eluthu_activity';
+const BADGES_KEY    = 'eluthu_badges';
+
+// Badge config table — every entry shares the same shape (id, type, threshold,
+// icon, label, label_ta). `type` tells the evaluator which value to compare
+// against `threshold`; adding a new badge never requires touching the
+// evaluator or renderer, only this array.
+const BADGES = [
+  { id: 'daily_15min', type: 'daily_minutes', threshold: 15, icon: '⏱️', label: '15 minutes today', label_ta: 'இன்று 15 நிமிடங்கள்' },
+  { id: 'streak_5',    type: 'streak_days',    threshold: 5,  icon: '🔥', label: '5-day streak',    label_ta: '5-நாள் தொடர்ச்சி' },
+];
+
+function todayKey(d = new Date()) {
+  // Local calendar date (not UTC), YYYY-MM-DD
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function loadActivity() {
+  try { return JSON.parse(localStorage.getItem(ACTIVITY_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveActivity(data) {
+  try { localStorage.setItem(ACTIVITY_KEY, JSON.stringify(data)); }
+  catch { /* localStorage unavailable — degrade silently */ }
+}
+
+function loadBadges() {
+  try { return JSON.parse(localStorage.getItem(BADGES_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveBadges(data) {
+  try { localStorage.setItem(BADGES_KEY, JSON.stringify(data)); }
+  catch { /* localStorage unavailable — degrade silently */ }
+}
+
+// Record one completed exercise against today's activity bucket, running
+// accuracy_avg/wpm_avg as incremental averages over `exercises` count.
+function recordActivity(stats) {
+  const key      = todayKey();
+  const activity = loadActivity();
+  const day = activity[key] ?? { exercises: 0, accuracy_avg: 0, wpm_avg: 0, minutes: 0 };
+
+  const prevCount = day.exercises;
+  const newCount  = prevCount + 1;
+  day.accuracy_avg = ((day.accuracy_avg * prevCount) + (stats.accuracy || 0)) / newCount;
+  day.wpm_avg      = ((day.wpm_avg * prevCount) + (stats.wpm || 0)) / newCount;
+  day.minutes      = day.minutes + Math.max(0, stats.elapsed || 0);
+  day.exercises    = newCount;
+
+  activity[key] = day;
+  saveActivity(activity);
+
+  evaluateBadges(key, day, activity);
+  renderStreakWidget();
+}
+
+function isNextCalendarDay(prevKey, curKey) {
+  const [py, pm, pd] = prevKey.split('-').map(Number);
+  const prevDate = new Date(py, pm - 1, pd);
+  prevDate.setDate(prevDate.getDate() + 1);
+  return todayKey(prevDate) === curKey;
+}
+
+// Current streak: consecutive days with ≥1 exercise, counted back from today
+// (or yesterday, if today has no activity yet — the day isn't "missed" until
+// it fully passes). Longest streak is the best consecutive run on record.
+function computeStreak(activity) {
+  const dates = Object.keys(activity)
+    .filter(d => (activity[d]?.exercises ?? 0) > 0)
+    .sort();
+  if (dates.length === 0) return { current: 0, longest: 0 };
+
+  let longest = 0, run = 0, prev = null;
+  dates.forEach(d => {
+    run = (prev && isNextCalendarDay(prev, d)) ? run + 1 : 1;
+    longest = Math.max(longest, run);
+    prev = d;
+  });
+
+  const dateSet = new Set(dates);
+  let current = 0;
+  let cursor  = new Date();
+  if (!dateSet.has(todayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+  while (dateSet.has(todayKey(cursor))) {
+    current++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return { current, longest };
+}
+
+// Whether a badge's threshold is newly crossed today. `streak_days` uses an
+// exact match so a milestone is recorded once — the single day the streak
+// count first reaches it — rather than on every subsequent day of the same
+// streak. `daily_minutes` is a per-day value re-evaluated fresh each day, so
+// ≥ is correct there (guarded against same-day duplicates separately).
+function badgeQualifies(type, value, threshold) {
+  if (type === 'streak_days') return value === threshold;
+  return value >= threshold;
+}
+
+function evaluateBadges(dateKey, dayActivity, activity) {
+  const badges      = loadBadges();
+  const earnedToday = badges[dateKey] ?? [];
+  const earnedIds   = new Set(earnedToday.map(b => b.id));
+  const { current: streak } = computeStreak(activity);
+
+  let changed = false;
+  BADGES.forEach(badge => {
+    if (earnedIds.has(badge.id)) return;
+    const value = badge.type === 'streak_days' ? streak : dayActivity.minutes;
+    if (badgeQualifies(badge.type, value, badge.threshold)) {
+      earnedToday.push({ id: badge.id, unlocked_at: new Date().toISOString() });
+      changed = true;
+    }
+  });
+
+  if (changed) {
+    badges[dateKey] = earnedToday;
+    saveBadges(badges);
+  }
+}
+
+// Precedence rule: when a day earned multiple badges, the heatmap cell shows
+// only the most recently unlocked one (by unlocked_at). The day-detail popup
+// still lists all of them.
+function mostRecentBadge(dateKey, badges) {
+  const list = badges[dateKey];
+  if (!list || list.length === 0) return null;
+  return list.reduce((latest, b) =>
+    (!latest || new Date(b.unlocked_at) > new Date(latest.unlocked_at)) ? b : latest, null);
+}
+
+function activityLevel(exerciseCount) {
+  if (!exerciseCount) return 0;
+  if (exerciseCount <= 2) return 1;
+  if (exerciseCount <= 5) return 2;
+  if (exerciseCount <= 9) return 3;
+  return 4;
+}
+
+function mondayOf(date) {
+  const d = new Date(date);
+  const dow = (d.getDay() + 6) % 7; // 0 = Monday
+  d.setDate(d.getDate() - dow);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function addDays(date, n) {
+  const d = new Date(date);
+  d.setDate(d.getDate() + n);
+  return d;
+}
+
+function renderHeatmap() {
+  const el = document.getElementById('heatmap');
+  if (!el) return;
+  el.innerHTML = '';
+
+  const activity = loadActivity();
+  const badges   = loadBadges();
+  const today        = new Date();
+  const currentMonday = mondayOf(today);
+  const startMonday   = addDays(currentMonday, -7 * 11); // 12 weeks total, incl. current
+
+  for (let week = 0; week < 12; week++) {
+    for (let dow = 0; dow < 7; dow++) {
+      const date = addDays(startMonday, week * 7 + dow);
+      const key  = todayKey(date);
+      const cell = document.createElement('div');
+      cell.className = 'heatmap-cell';
+
+      if (date > today) {
+        cell.classList.add('future');
+      } else {
+        const count = activity[key]?.exercises ?? 0;
+        cell.classList.add(`level-${activityLevel(count)}`);
+
+        const badge = mostRecentBadge(key, badges);
+        const cfg   = badge ? BADGES.find(b => b.id === badge.id) : null;
+        if (cfg) {
+          cell.classList.add('badge');
+          cell.textContent = cfg.icon;
+        }
+        cell.title = key;
+        cell.addEventListener('click', () => openDayDetail(key));
+      }
+      el.appendChild(cell);
+    }
+  }
+}
+
+// Just the heatmap — no counter, no legend. Click a day for badge/stat detail.
+function renderStreakWidget() {
+  renderHeatmap();
+}
+
+function formatDateFull(dateKey) {
+  const [y, m, d] = dateKey.split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  try {
+    return date.toLocaleDateString('ta-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  } catch {
+    return dateKey;
+  }
+}
+
+function openDayDetail(dateKey) {
+  const activity   = loadActivity();
+  const badges     = loadBadges();
+  const day        = activity[dateKey];
+  const dayBadges  = badges[dateKey] ?? [];
+
+  const $date = document.getElementById('day-detail-date');
+  const $body = document.getElementById('day-detail-body');
+  if (!$date || !$body) return;
+
+  $date.textContent = formatDateFull(dateKey);
+  $body.innerHTML = '';
+
+  if (dayBadges.length > 0) {
+    const chipWrap = document.createElement('div');
+    chipWrap.className = 'day-detail-badges';
+    dayBadges.forEach(b => {
+      const cfg  = BADGES.find(c => c.id === b.id);
+      const chip = document.createElement('span');
+      chip.className = 'badge-chip';
+      chip.textContent = cfg ? `${cfg.icon} ${cfg.label_ta}` : b.id;
+      chipWrap.appendChild(chip);
+    });
+    $body.appendChild(chipWrap);
+  }
+
+  if (!day || day.exercises === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'day-detail-empty';
+    empty.textContent = 'பயிற்சி பதிவு இல்லை (No practice recorded)';
+    $body.appendChild(empty);
+  } else {
+    const grid = document.createElement('div');
+    grid.className = 'day-detail-stats';
+    grid.innerHTML = `
+      <div class="stat-item"><span class="stat-value">${day.exercises}</span><span class="stat-label">பயிற்சிகள்</span></div>
+      <div class="stat-item"><span class="stat-value">${Math.round(day.wpm_avg)}</span><span class="stat-label">WPM</span></div>
+      <div class="stat-item"><span class="stat-value">${Math.round(day.accuracy_avg)}%</span><span class="stat-label">துல்லியம்</span></div>
+      <div class="stat-item"><span class="stat-value">${Math.round(day.minutes)}</span><span class="stat-label">நிமிடங்கள்</span></div>
+    `;
+    $body.appendChild(grid);
+  }
+
+  document.getElementById('day-detail-overlay')?.classList.remove('hidden');
+}
+
+function closeDayDetail() {
+  document.getElementById('day-detail-overlay')?.classList.add('hidden');
+}
+
+document.getElementById('day-detail-close')?.addEventListener('click', closeDayDetail);
+document.getElementById('day-detail-overlay')?.addEventListener('click', e => {
+  if (!e.target.closest('.picker-panel')) closeDayDetail();
+});
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 function startApp() {
