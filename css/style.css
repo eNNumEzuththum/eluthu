@@ -1,4 +1,4 @@
-/* @version 1.3.3 */
+/* @version 1.4.1 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -246,6 +246,7 @@ body {
 }
 
 .picker-lesson {
+  position: relative;
   border: 1.5px solid var(--border);
   border-radius: 8px;
   padding: 8px 10px;
@@ -263,6 +264,15 @@ body {
   font-weight: 600;
   color: var(--text);
   margin-bottom: 6px;
+}
+
+.picker-lesson-stars {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  line-height: 1;
 }
 
 /* ── Character chips ────────────────────────────────────────────────────── */
