@@ -11,7 +11,7 @@
  */
 
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['typing.js'] = '1.0.0';
+window.ELUTHU_VERSIONS['typing.js'] = '1.0.1';
 
 'use strict';
 
@@ -257,9 +257,15 @@ class TypingEngine {
     const elapsed = this._startTime
       ? ((this._endTime || Date.now()) - this._startTime) / 60000
       : 0;
-    const words    = this._typed.length / 5;  // standard: 5 chars = 1 word
-    const wpm      = elapsed > 0 ? Math.round(words / elapsed) : 0;
     const correct  = this._typed.filter(t => t.correct).length;
+    // WPM counts only CORRECT characters — rapid wrong keystrokes must not
+    // inflate speed. Previously used this._typed.length (correct + wrong
+    // combined), which let low-accuracy mashing show an unrealistically
+    // high WPM (e.g. 145 typed at 22% accuracy showed 137 WPM instead of
+    // the ~30 WPM that 32 correct characters actually represents). At 100%
+    // accuracy this is unchanged (correct === typed).
+    const words    = correct / 5;  // standard: 5 chars = 1 word
+    const wpm      = elapsed > 0 ? Math.round(words / elapsed) : 0;
     const accuracy = this._totalKeys > 0
       ? Math.round((correct / this._totalKeys) * 100)
       : 100;

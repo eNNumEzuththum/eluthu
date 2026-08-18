@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.5.3';
+window.ELUTHU_VERSIONS['app.js'] = '1.5.4';
 
 'use strict';
 
@@ -357,10 +357,12 @@ function updateStats(snap) {
   }
 
   $statAccuracy.textContent = DEMO_MODE ? '100%' : `${Math.round(stats.accuracy)}%`;
-  // Show 0 WPM for first 2 keypresses
-  const wpm = (stats.elapsed > 0 && snap.typed.length > 2)
-    ? Math.round((snap.typed.length / 5) / stats.elapsed)
-    : 0;
+  // Show 0 WPM for first 2 keypresses. Use stats.wpm directly (already
+  // computed from correct-only characters in typing.js/combination.js) —
+  // this used to recompute its own WPM from snap.typed.length (which
+  // includes WRONG keystrokes), duplicating the formula with the bug still
+  // in it even after the engine-level fix.
+  const wpm = (stats.elapsed > 0 && snap.typed.length > 2) ? stats.wpm : 0;
   $statCpm.textContent = wpm || '0';
 }
 

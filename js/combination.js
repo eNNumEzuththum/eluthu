@@ -16,7 +16,7 @@
  * Interface is identical to TypingEngine so app.js can swap between them.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.1.7';
+window.ELUTHU_VERSIONS['combination.js'] = '1.1.8';
 
 'use strict';
 
@@ -466,9 +466,13 @@ class CombinationEngine {
     const elapsed = this._startTime
       ? ((this._endTime || Date.now()) - this._startTime) / 60000
       : 0;
-    const words    = this._matched.length / 5;
-    const wpm      = elapsed > 0 ? Math.round(words / elapsed) : 0;
     const correct  = this._matched.filter(t => t.correct).length;
+    // WPM counts only CORRECT characters — rapid wrong keystrokes must not
+    // inflate speed. Previously used this._matched.length (correct + wrong
+    // combined), which let low-accuracy mashing show an unrealistically
+    // high WPM. At 100% accuracy this is unchanged (correct === matched).
+    const words    = correct / 5;
+    const wpm      = elapsed > 0 ? Math.round(words / elapsed) : 0;
     const accuracy = this._totalKeys > 0
       ? Math.round((correct / this._totalKeys) * 100)
       : 100;
