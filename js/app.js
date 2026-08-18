@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.4.2';
+window.ELUTHU_VERSIONS['app.js'] = '1.4.3';
 
 'use strict';
 
@@ -339,14 +339,23 @@ function updateStats(snap) {
   if (currentExerciseType === 'introduction') return;
   // Wait for first keypress before showing live stats
   if (snap.state === 'idle') return;
-  const stats = snap.stats;
-  // First keypress — switch from prompt to live stats
+  const stats     = snap.stats;
+  const targetPct = snap.accuracyTarget;
+
+  // First keypress — switch from prompt to live stats, create the badge once
   if ($statsBar.dataset.started !== 'true') {
     $statsBar.dataset.started = 'true';
-    const targetPct = snap.accuracyTarget;
-    const badgeColor = (DEMO_MODE || snap.stats.accuracy >= targetPct) ? '#27ae60' : '#f39c12';
-    $statTarget.innerHTML = `<span style="background:${badgeColor};color:white;border-radius:4px;padding:1px 5px;font-size:10px;">${targetPct}%</span>`;
+    $statTarget.innerHTML = `<span id="stat-target-badge" style="color:white;border-radius:4px;padding:1px 5px;font-size:10px;">${targetPct}%</span>`;
   }
+  // Recompute the badge's color on every update, not just the first — so it
+  // reflects CURRENT accuracy (turns green once the user recovers back above
+  // target, and back to orange if it drops again) instead of freezing at
+  // whatever accuracy happened to be right after the first keypress.
+  const badgeEl = document.getElementById('stat-target-badge');
+  if (badgeEl) {
+    badgeEl.style.background = (DEMO_MODE || stats.accuracy >= targetPct) ? '#27ae60' : '#f39c12';
+  }
+
   $statAccuracy.textContent = DEMO_MODE ? '100%' : `${Math.round(stats.accuracy)}%`;
   // Show 0 WPM for first 2 keypresses
   const wpm = (stats.elapsed > 0 && snap.typed.length > 2)
@@ -836,17 +845,15 @@ async function loadExercise() {
     activeEngine = typingEngine;
   }
 
-  // Show/hide stats bar based on exercise type
+  // Stats bar is always visible, but only populated for non-introduction
+  // exercises (updateStats() early-returns for 'introduction'). Clear it on
+  // every load — including introduction — so it can't show stale numbers
+  // left over from whatever exercise ran before it.
   currentExerciseType = data.exercise_type ?? 'introduction';
-  if (currentExerciseType === 'introduction') {
-    // stats-bar always visible in left panel
-  } else {
-    // stats-bar always visible
-    $statAccuracy.textContent = '';
-    $statCpm.textContent = '';
-    $statTarget.textContent = '';
-    $statsBar.dataset.started = 'false';
-  }
+  $statAccuracy.textContent = '';
+  $statCpm.textContent = '';
+  $statTarget.textContent = '';
+  $statsBar.dataset.started = 'false';
 
   // Highlight first key
   if (combineMode) {
