@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.5.4';
+window.ELUTHU_VERSIONS['app.js'] = '1.5.8';
 
 'use strict';
 
@@ -705,9 +705,12 @@ function _onComplete(stats) {
   recordActivity(stats);
 
   // Save score BEFORE advancing indices
-  // Only save WPM if elapsed > 5 seconds (avoid inflated WPM on short exercises)
-  const saveWpm = stats.elapsed > (5 / 60) ? stats.wpm : null;
-  if (passed) saveExercisePass(lessonIdx, exerciseIdx, saveWpm, stats.accuracy);
+  // Always save WPM — no longer gated behind a minimum elapsed time. The
+  // engines already compute WPM from correct-character count divided by
+  // elapsed time (see typing.js/combination.js), so it's meaningful even on
+  // short exercises; withholding it just made review exercises (typically
+  // short) look systematically unmeasured in the picker.
+  if (passed) saveExercisePass(lessonIdx, exerciseIdx, stats.wpm, stats.accuracy);
 
   // Recompute this lesson's star rating (only fires once the whole lesson —
   // all its phases — is complete; see isLessonComplete()). Must happen
@@ -1048,7 +1051,12 @@ function buildPicker() {
         btn.classList.add('passed');
         const hasScore = score && typeof score === 'object' && score.accuracy !== undefined;
         btn.innerHTML = `✅ ${exLabel}`
-          + (hasScore ? `<span class="picker-score">${score.accuracy}%${score.wpm ? ` · ${score.wpm} WPM` : ''}</span>` : '');
+          // score.wpm != null (not a strict truthy check) — a legitimately
+          // fast exercise can compute to exactly 0 WPM (elapsed rounds to 0
+          // at Date.now()'s millisecond resolution on very short/fast
+          // exercises); a truthy check would hide that real 0 the same way
+          // as a genuinely unrecorded null/undefined value.
+          + (hasScore ? `<span class="picker-score">${score.accuracy}%${score.wpm != null ? ` · ${score.wpm} WPM` : ''}</span>` : '');
       } else {
         btn.textContent = exLabel;
       }
@@ -1157,11 +1165,27 @@ function loadScores() {
 function saveExercisePass(lessonIdx, exerciseIdx, wpm, accuracy) {
   const scores = loadScores();
   const key    = `${lessonIdx}-${exerciseIdx}`;
-  // Keep best score
   const prev   = scores[key];
-  if (!prev || accuracy > prev.accuracy || (accuracy === prev.accuracy && wpm > prev.wpm)) {
-    scores[key] = { wpm, accuracy: Math.round(accuracy) };
-  }
+
+  // Track accuracy-best and wpm-best as two INDEPENDENT running maxima,
+  // rather than one "best attempt as a whole" record. This matters because
+  // a redo can legitimately have lower accuracy than a prior best while
+  // still carrying a real, worth-keeping wpm measurement — e.g. an old
+  // record saved as {wpm: null, accuracy: 100} from before wpm was always
+  // recorded, redone at 95% accuracy: a "keep only if this whole attempt
+  // beats the old one" comparison would refuse the update (95 < 100) and
+  // the null would stay stuck forever, even though backfilling wpm here
+  // doesn't misrepresent the accuracy record at all — the best-ever
+  // accuracy (100) is still correctly preserved below via Math.max.
+  const roundedAccuracy = Math.round(accuracy);
+  const bestAccuracy = prev ? Math.max(prev.accuracy, roundedAccuracy) : roundedAccuracy;
+  const prevWpm       = prev?.wpm ?? -Infinity;
+  const bestWpm        = Math.max(prevWpm, wpm);
+
+  scores[key] = {
+    accuracy: bestAccuracy,
+    wpm: bestWpm === -Infinity ? null : bestWpm,
+  };
   localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
 }
 
