@@ -1,6 +1,7 @@
 // ── Paste into the browser devtools console while eluthu is open ──────────────
-// Simulates 12 weeks (84 days) of a user's practice activity, ending today,
-// and writes the resulting eluthu_activity / eluthu_badges / eluthu_lesson_stars
+// Simulates 11 weeks + 6 days (83 days) of a user's practice activity, ending
+// YESTERDAY (today's cell is left empty on purpose, so today's own fresh
+// behavior can be tested cleanly without pre-seeded data on it), and writes the resulting eluthu_activity / eluthu_badges / eluthu_lesson_stars
 // directly to localStorage.
 //
 // This is a FULLY INDEPENDENT simulation — it does not call, read, or depend
@@ -60,8 +61,15 @@
   ];
 
   const MINUTE_CHOICES   = [0, 0, 0, 2, 4, 6, 8, 10, 15, 20, 25];
-  const ACCURACY_CHOICES = [80, 85, 90, 95, 100, 100]; // extra 100 lets perfect_exercise fire sometimes
-  const WPM_CHOICES      = [5, 10, 15, 20, 25, 30, 35];
+  // Speed/accuracy pools model individual practice/review exercise
+  // completions (the only exercise types that count toward rewards —
+  // introduction exercises are excluded in the real app, see the
+  // recordActivity() fix). Each active day simulates 1-4 such exercises,
+  // averaged into the day's accuracy_avg/wpm_avg the same way
+  // recordActivity() does it for real, rather than picking one number for
+  // the whole day.
+  const ACCURACY_CHOICES = [90, 95, 100];
+  const WPM_CHOICES      = [5, 15, 25, 35, 45, 55, 65];
 
   function todayKey(d) {
     const y = d.getFullYear(), m = String(d.getMonth() + 1).padStart(2, '0'),
@@ -175,18 +183,35 @@
   const badges       = {};
   const lessonStars  = {};
   let syntheticLessonIdx = 9000;
-  const today = new Date();
+  // Anchor on YESTERDAY, ending exactly 83 days (11 weeks 6 days) before it
+  // — spanning [today-83, today-1]. This matches the app's live heatmap
+  // window ([today-83, today], 84 cells) exactly minus today's own cell:
+  // seeding a full 84 days ending yesterday would put the oldest seeded day
+  // at today-84, one day OUTSIDE the app's real display window, silently
+  // losing it from view. 83 days here + today's own real activity together
+  // exactly fill all 84 visible cells, leaving today free for fresh testing.
+  const today     = new Date();
+  const yesterday = addDays(today, -1);
 
-  for (let daysAgo = 83; daysAgo >= 0; daysAgo--) {
-    const date    = addDays(today, -daysAgo);
+  for (let daysAgo = 82; daysAgo >= 0; daysAgo--) {
+    const date    = addDays(yesterday, -daysAgo);
     const key     = todayKey(date);
     const minutes = pickFrom(MINUTE_CHOICES);
 
     if (minutes === 0) continue; // real rest day — no activity entry
 
+    // Simulate 1-4 individual practice/review exercise completions for the
+    // day, each with its own accuracy/wpm, then average them into the
+    // day's accuracy_avg/wpm_avg exactly like recordActivity()'s real
+    // incremental-average formula — not one flat number for the whole day.
     const exercises = randInt(1, 4);
-    const accuracy  = pickFrom(ACCURACY_CHOICES);
-    const wpm       = pickFrom(WPM_CHOICES);
+    let accuracySum = 0, wpmSum = 0;
+    for (let e = 0; e < exercises; e++) {
+      accuracySum += pickFrom(ACCURACY_CHOICES);
+      wpmSum      += pickFrom(WPM_CHOICES);
+    }
+    const accuracy = accuracySum / exercises;
+    const wpm      = wpmSum / exercises;
     activity[key] = { exercises, accuracy_avg: accuracy, wpm_avg: wpm, minutes };
 
     // Occasionally "complete a lesson" worth of stars, so star_rating badges
@@ -209,11 +234,29 @@
 
     const dayBadges = badges[key] ?? [];
     let changed = false;
-    BADGE_RULES.forEach(rule => {
-      if (alreadyEarned(rule, key, badges)) return;
-      if (tierSuppressed(rule, badges)) return;
-      if (badgeQualifies(rule, valueByType[rule.type])) {
-        dayBadges.push({ id: rule.id, unlocked_at: new Date(date.getTime() + randInt(8, 22) * 3600e3).toISOString() });
+
+    // Group by type so only the SINGLE HIGHEST newly-qualifying tier per
+    // family is awarded per evaluation, not every tier the value crosses at
+    // once (matches app.js's evaluateBadges — see its comment for why).
+    const byType = {};
+    BADGE_RULES.forEach(r => { (byType[r.type] ??= []).push(r); });
+
+    Object.entries(byType).forEach(([type, rulesOfType]) => {
+      // weekly_accuracy_avg only evaluates on SUNDAY (week's end), using the
+      // complete Mon-Sun average — evaluating it mid-week could award it on
+      // a partial week that doesn't hold up once the week finishes.
+      if (type === 'weekly_accuracy_avg' && date.getDay() !== 0) return;
+
+      const value = valueByType[type];
+      let best = null;
+      rulesOfType.forEach(rule => {
+        if (alreadyEarned(rule, key, badges)) return;
+        if (tierSuppressed(rule, badges)) return;
+        if (!badgeQualifies(rule, value)) return;
+        if (!best || (rule.threshold ?? 0) > (best.threshold ?? 0)) best = rule;
+      });
+      if (best) {
+        dayBadges.push({ id: best.id, unlocked_at: new Date(date.getTime() + randInt(8, 22) * 3600e3).toISOString() });
         changed = true;
       }
     });
@@ -226,7 +269,7 @@
     localStorage.setItem('eluthu_lesson_stars', JSON.stringify(lessonStars));
   }
 
-  console.log(`Seeded ${Object.keys(activity).length} active days out of 84 (12 weeks).`);
+  console.log(`Seeded ${Object.keys(activity).length} active days out of 83 (11 weeks 6 days).`);
   console.log(`Badges awarded on ${Object.keys(badges).length} of those days.`);
   console.log('All badge ids awarded:', [...new Set(Object.values(badges).flat().map(b => b.id))]);
   console.log('Reload the page to see the heatmap.');

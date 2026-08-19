@@ -1,4 +1,4 @@
-/* @version 1.4.1 */
+/* @version 1.4.2 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -549,9 +549,11 @@ body {
 .heatmap-cell.level-4 { background: #1f7a1f; }
 
 .heatmap-cell.badge {
-  background: var(--blue-bg);
+  /* No background override — let the cell's own level-N activity-intensity
+     green show through underneath the icon instead of a flat blue fill.
+     Icon shrunk 20% (11px -> 8.8px) so there's visible margin around it. */
   border: 1px solid var(--blue);
-  font-size: 11px;
+  font-size: 8.8px;
 }
 
 /* ── Day-detail popup (reuses .picker-overlay / .picker-panel chrome) ───────── */

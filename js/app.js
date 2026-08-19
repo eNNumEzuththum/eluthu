@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.6.2';
+window.ELUTHU_VERSIONS['app.js'] = '1.6.4';
 
 'use strict';
 
@@ -1679,13 +1679,44 @@ function evaluateBadges(dateKey, dayActivity, activity, exerciseStats) {
     comeback:            daysSinceLastActivity(activity, dateKey),
   };
 
-  let changed = false;
+  // Group threshold-based badges by type so only the SINGLE HIGHEST
+  // newly-qualifying tier per family is awarded per evaluation, not every
+  // tier the current value happens to cross at once (e.g. one exercise
+  // hitting 41 WPM shouldn't award all of wpm_10/20/30/40 simultaneously —
+  // just wpm_40, the highest reached). streak_days uses an exact match so
+  // only one of its entries can ever match a given streak value anyway;
+  // single-entry types (exercise_accuracy, weekly_accuracy_avg, comeback)
+  // are unaffected, since "highest of one" is just that one. tierSuppressed
+  // still separately guards daily_minutes/daily_wpm_avg against a LATER
+  // smaller day awarding an already-skipped lower tier — that's a
+  // cross-day concern this per-evaluation grouping doesn't address.
+  const byType = {};
   BADGES.forEach(badge => {
     if (badge.type === 'milestone') return; // unlocked explicitly via unlockMilestone()
-    if (alreadyEarned(badge, dateKey, badgesStore)) return;
-    if (tierSuppressed(badge, badgesStore)) return;
-    if (badgeQualifies(badge, valueByType[badge.type])) {
-      earnedToday.push({ id: badge.id, unlocked_at: new Date().toISOString() });
+    (byType[badge.type] ??= []).push(badge);
+  });
+
+  let changed = false;
+  Object.entries(byType).forEach(([type, badgesOfType]) => {
+    // weekly_accuracy_avg only gets evaluated on SUNDAY (week's end), using
+    // the complete Mon-Sun average. Evaluating it continuously through the
+    // week would let it fire prematurely on a partial week (e.g. hitting
+    // 96% by Wednesday off 1-2 exercises) even if the accuracy drops later
+    // and the final full-week average never actually crosses 95%.
+    if (type === 'weekly_accuracy_avg') {
+      const [y, m, d] = dateKey.split('-').map(Number);
+      if (new Date(y, m - 1, d).getDay() !== 0) return; // 0 = Sunday
+    }
+    const value = valueByType[type];
+    let best = null;
+    badgesOfType.forEach(badge => {
+      if (alreadyEarned(badge, dateKey, badgesStore)) return;
+      if (tierSuppressed(badge, badgesStore)) return;
+      if (!badgeQualifies(badge, value)) return;
+      if (!best || (badge.threshold ?? 0) > (best.threshold ?? 0)) best = badge;
+    });
+    if (best) {
+      earnedToday.push({ id: best.id, unlocked_at: new Date().toISOString() });
       changed = true;
     }
   });
