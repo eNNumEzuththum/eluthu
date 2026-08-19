@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.5.8';
+window.ELUTHU_VERSIONS['app.js'] = '1.6.1';
 
 'use strict';
 
@@ -35,6 +35,7 @@ const $progressDots  = document.getElementById('progress-dots');
 
 let currentExerciseType = 'introduction';  // set per exercise
 let combineMode         = false;           // true when exercise is combination mode
+let currentMilestone    = null;            // this exercise's mile_stone field, if any
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let manifest      = null;   // full lessons.json
@@ -717,6 +718,12 @@ function _onComplete(stats) {
   // before lessonIdx advances below.
   if (passed) recalcLessonStars(lessonIdx);
 
+  // Exercise-tagged milestones — an exercise JSON can carry a `mile_stone`
+  // field naming a badge id (e.g. "row_home"). Unlocks the moment THIS
+  // SPECIFIC exercise passes, independent of whether the rest of its lesson
+  // is done.
+  if (passed && currentMilestone) unlockMilestone(currentMilestone);
+
   if (passed) {
     // Advance to next exercise or next lesson
     const lesson = manifest.lessons[lessonIdx];
@@ -860,6 +867,7 @@ async function loadExercise() {
   // every load — including introduction — so it can't show stale numbers
   // left over from whatever exercise ran before it.
   currentExerciseType = data.exercise_type ?? 'introduction';
+  currentMilestone    = data.mile_stone ?? null;
   $statAccuracy.textContent = '';
   $statCpm.textContent = '';
   $statTarget.textContent = '';
@@ -1386,13 +1394,73 @@ function loadProgress() {
 const ACTIVITY_KEY = 'eluthu_activity';
 const BADGES_KEY    = 'eluthu_badges';
 
-// Badge config table — every entry shares the same shape (id, type, threshold,
-// icon, label, label_ta). `type` tells the evaluator which value to compare
-// against `threshold`; adding a new badge never requires touching the
-// evaluator or renderer, only this array.
+// Badge config table — every entry shares (id, type, icon, label). Every
+// tiered/threshold-based type additionally carries `threshold`; one-off
+// milestones carry neither (unlocked explicitly via unlockMilestone(id) —
+// see that function's callers). Tiered families use one ESCALATING icon per
+// threshold (e.g. 🚶→🏃→🚴→🏍️→🚄→🚀 for daily_wpm_avg) instead of a shared
+// icon + tier color — more legible at heatmap-cell size, and doesn't need a
+// separate tier/color lookup table. Suppression for the day-reset types
+// (daily_minutes, daily_wpm_avg — see tierSuppressed) ranks entries by
+// `threshold` within the same `type`, since entries are already listed in
+// ascending difficulty order and threshold alone is enough to rank them.
 const BADGES = [
-  { id: 'daily_15min', type: 'daily_minutes', threshold: 15, icon: '⏱️', label: '15 minutes today', label_ta: 'இன்று 15 நிமிடங்கள்' },
-  { id: 'streak_5',    type: 'streak_days',    threshold: 5,  icon: '🔥', label: '5-day streak',    label_ta: '5-நாள் தொடர்ச்சி' },
+  // Daily duration — escalating emoji: stopwatch → timer → alarm clock
+  { id: 'daily_15min', type: 'daily_minutes', threshold: 15, icon: '⏱️', label: 'இன்று 15 நிமிடங்கள்' },
+  { id: 'daily_30min', type: 'daily_minutes', threshold: 30, icon: '⏲️', label: 'இன்று 30 நிமிடங்கள்' },
+  { id: 'daily_60min', type: 'daily_minutes', threshold: 60, icon: '⏰', label: 'இன்று 60 நிமிடங்கள்' },
+
+  // Cumulative lifetime practice — hourglass → calendar (implying "a full day's worth")
+  { id: 'total_5hr',  type: 'cumulative_minutes', threshold: 300,  icon: '⌛', label: 'மொத்தம் 5 மணி நேரம்' },
+  { id: 'total_24hr', type: 'cumulative_minutes', threshold: 1440, icon: '📆', label: 'மொத்தம் 24 மணி நேரம்' },
+
+  // Streak length — fire → star → crown (escalating prestige)
+  { id: 'streak_5',  type: 'streak_days', threshold: 5,  icon: '🔥', label: '5-நாள் தொடர்ச்சி' },
+  { id: 'streak_14', type: 'streak_days', threshold: 14, icon: '🌟', label: '2-வார தொடர்ச்சி' },
+  { id: 'streak_30', type: 'streak_days', threshold: 30, icon: '👑', label: '1-மாத தொடர்ச்சி' },
+
+  // Daily average speed — literal speed progression: walk → run → bike → motorbike → train → rocket
+  { id: 'wpm_10', type: 'daily_wpm_avg', threshold: 10, icon: '🚶', label: 'சராசரி 10 WPM' },
+  { id: 'wpm_20', type: 'daily_wpm_avg', threshold: 20, icon: '🏃', label: 'சராசரி 20 WPM' },
+  { id: 'wpm_30', type: 'daily_wpm_avg', threshold: 30, icon: '🚴', label: 'சராசரி 30 WPM' },
+  { id: 'wpm_40', type: 'daily_wpm_avg', threshold: 40, icon: '🏍️', label: 'சராசரி 40 WPM' },
+  { id: 'wpm_50', type: 'daily_wpm_avg', threshold: 50, icon: '🚄', label: 'சராசரி 50 WPM' },
+  { id: 'wpm_60', type: 'daily_wpm_avg', threshold: 60, icon: '🚀', label: 'சராசரி 60 WPM' },
+
+  // Cumulative stars across all lessons — escalating star variants.
+  // Reads from the lesson-star-rating feature's own storage (eluthu_lesson_stars)
+  { id: 'stars_50',   type: 'star_rating', threshold: 50,   icon: '⭐', label: '50 நட்சத்திரங்கள்' },
+  { id: 'stars_100',  type: 'star_rating', threshold: 100,  icon: '🌟', label: '100 நட்சத்திரங்கள்' },
+  { id: 'stars_250',  type: 'star_rating', threshold: 250,  icon: '💫', label: '250 நட்சத்திரங்கள்' },
+  { id: 'stars_500',  type: 'star_rating', threshold: 500,  icon: '✨', label: '500 நட்சத்திரங்கள்' },
+  { id: 'stars_1000', type: 'star_rating', threshold: 1000, icon: '🌠', label: '1000 நட்சத்திரங்கள்' },
+
+  // Keyboard-row / character-set / content-stage milestones — one-off, all
+  // unlocked via an exercise JSON's `mile_stone` field matching this `id`
+  // (see loadExercise()/onComplete()) — no threshold, not evaluated by the
+  // generic numeric evaluator at all.
+  { id: 'first_lesson', type: 'milestone', icon: '🎹', label: 'முதல் பாடம் முடிந்தது' },
+  { id: 'row_home',   type: 'milestone', icon: '⌨️', label: 'மூல வரிசை முடிந்தது' },
+  { id: 'row_middle', type: 'milestone', icon: '⌨️', label: 'நடு வரிசை முடிந்தது' },
+  { id: 'row_top',    type: 'milestone', icon: '⌨️', label: 'மேல் வரிசை முடிந்தது' },
+  { id: 'row_bottom', type: 'milestone', icon: '⌨️', label: 'கீழ் வரிசை முடிந்தது' },
+
+  // Character-set completion — vowels → consonants → all letters (trophy for the final one)
+  { id: 'all_vowels',     type: 'milestone', icon: '🅰️', label: 'அனைத்து உயிரெழுத்துகள்' },
+  { id: 'all_consonants', type: 'milestone', icon: '🔤', label: 'அனைத்து மெய்யெழுத்துகள்' },
+  { id: 'all_letters',    type: 'milestone', icon: '🏆', label: 'அனைத்து தமிழ் எழுத்துகள்' },
+
+  // Content-stage — first sentence → first paragraph
+  { id: 'first_sentence',  type: 'milestone', icon: '📝', label: 'முதல் வாக்கியம்' },
+  { id: 'first_paragraph', type: 'milestone', icon: '📄', label: 'முதல் பந்தி' },
+
+  // Accuracy — one-off / weekly-repeatable
+  { id: 'perfect_exercise',   type: 'exercise_accuracy',   threshold: 100, icon: '💯', label: 'முதல் சரியான பயிற்சி' },
+  { id: 'weekly_accuracy_95', type: 'weekly_accuracy_avg', threshold: 95,  icon: '🎯', label: 'இவ்வாரம் 95%+ துல்லியம்' },
+
+  // Re-engagement after a lapse — dedup is per-day (see alreadyEarned), so
+  // this can fire again on a later, separate comeback
+  { id: 'comeback', type: 'comeback', threshold: 7, icon: '👋', label: 'மீண்டும் வருக' },
 ];
 
 function todayKey(d = new Date()) {
@@ -1425,6 +1493,11 @@ function saveBadges(data) {
 
 // Record one completed exercise against today's activity bucket, running
 // accuracy_avg/wpm_avg as incremental averages over `exercises` count.
+// Record one completed exercise against today's activity bucket, running
+// accuracy_avg/wpm_avg as incremental averages over `exercises` count.
+// `stats` (the raw single-exercise result) is also passed through to
+// evaluateBadges for exercise_accuracy detection, since a day's aggregate
+// accuracy_avg can't tell you whether any ONE exercise hit 100%.
 function recordActivity(stats) {
   const key      = todayKey();
   const activity = loadActivity();
@@ -1440,7 +1513,7 @@ function recordActivity(stats) {
   activity[key] = day;
   saveActivity(activity);
 
-  evaluateBadges(key, day, activity);
+  evaluateBadges(key, day, activity, stats);
   renderStreakWidget();
 }
 
@@ -1478,36 +1551,158 @@ function computeStreak(activity) {
   return { current, longest };
 }
 
-// Whether a badge's threshold is newly crossed today. `streak_days` uses an
-// exact match so a milestone is recorded once — the single day the streak
-// count first reaches it — rather than on every subsequent day of the same
-// streak. `daily_minutes` is a per-day value re-evaluated fresh each day, so
-// ≥ is correct there (guarded against same-day duplicates separately).
-function badgeQualifies(type, value, threshold) {
-  if (type === 'streak_days') return value === threshold;
-  return value >= threshold;
+// Whether a badge's threshold is newly crossed. `streak_days` uses an exact
+// match so a milestone is recorded once — the single day the streak count
+// first reaches it — rather than on every subsequent day of the same
+// streak. Every other threshold-based type uses >= (a per-day or cumulative
+// value re-evaluated fresh, guarded against duplicates by alreadyEarned).
+function badgeQualifies(badge, value) {
+  if (value == null) return false;
+  if (badge.type === 'streak_days') return value === badge.threshold;
+  return value >= badge.threshold;
 }
 
-function evaluateBadges(dateKey, dayActivity, activity) {
-  const badges      = loadBadges();
-  const earnedToday = badges[dateKey] ?? [];
-  const earnedIds   = new Set(earnedToday.map(b => b.id));
+// Total minutes practiced across every recorded day, ever.
+function cumulativeMinutesTotal(activity) {
+  return Object.values(activity).reduce((sum, d) => sum + (d.minutes || 0), 0);
+}
+
+// Running total of lesson stars earned, read from the lesson-star-rating
+// feature's own storage.
+function cumulativeStarsTotal() {
+  const lessonStars = loadLessonStars();
+  return Object.values(lessonStars).reduce((sum, l) => sum + (l.stars || 0), 0);
+}
+
+// This calendar week's (Monday–Sunday, matching the heatmap) accuracy
+// average, weighted by each day's exercise count. Null if no activity this
+// week yet.
+function weeklyAccuracyAvg(activity, today = new Date()) {
+  const monday = mondayOf(today);
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const day = activity[todayKey(addDays(monday, i))];
+    if (day && day.exercises > 0) days.push(day);
+  }
+  if (days.length === 0) return null;
+  const totalEx = days.reduce((s, d) => s + d.exercises, 0);
+  const weighted = days.reduce((s, d) => s + d.accuracy_avg * d.exercises, 0);
+  return totalEx > 0 ? weighted / totalEx : null;
+}
+
+// Days since the most recent activity date STRICTLY BEFORE `dateKeyStr`.
+// Null if there's no prior activity at all (nothing to "come back" from).
+function daysSinceLastActivity(activity, dateKeyStr) {
+  const priorDates = Object.keys(activity)
+    .filter(d => d !== dateKeyStr && (activity[d]?.exercises ?? 0) > 0)
+    .sort();
+  if (priorDates.length === 0) return null;
+  const [ly, lm, ld] = priorDates[priorDates.length - 1].split('-').map(Number);
+  const [ty, tm, td] = dateKeyStr.split('-').map(Number);
+  const last  = new Date(ly, lm - 1, ld);
+  const today = new Date(ty, tm - 1, td);
+  return Math.round((today - last) / 86400000);
+}
+
+// Whether `badge` has already been earned, per its type's dedup rule:
+//   - weekly_accuracy_avg: dedup within the SAME Mon–Sun week only, so it
+//     can re-fire on a later, separate qualifying week.
+//   - comeback: dedup on the EXACT SAME DAY only (multiple exercises on the
+//     comeback day shouldn't duplicate it), so a later, separate comeback
+//     can still fire.
+//   - everything else: once ever, across all dates — the lifetime default.
+function alreadyEarned(badge, dateKey, badgesStore) {
+  if (badge.type === 'weekly_accuracy_avg') {
+    const [y, m, d] = dateKey.split('-').map(Number);
+    const monday = mondayOf(new Date(y, m - 1, d));
+    const sunday = addDays(monday, 6);
+    return Object.entries(badgesStore).some(([k, list]) => {
+      const [ky, km, kd] = k.split('-').map(Number);
+      const kdate = new Date(ky, km - 1, kd);
+      return kdate >= monday && kdate <= sunday && list.some(b => b.id === badge.id);
+    });
+  }
+  if (badge.type === 'comeback') {
+    return (badgesStore[dateKey] || []).some(b => b.id === badge.id);
+  }
+  return Object.values(badgesStore).flat().some(b => b.id === badge.id);
+}
+
+// Highest threshold ever awarded within a family (daily_minutes /
+// daily_wpm_avg only — see tierSuppressed below for why). Entries are
+// listed in ascending difficulty order, so threshold alone ranks them —
+// no separate tier field needed.
+function familyMaxThresholdEverAwarded(type, badgesStore) {
+  const earnedIds = new Set(Object.values(badgesStore).flat().map(b => b.id));
+  let max = 0;
+  BADGES.forEach(b => {
+    if (b.type === type && earnedIds.has(b.id)) max = Math.max(max, b.threshold ?? 0);
+  });
+  return max;
+}
+
+// daily_minutes and daily_wpm_avg reset every day (unlike streak_days or the
+// cumulative_* / star_rating types, which only ever grow) — so a single big
+// day can jump straight past a low threshold to a high one, and per-badge
+// once-ever alone isn't enough: a LATER, smaller day could still "newly"
+// qualify for that skipped-over lower threshold and award it after a higher
+// one was already shown, which looks like a downgrade. Suppress any
+// threshold at or below the family's historical max instead.
+function tierSuppressed(badge, badgesStore) {
+  if (badge.type !== 'daily_minutes' && badge.type !== 'daily_wpm_avg') return false;
+  return (badge.threshold ?? 0) <= familyMaxThresholdEverAwarded(badge.type, badgesStore);
+}
+
+function evaluateBadges(dateKey, dayActivity, activity, exerciseStats) {
+  const badgesStore = loadBadges();
+  const earnedToday = badgesStore[dateKey] ?? [];
   const { current: streak } = computeStreak(activity);
+
+  const valueByType = {
+    daily_minutes:       dayActivity.minutes,
+    daily_wpm_avg:       dayActivity.wpm_avg,
+    streak_days:         streak,
+    cumulative_minutes:  cumulativeMinutesTotal(activity),
+    star_rating:         cumulativeStarsTotal(),
+    weekly_accuracy_avg: weeklyAccuracyAvg(activity),
+    exercise_accuracy:   exerciseStats?.accuracy,
+    comeback:            daysSinceLastActivity(activity, dateKey),
+  };
 
   let changed = false;
   BADGES.forEach(badge => {
-    if (earnedIds.has(badge.id)) return;
-    const value = badge.type === 'streak_days' ? streak : dayActivity.minutes;
-    if (badgeQualifies(badge.type, value, badge.threshold)) {
+    if (badge.type === 'milestone') return; // unlocked explicitly via unlockMilestone()
+    if (alreadyEarned(badge, dateKey, badgesStore)) return;
+    if (tierSuppressed(badge, badgesStore)) return;
+    if (badgeQualifies(badge, valueByType[badge.type])) {
       earnedToday.push({ id: badge.id, unlocked_at: new Date().toISOString() });
       changed = true;
     }
   });
 
   if (changed) {
-    badges[dateKey] = earnedToday;
-    saveBadges(badges);
+    badgesStore[dateKey] = earnedToday;
+    saveBadges(badgesStore);
   }
+}
+
+// Unlock a milestone-type badge by its `id`. Idempotent — safe to call every
+// time the trigger event happens; does nothing once already unlocked. Call
+// this from wherever the corresponding completion event actually fires.
+function unlockMilestone(id) {
+  const badge = BADGES.find(b => b.type === 'milestone' && b.id === id);
+  if (!badge) return;
+
+  const badgesStore = loadBadges();
+  const alreadyUnlocked = Object.values(badgesStore).flat().some(b => b.id === badge.id);
+  if (alreadyUnlocked) return;
+
+  const dateKey = todayKey();
+  const today = badgesStore[dateKey] ?? [];
+  today.push({ id: badge.id, unlocked_at: new Date().toISOString() });
+  badgesStore[dateKey] = today;
+  saveBadges(badgesStore);
+  renderStreakWidget();
 }
 
 // Precedence rule: when a day earned multiple badges, the heatmap cell shows
@@ -1615,7 +1810,7 @@ function openDayDetail(dateKey) {
       const cfg  = BADGES.find(c => c.id === b.id);
       const chip = document.createElement('span');
       chip.className = 'badge-chip';
-      chip.textContent = cfg ? `${cfg.icon} ${cfg.label_ta}` : b.id;
+      chip.textContent = cfg ? `${cfg.icon} ${cfg.label}` : b.id;
       chipWrap.appendChild(chip);
     });
     $body.appendChild(chipWrap);
