@@ -55,7 +55,7 @@ function renderFooter() {
   wrap.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:8px 0;">
       <div style="font-size:12px;color:#888;">🔒 100% Offline &amp; Private</div>
-      <div style="font-size:11px;color:#aaa;">v1.5.13 (18 Aug 2026)</div>
+      <div style="font-size:11px;color:#aaa;">v1.6.14 (19 Aug 2026)</div>
     </div>
   `;
 }
@@ -69,4 +69,4 @@ if (document.readyState === 'loading') {
 
 // Self-register
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['version.js'] = '1.5.13';
+window.ELUTHU_VERSIONS['version.js'] = '1.6.14';
