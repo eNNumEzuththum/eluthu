@@ -198,6 +198,30 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True):
 
     return exercises
 
+# ── Milestone helper ──────────────────────────────────────────────────────────
+
+def apply_mile_stone(exercises_dir, ex_id, mile_stone):
+    """Attach a 'mile_stone' field to an already-written exercise file,
+    inserted just before the 'text' key."""
+    path = os.path.join(exercises_dir, f"{ex_id}.json")
+    if not os.path.exists(path):
+        print(f"  ⚠ mile_stone '{mile_stone}' — exercise {ex_id} not found, skipped")
+        return
+    with open(path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    new_data = {}
+    inserted = False
+    for k, v in data.items():
+        if k == 'text' and not inserted:
+            new_data['mile_stone'] = mile_stone
+            inserted = True
+        new_data[k] = v
+    if not inserted:
+        new_data['mile_stone'] = mile_stone
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(new_data, f, ensure_ascii=False, indent=2)
+    print(f"  ★ mile_stone '{mile_stone}' → {ex_id}")
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
@@ -213,12 +237,29 @@ def main():
     # Lookup lesson_words by ID — IDs match sequential plan positions
     words_by_id = {l['id']: l for l in lesson_words}
 
-    manifest_lessons = []
-    lesson_counter   = 0
+    manifest_lessons   = []
+    lesson_counter     = 0
+    last_exercise_id   = None   # most recently written exercise file (any lesson)
 
     for plan_entry in lesson_plan:
         lesson_counter += 1
         lid = str(lesson_counter) if lesson_counter >= 100 else f"{lesson_counter:02d}"
+
+        # ── Milestone ────────────────────────────────────────────────────────
+        # Normally mile_stone points BACKWARD: tag the previous entry's last
+        # exercise. Exception: on 'sentence'/'paragraph' special entries, the
+        # entry generates its own exercises, so mile_stone points FORWARD to
+        # the very first exercise this entry produces.
+        mile_stone      = plan_entry.get('mile_stone')
+        _entry_chars    = plan_entry.get('chars', [])
+        is_fwd_special  = _entry_chars in (['sentence'], ['paragraph'])
+        forward_mile_stone = mile_stone if (mile_stone and is_fwd_special) else None
+
+        if mile_stone and not is_fwd_special:
+            if last_exercise_id:
+                apply_mile_stone(EXERCISES_DIR, last_exercise_id, mile_stone)
+            else:
+                print(f"  ⚠ mile_stone '{mile_stone}' — no previous exercise to tag, skipped")
 
         # ── Message entry ─────────────────────────────────────────────────────
         if 'message' in plan_entry:
@@ -235,6 +276,7 @@ def main():
             }
             with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+            last_exercise_id = ex_id
             manifest_lessons.append({
                 'id': lid, 'name': '─', 'chars': [],
                 'combination_mode': False, 'exercises': [ex_id],
@@ -250,6 +292,7 @@ def main():
             # Find all lesson_words entries for this special type
             special_entries = [w for w in lesson_words
                                if w.get('name', '').startswith(special_name)]
+            fwd_milestone_applied = False
             for lesson in special_entries:
                 lesson_counter += 1
                 lid = str(lesson_counter) if lesson_counter >= 100 else f"{lesson_counter:02d}"
@@ -277,6 +320,10 @@ def main():
                     }
                     with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
                         json.dump(data, f, ensure_ascii=False, indent=2)
+                    last_exercise_id = ex_id
+                    if forward_mile_stone and not fwd_milestone_applied:
+                        apply_mile_stone(EXERCISES_DIR, ex_id, forward_mile_stone)
+                        fwd_milestone_applied = True
                     print(f"  {ex_id}: [{exercise_type}] {repr(text[:60])}{'...' if len(text)>60 else ''}")
                     exercise_ids.append(ex_id)
 
@@ -343,6 +390,7 @@ def main():
             }
             with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+            last_exercise_id = ex_id
             print(f"  {ex_id}: [{exercise_type}] acc={accuracy_target} {repr(text[:50])}{'...' if len(text)>50 else ''}")
             exercise_ids.append(ex_id)
 
