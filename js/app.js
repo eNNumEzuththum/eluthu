@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.6.1';
+window.ELUTHU_VERSIONS['app.js'] = '1.6.2';
 
 'use strict';
 
@@ -701,9 +701,13 @@ function _onComplete(stats) {
   const completionTarget = stats.accuracyTarget === 100 ? 80 : stats.accuracyTarget;
   const passed = stats.accuracy >= completionTarget;
 
-  // Record today's practice activity for the streak / heatmap, regardless of
-  // pass/fail — the exercise was completed (typed through to the end).
-  recordActivity(stats);
+  // Record today's practice activity for the streak / heatmap / badges,
+  // regardless of pass/fail — but only for practice/review exercises.
+  // Introduction exercises are trivially short (teaching a single new
+  // character) and expected to be near-100% by design, so counting them
+  // toward daily minutes/accuracy/wpm would dilute real practice signal in
+  // the heatmap and inflate badge eligibility with near-meaningless data.
+  if (currentExerciseType !== 'introduction') recordActivity(stats);
 
   // Save score BEFORE advancing indices
   // Always save WPM — no longer gated behind a minimum elapsed time. The
@@ -1243,9 +1247,12 @@ function isLessonComplete(li) {
   return lesson.exercises.every((_, ei) => hasPassedExercise(li, ei));
 }
 
-// This lesson's own aggregate: mean of its exercises' best accuracy/wpm
-// (drawn from eluthu_scores, which already keeps a running best per
-// exercise). wpm entries can be null on very short exercises — those are
+// This lesson's own aggregate: mean of its PRACTICE/REVIEW exercises' best
+// accuracy/wpm (drawn from eluthu_scores, which already keeps a running
+// best per exercise). Introduction exercises are excluded — trivially
+// short and expected to be near-100% by design, so including them would
+// dilute the accuracy/wpm signal used to judge "good" performance for star
+// ratings. wpm entries can be null on very short exercises — those are
 // skipped, and if none remain, wpm is null (speed just can't count toward
 // 2/3 stars for that lesson).
 function lessonAggregate(li) {
@@ -1253,7 +1260,10 @@ function lessonAggregate(li) {
   if (!lesson) return { accuracy: null, wpm: null };
 
   const scores = lesson.exercises
-    .map((_, ei) => getExerciseScore(li, ei))
+    .map((_, ei) => {
+      const exType = lesson.exercise_types?.[ei] ?? 'practice';
+      return exType === 'introduction' ? null : getExerciseScore(li, ei);
+    })
     .filter(Boolean);
   if (scores.length === 0) return { accuracy: null, wpm: null };
 
