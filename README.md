@@ -68,6 +68,19 @@ While the difference seems minor for a single word, Tamil 99 and Bamini are clos
 - **Real Tamil Words:** Combination lessons use real Tamil words and phrases derived strictly from characters you have learned so far (capped at 50 words per exercise for optimal learning pace).
 - **Local Progress Saving:** Your progress is saved automatically in your browser.
 - **Free Typing Sandbox:** A dedicated space where you can paste custom Tamil text to practice freely.
+- **Streak Heatmap:** A calendar-style heatmap tracks your daily practice, alongside a live streak counter — see [Track Your Progress](#track-your-progress) below.
+- **Achievement Badges:** Earn badges for milestones — daily practice duration, streak length, typing speed, accuracy, and completing each keyboard row or character set.
+- **Lesson Star Ratings:** Every lesson earns a 1–3 star rating based on your performance, and improves as you redo it.
+
+---
+
+## Track Your Progress
+
+eluthu includes a few lightweight ways to see how you're doing over time — all computed locally from your own practice data, nothing sent anywhere.
+
+- **🔥 Streak & Heatmap:** A GitHub-style contribution graph shows which days you practiced, with a running streak counter for consecutive days. Click any day on the heatmap for a detailed breakdown — exercises completed, average speed, and accuracy for that day.
+- **🏅 Badges:** Unlockable achievements across several categories — daily practice duration, streak length, typing speed, accuracy, keyboard-row completion, character-set completion, and content milestones (first word, sentence, paragraph). Badges appear on the heatmap on the day you earn them.
+- **⭐ Lesson Stars:** Each lesson is rated 1–3 stars based on your best performance. Redoing a lesson can only improve its rating, never lower it — so there's no risk in going back to sharpen a skill.
 
 ---
 
