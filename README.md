@@ -67,10 +67,23 @@ While the difference seems minor for a single word, Tamil 99 and Bamini are clos
 - **Introduction, Practice & Review:** Each lesson has dedicated exercise phases — introduction (100% accuracy required), practice (90%), and review (80%) — so you build confidence before moving on.
 - **Real Tamil Words:** Combination lessons use real Tamil words and phrases derived strictly from characters you have learned so far (capped at 50 words per exercise for optimal learning pace).
 - **Local Progress Saving:** Your progress is saved automatically in your browser.
-- **Free Typing Sandbox:** A dedicated space where you can paste custom Tamil text to practice freely.
+- **Tamil99 Writer:** A standalone, lightweight Tamil word processor for writing freely. See [Tamil99 Writer](#tamil99-writer) below.
 - **Streak Heatmap:** A calendar-style heatmap tracks your daily practice, alongside a live streak counter — see [Track Your Progress](#track-your-progress) below.
 - **Achievement Badges:** Earn badges for milestones — daily practice duration, streak length, typing speed, accuracy, and completing each keyboard row or character set.
 - **Lesson Star Ratings:** Every lesson earns a 1–3 star rating based on your performance, and improves as you redo it.
+
+---
+
+## Tamil99 Writer
+
+A dedicated writing space, completely separate from the lesson curriculum — for letters, notes, school newsletters, or anything else you want to write in Tamil, not just practice text.
+
+- **Type freely** using Tamil 99, with copy and paste both ways (button or native Ctrl+V/Cmd+V) to move text in and out of the box.
+- **Real cursor editing** — move with the arrow keys (Left/Right, Home/End), insert or delete text anywhere, not just at the end.
+- **Auto-save** — your draft saves itself a second after you stop typing, with a small "Saved ✓" indicator, and is restored automatically the next time you open the page, even after a hard refresh.
+- **Live word and character count** as you type.
+- **Adjustable font size** (small/medium/large), remembered across visits.
+- **Resizable writing area** — drag the bottom-right corner to make it as tall as you need.
 
 ---
 
@@ -137,7 +150,7 @@ The following features are planned for future releases:
 ```text
 .
 ├── index.html                # Main entry point for the web application
-├── tamil99-tester.html       # Free typing sandbox for custom Tamil text
+├── tamil99-writter.html      # Standalone Tamil99 word processor — separate from lesson progress
 ├── css/
 │   └── style.css             # Application styles
 ├── js/

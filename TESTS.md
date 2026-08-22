@@ -4,7 +4,7 @@
 ## File Versions
 | File | Version |
 |---|---|
-| index.html | 1.1.5 |
+| index.html | 1.1.6 |
 | style.css | 1.4.2 |
 | tamil99-keymap.json | 1.0.0 |
 | tamil99.js | 1.0.0 |
@@ -13,7 +13,7 @@
 | lessons.js | 1.0.0 |
 | app.js | 1.6.4 |
 | version.js | 1.6.16 |
-| tamil99-tester.html | 1.0.0 |
+| tamil99-tester.html |  |
 ---
 
 
