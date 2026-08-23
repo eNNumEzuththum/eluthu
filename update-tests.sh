@@ -32,7 +32,7 @@ V_TYP=$(get_js_version  "$ELUTHU_DIR/js/typing.js"             'typing.js')
 V_LES=$(get_js_version  "$ELUTHU_DIR/js/lessons.js"            'lessons.js')
 V_APP=$(get_js_version  "$ELUTHU_DIR/js/app.js"                'app.js')
 V_VER=$(get_js_version  "$ELUTHU_DIR/js/version.js"            'version.js')
-V_TST=$(get_version     "$ELUTHU_DIR/tamil99-tester.html"      '@version')
+V_WRT=$(get_version     "$ELUTHU_DIR/tamil99-writer.html"      '@version')
 
 echo "Versions found:"
 echo "  index.html           v$V_HTML"
@@ -44,7 +44,7 @@ echo "  typing.js            v$V_TYP"
 echo "  lessons.js           v$V_LES"
 echo "  app.js               v$V_APP"
 echo "  version.js           v$V_VER"
-echo "  tamil99-tester.html  v$V_TST"
+echo "  tamil99-writer.html  v$V_WRT"
 
 # Replace the versions table in TESTS.md
 TESTS="$ELUTHU_DIR/TESTS.md"
@@ -62,7 +62,7 @@ NEW_TABLE="## File Versions
 | lessons.js | $V_LES |
 | app.js | $V_APP |
 | version.js | $V_VER |
-| tamil99-tester.html | $V_TST |"
+| tamil99-writer.html | $V_WRT |"
 
 # Replace between "## File Versions" and next "---"
 python3 - "$TESTS" "$NEW_TABLE" << 'EOF'

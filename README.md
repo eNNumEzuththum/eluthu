@@ -150,7 +150,7 @@ The following features are planned for future releases:
 ```text
 .
 ├── index.html                # Main entry point for the web application
-├── tamil99-writter.html      # Standalone Tamil99 word processor — separate from lesson progress
+├── tamil99-writer.html      # Standalone Tamil99 word processor — separate from lesson progress
 ├── css/
 │   └── style.css             # Application styles
 ├── js/
