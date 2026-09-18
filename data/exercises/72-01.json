@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
+  "exercise_type": "introduction",
   "combination_mode": true,
-  "accuracy_target": 80,
-  "mile_stone": "row_top",
-  "text": "அஞ்சை அஞ்சு இஞ்சு அஞ்சாசி எஞ்சு எஞ்சி அஞ்சி உஞ்சி உச்சி ஊசி ஆச்சி இச்சை ஆசை அசை ஆசி ஆசு ஈசு உச்சை எச்சை ஓசை அஞ்ஞை இஞ்ஞை உஞ்ஞை எஞ்ஞை ஆஞை ஈஞை இஞ்சி"
+  "accuracy_target": 100,
+  "text": "ழ ழ ழ் ழ் ழை ழை ழெ ழெ ழே ழே ழு ழு ழூ ழூ ழொ ழொ ழி ழி ழீ ழீ ழோ ழோ ழா ழா ழௌ ழௌ"
 }

@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "த த த் த் து து தி தி தெ தெ தை தை தூ தூ தீ தீ தா தா தே தே தொ தொ தோ தோ தௌ தௌ"
+  "accuracy_target": 80,
+  "text": "அறு ஏறு ஊற்று ஏற்று இற்றை இறை ஈற்று எவை அவை அவ்வை அவி ஆவி உரு ஊர் ஆர் ஏர் ஓர் உரை உறை ஆப்பு ஒப்பு அப்பு ஈறு அறை ஏறை இறு உறு இவி ஈவி ஓவி அவ்வி"
 }

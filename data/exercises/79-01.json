@@ -1,7 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "ல ல ல் ல் லு லு லி லி லெ லெ லை லை லூ லூ லீ லீ லா லா லே லே லொ லொ லோ லோ லௌ லௌ"
+  "accuracy_target": 80,
+  "mile_stone": "all_letters",
+  "text": "இயை அஞ்சை அஞ்சு இஞ்சு அஞ்சாசி எஞ்சு எஞ்சி அஞ்சி உஞ்சி அண்ணை எண்ணை அண்ணி எண்ணு எண்ணி எண் உச்சி ஊசி ஆச்சி இச்சை ஆசை அசை அழி ஆழி இழு இழி ஆழ் உழி ஊழி ஏழு அய்யா ஐயா அந்ந இந்ந உந்ந எந்ந"
 }

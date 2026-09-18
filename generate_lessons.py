@@ -39,7 +39,7 @@ VOWEL_TO_MARKER = {
     'ஓ': 'ோ', 'ஔ': 'ௌ',
 }
 
-UYIRMEI_VOWEL_ORDER = ['அ', '்', 'உ', 'இ', 'எ', 'ஐ', 'ஊ', 'ஈ', 'ஆ', 'ஏ', 'ஒ', 'ஓ', 'ஔ']
+UYIRMEI_VOWEL_ORDER = ['அ', '்', 'ஐ', 'எ', 'ஏ', 'உ', 'ஊ', 'ஒ', 'இ', 'ஈ', 'ஓ', 'ஆ', 'ஔ']
 
 # ── Uyirmei helpers ───────────────────────────────────────────────────────────
 
@@ -179,7 +179,6 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True):
             ex2 += [w, w]
         while len(ex2) < N:
             extra = list(short_words)
-            random.shuffle(extra)
             ex2 += extra
         ex2 = ex2[:N]
     exercises.append(' '.join(ex2).strip())
