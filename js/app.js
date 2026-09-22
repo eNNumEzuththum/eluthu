@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.6.4';
+window.ELUTHU_VERSIONS['app.js'] = '1.6.6';
 
 'use strict';
 
@@ -1254,7 +1254,7 @@ function isLessonComplete(li) {
 // dilute the accuracy/wpm signal used to judge "good" performance for star
 // ratings. wpm entries can be null on very short exercises — those are
 // skipped, and if none remain, wpm is null (speed just can't count toward
-// 2/3 stars for that lesson).
+// tiers 2-5 for that lesson).
 function lessonAggregate(li) {
   const lesson = manifest?.lessons?.[li];
   if (!lesson) return { accuracy: null, wpm: null };
@@ -1309,19 +1309,31 @@ function lessonBaseline(li) {
 }
 
 function computeStars(bestAccuracy, bestWpm, baseline) {
-  // 1 star = lesson completed. 2/3 need accuracy and/or speed "good".
+  // 1 star = lesson completed. Tiers 2-5 need accuracy and/or speed "good",
+  // with tiers 4/5 requiring an increasingly wide speed margin.
   //
   // Accuracy is capped at 100% — requiring it to be strictly ABOVE baseline
   // is impossible to satisfy once someone's already at the ceiling (you
   // can't beat your own 100%). So 100% accuracy counts as "good"
-  // unconditionally, independent of baseline. Below 100%, "good" still means
-  // strictly above the user's own baseline average, same as speed.
+  // unconditionally for every tier, independent of baseline. Below 100%,
+  // "good" still means strictly above the user's own baseline average.
   const accGood = bestAccuracy != null && (bestAccuracy >= 100 ||
     (baseline.accuracy != null && bestAccuracy > baseline.accuracy));
-  const wpmGood = baseline.wpm != null && bestWpm != null && bestWpm > baseline.wpm;
 
-  if (accGood && wpmGood) return 3;
-  if (accGood || wpmGood) return 2;
+  // Speed has no ceiling to auto-satisfy against, so tiers 4/5 are gated by
+  // margin above baseline (not just "any improvement") — 30%+ for tier 4,
+  // 60%+ for tier 5. Guards baseline.wpm > 0 to avoid a divide-by-zero.
+  const wpmMargin = (baseline.wpm != null && bestWpm != null && baseline.wpm > 0)
+    ? (bestWpm - baseline.wpm) / baseline.wpm
+    : null;
+  const wpmGood     = wpmMargin != null && wpmMargin > 0;      // any improvement (tiers 2/3, unchanged)
+  const wpmGoodWide = wpmMargin != null && wpmMargin >= 0.30;  // 30%+ above baseline (tier 4)
+  const wpmGoodHuge = wpmMargin != null && wpmMargin >= 0.60;  // 60%+ above baseline (tier 5)
+
+  if (accGood && wpmGoodHuge) return 5;
+  if (accGood && wpmGoodWide) return 4;
+  if (accGood && wpmGood)     return 3;
+  if (accGood || wpmGood)     return 2;
   return 1;
 }
 
@@ -1369,9 +1381,9 @@ function getLessonStars(li) {
   return loadLessonStars()[li]?.stars ?? 0;
 }
 
-// ⭐⭐☆ style — filled for earned, outline for the remainder, out of 3.
+// ⭐⭐⭐☆☆ style — filled for earned, outline for the remainder, out of 5.
 function renderStarRating(stars) {
-  return '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  return '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
 }
 
 // Max reachable lesson/exercise (for locked state)
