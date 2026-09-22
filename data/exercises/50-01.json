@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "ர ர ர் ர் ரை ரை ரெ ரெ ரே ரே ரு ரு ரூ ரூ ரொ ரொ ரி ரி ரீ ரீ ரோ ரோ ரா ரா ரௌ ரௌ"
+  "accuracy_target": 80,
+  "text": "பறி பறை பாறை பிறை புறா பற்று புற்று பற்றி போற்றி பற்றை போற்று அறுப்பு இறப்பு உறுப்பு பறப்பு"
 }

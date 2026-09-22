@@ -120,26 +120,48 @@ def make_non_combo_exercises(chars, lesson_id):
             exercises.append(smart_join(text, False))
         return exercises
 
-    for ch in chars:
-        exercises.append(smart_join([ch] * 2, False))
+    # Intro_1, Intro_2, ... — each key repeated twice
+    intro_parts = [smart_join([ch] * 2, False) for ch in chars]
 
+    pattern1 = ''  # Intro_3 — mix both keys, no space
+    pattern2 = ''  # Intro_4 — mix both keys, with space (not used in the combined form)
     if len(chars) >= 2:
         text = []
         for i in range(len(chars)):
             c1 = chars[i]; c2 = chars[(i + 1) % len(chars)]
             text += [c1]*4 + [c2]*4 + [c1]*2 + [c2]*2 + [c1, c2, c2, c1]
-        exercises.append(smart_join(text, False))
+        pattern1 = smart_join(text, False)
+
         text = []
         for ch in chars:
             text += ([ch] + [' ']) * 3
         for i in range(len(chars)):
             c1 = chars[i]; c2 = chars[(i+1) % len(chars)]
             text += [c1, c2, ' '] * 2
-        exercises.append(smart_join(text, False))
+        pattern2 = smart_join(text, False)
 
+    practice_text = ''  # Intro_5 — pseudo-word practice
     if len(practice_pool) >= 2:
-        text = make_practice_words(practice_pool, target=max_words(chars))
-        exercises.append(smart_join(text, False))
+        practice_text = smart_join(make_practice_words(practice_pool, target=max_words(chars)), False)
+
+    if len(chars) == 2:
+        # Combine Intro_1 + Intro_2 + Intro_3 (Intro_4 dropped) into a single
+        # introduction exercise, no length limit. Practice words (Intro_5)
+        # remain a separate exercise, not part of the introduction.
+        combined = ' '.join(p for p in (intro_parts[0], intro_parts[1], pattern1) if p)
+        exercises.append(combined)
+        if practice_text:
+            exercises.append(practice_text)
+        return exercises
+
+    # Fallback (len(chars) == 1, or >= 3 if ever routed here): old behavior.
+    exercises.extend(intro_parts)
+    if pattern1:
+        exercises.append(pattern1)
+    if pattern2:
+        exercises.append(pattern2)
+    if practice_text:
+        exercises.append(practice_text)
 
     return exercises
 
@@ -165,7 +187,7 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True):
     # Ex 1: Introduction
     intro = []
     for ch in uyirmei_pool:
-        intro += [ch, ' ', ch, ' ']
+        intro += [ch, ch, ' ']
     exercises.append(''.join(intro).strip())
 
     if not has_words:
@@ -375,7 +397,7 @@ def main():
                 accuracy_map = {1: 80}
             else:
                 texts        = make_non_combo_exercises(chars, lesson_id=lesson_counter)
-                accuracy_map = {1:100, 2:100, 3:100, 4:100, 5:90, 6:80}
+                accuracy_map = {1: 100, 2: 90} if len(chars) == 2 else {1:100, 2:100, 3:100, 4:100, 5:90, 6:80}
 
         exercise_ids = []
         for i, text in enumerate(texts, 1):

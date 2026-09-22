@@ -1,8 +1,8 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
-  "combination_mode": false,
-  "accuracy_target": 80,
-  "mile_stone": "all_vowels",
-  "text": "ழழழ ஞஞஞ ஆஆஆ சசச ணணண அஅஅ நநந ஔஔஔ யயய அஅந நஅஅ அநஅந நநஆ ஆநந நஆநஆ ஆஆண ணஆஆ ஆணஆண ணணஔ ஔணண ணஔணஔ ஔஔழ ழஔஔ ஔழஔழ ழழச சழழ ழசழச சசஞ ஞசச சஞசஞ ஞஞய யஞஞ ஞயஞய யயஅ அயய யஅயஅ ஞஔஞஆ ஔழழச சயஔண சணஔ ஆயஆயய"
+  "exercise_type": "message",
+  "combination_mode": true,
+  "accuracy_target": 100,
+  "text": "🎉 சின்னி விரல்களின் எழுத்துகளைப் பழகிவிட்டீர்கள்! அவற்றை மீண்டும் ஒரு முறை பயிற்சி செய்வோம்.  \n\nதொடர அ விசையை அழுத்தவும். Press a to continue.",
+  "key": "KeyA"
 }

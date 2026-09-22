@@ -1,8 +1,9 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
+  "exercise_type": "message",
   "combination_mode": true,
-  "accuracy_target": 80,
+  "accuracy_target": 100,
   "mile_stone": "all_letters",
-  "text": "நேசி யாசி நாணி நாழி நாண் யாழ் நஞ்சு நெஞ்சு"
+  "text": "🎉 சின்னி விரல்களின் உயிர்மெய் எழுத்துகளைப் பழகிவிட்டீர்கள்! அவற்றை மீண்டும் ஒரு முறை பயிற்சி செய்வோம்.  \n\nதொடர ய விசையை அழுத்தவும். Press ; to continue.",
+  "key": "Key;"
 }

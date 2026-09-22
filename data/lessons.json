@@ -102,15 +102,9 @@
       "combination_mode": false,
       "exercises": [
         "11-01",
-        "11-02",
-        "11-03",
-        "11-04",
-        "11-05"
+        "11-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -134,15 +128,9 @@
       "combination_mode": false,
       "exercises": [
         "13-01",
-        "13-02",
-        "13-03",
-        "13-04",
-        "13-05"
+        "13-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -166,15 +154,9 @@
       "combination_mode": false,
       "exercises": [
         "15-01",
-        "15-02",
-        "15-03",
-        "15-04",
-        "15-05"
+        "15-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -208,15 +190,9 @@
       "combination_mode": false,
       "exercises": [
         "17-01",
-        "17-02",
-        "17-03",
-        "17-04",
-        "17-05"
+        "17-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -231,15 +207,9 @@
       "combination_mode": false,
       "exercises": [
         "18-01",
-        "18-02",
-        "18-03",
-        "18-04",
-        "18-05"
+        "18-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -254,15 +224,9 @@
       "combination_mode": false,
       "exercises": [
         "19-01",
-        "19-02",
-        "19-03",
-        "19-04",
-        "19-05"
+        "19-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -330,15 +294,9 @@
       "combination_mode": false,
       "exercises": [
         "23-01",
-        "23-02",
-        "23-03",
-        "23-04",
-        "23-05"
+        "23-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -353,15 +311,9 @@
       "combination_mode": false,
       "exercises": [
         "24-01",
-        "24-02",
-        "24-03",
-        "24-04",
-        "24-05"
+        "24-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -393,15 +345,9 @@
       "combination_mode": false,
       "exercises": [
         "26-01",
-        "26-02",
-        "26-03",
-        "26-04",
-        "26-05"
+        "26-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -444,15 +390,9 @@
       "combination_mode": false,
       "exercises": [
         "29-01",
-        "29-02",
-        "29-03",
-        "29-04",
-        "29-05"
+        "29-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -467,15 +407,9 @@
       "combination_mode": false,
       "exercises": [
         "30-01",
-        "30-02",
-        "30-03",
-        "30-04",
-        "30-05"
+        "30-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -507,15 +441,9 @@
       "combination_mode": false,
       "exercises": [
         "32-01",
-        "32-02",
-        "32-03",
-        "32-04",
-        "32-05"
+        "32-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -558,15 +486,9 @@
       "combination_mode": false,
       "exercises": [
         "35-01",
-        "35-02",
-        "35-03",
-        "35-04",
-        "35-05"
+        "35-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -581,15 +503,9 @@
       "combination_mode": false,
       "exercises": [
         "36-01",
-        "36-02",
-        "36-03",
-        "36-04",
-        "36-05"
+        "36-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -621,15 +537,9 @@
       "combination_mode": false,
       "exercises": [
         "38-01",
-        "38-02",
-        "38-03",
-        "38-04",
-        "38-05"
+        "38-02"
       ],
       "exercise_types": [
-        "introduction",
-        "introduction",
-        "introduction",
         "introduction",
         "practice"
       ]
@@ -655,31 +565,49 @@
     },
     {
       "id": "40",
-      "name": "ச, ஞ மற்றும் ய",
+      "name": "ச மற்றும் ய",
       "chars": [
         "ச",
-        "ஞ",
         "ய"
       ],
       "combination_mode": false,
       "exercises": [
-        "40-01"
+        "40-01",
+        "40-02"
       ],
       "exercise_types": [
-        "review"
+        "introduction",
+        "practice"
       ]
     },
     {
       "id": "41",
-      "name": "─",
-      "chars": [],
+      "name": "ச மற்றும் ஞ",
+      "chars": [
+        "ச",
+        "ஞ"
+      ],
       "combination_mode": false,
       "exercises": [
-        "41-01"
+        "41-01",
+        "41-02"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice"
       ]
     },
     {
       "id": "42",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
+      "exercises": [
+        "42-01"
+      ]
+    },
+    {
+      "id": "43",
       "name": "அ, ந, ஆ, ண, ஔ, ழ, ச, ஞ மற்றும் ய",
       "chars": [
         "அ",
@@ -694,19 +622,10 @@
       ],
       "combination_mode": false,
       "exercises": [
-        "42-01"
+        "43-01"
       ],
       "exercise_types": [
         "review"
-      ]
-    },
-    {
-      "id": "43",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
-      "exercises": [
-        "43-01"
       ]
     },
     {
@@ -738,39 +657,18 @@
     },
     {
       "id": "47",
-      "name": "ப வரிசை",
-      "chars": [
-        "ப",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
       "exercises": [
-        "47-01",
-        "47-02",
-        "47-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
-        "review"
+        "47-01"
       ]
     },
     {
       "id": "48",
-      "name": "ற வரிசை",
+      "name": "ப வரிசை",
       "chars": [
-        "ற",
+        "ப",
         "அ",
         "ஆ",
         "இ",
@@ -798,6 +696,36 @@
     },
     {
       "id": "49",
+      "name": "ற வரிசை",
+      "chars": [
+        "ற",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "49-01",
+        "49-02",
+        "49-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
+      ]
+    },
+    {
+      "id": "50",
       "name": "ப மற்றும் ற வரிசைகள்",
       "chars": [
         "ப",
@@ -817,47 +745,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "49-01"
+        "50-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "50",
-      "name": "ர வரிசை",
-      "chars": [
-        "ர",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "50-01",
-        "50-02",
-        "50-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "51",
-      "name": "வ வரிசை",
+      "name": "ர வரிசை",
       "chars": [
-        "வ",
+        "ர",
         "அ",
         "ஆ",
         "இ",
@@ -885,9 +783,8 @@
     },
     {
       "id": "52",
-      "name": "ர மற்றும் வ வரிசைகள்",
+      "name": "வ வரிசை",
       "chars": [
-        "ர",
         "வ",
         "அ",
         "ஆ",
@@ -904,18 +801,20 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "52-01"
+        "52-01",
+        "52-02",
+        "52-03"
       ],
       "exercise_types": [
+        "introduction",
+        "practice",
         "review"
       ]
     },
     {
       "id": "53",
-      "name": "ப, ற, ர மற்றும் வ வரிசைகள்",
+      "name": "ர மற்றும் வ வரிசைகள்",
       "chars": [
-        "ப",
-        "ற",
         "ர",
         "வ",
         "அ",
@@ -941,9 +840,12 @@
     },
     {
       "id": "54",
-      "name": "க வரிசை",
+      "name": "ப, ற, ர மற்றும் வ வரிசைகள்",
       "chars": [
-        "க",
+        "ப",
+        "ற",
+        "ர",
+        "வ",
         "அ",
         "ஆ",
         "இ",
@@ -959,21 +861,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "54-01",
-        "54-02",
-        "54-03"
+        "54-01"
       ],
       "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "55",
-      "name": "ள வரிசை",
+      "name": "க வரிசை",
       "chars": [
-        "ள",
+        "க",
         "அ",
         "ஆ",
         "இ",
@@ -1001,6 +899,36 @@
     },
     {
       "id": "56",
+      "name": "ள வரிசை",
+      "chars": [
+        "ள",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "56-01",
+        "56-02",
+        "56-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
+      ]
+    },
+    {
+      "id": "57",
       "name": "க மற்றும் ள வரிசைகள்",
       "chars": [
         "க",
@@ -1020,47 +948,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "56-01"
+        "57-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "57",
-      "name": "ல வரிசை",
-      "chars": [
-        "ல",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "57-01",
-        "57-02",
-        "57-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "58",
-      "name": "ங வரிசை",
+      "name": "ல வரிசை",
       "chars": [
-        "ங",
+        "ல",
         "அ",
         "ஆ",
         "இ",
@@ -1088,6 +986,36 @@
     },
     {
       "id": "59",
+      "name": "ங வரிசை",
+      "chars": [
+        "ங",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "59-01",
+        "59-02",
+        "59-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
+      ]
+    },
+    {
+      "id": "60",
       "name": "க, ள, ல மற்றும் ங வரிசைகள்",
       "chars": [
         "க",
@@ -1109,23 +1037,23 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "59-01"
+        "60-01"
       ],
       "exercise_types": [
         "review"
       ]
     },
     {
-      "id": "60",
+      "id": "61",
       "name": "─",
       "chars": [],
       "combination_mode": false,
       "exercises": [
-        "60-01"
+        "61-01"
       ]
     },
     {
-      "id": "61",
+      "id": "62",
       "name": "ப, ற, ர, க, ள, ல, வ மற்றும் ங வரிசைகள்",
       "chars": [
         "ப",
@@ -1151,47 +1079,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "61-01"
+        "62-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "62",
-      "name": "ம வரிசை",
-      "chars": [
-        "ம",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "62-01",
-        "62-02",
-        "62-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "63",
-      "name": "ன வரிசை",
+      "name": "ம வரிசை",
       "chars": [
-        "ன",
+        "ம",
         "அ",
         "ஆ",
         "இ",
@@ -1219,15 +1117,45 @@
     },
     {
       "id": "64",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
+      "name": "ன வரிசை",
+      "chars": [
+        "ன",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
       "exercises": [
-        "64-01"
+        "64-01",
+        "64-02",
+        "64-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
       "id": "65",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
+      "exercises": [
+        "65-01"
+      ]
+    },
+    {
+      "id": "66",
       "name": "ம, ன மற்றும் , வரிசைகள்",
       "chars": [
         "ம",
@@ -1247,47 +1175,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "65-01"
+        "66-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "66",
-      "name": "த வரிசை",
-      "chars": [
-        "த",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "66-01",
-        "66-02",
-        "66-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "67",
-      "name": "ட வரிசை",
+      "name": "த வரிசை",
       "chars": [
-        "ட",
+        "த",
         "அ",
         "ஆ",
         "இ",
@@ -1315,15 +1213,45 @@
     },
     {
       "id": "68",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
+      "name": "ட வரிசை",
+      "chars": [
+        "ட",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
       "exercises": [
-        "68-01"
+        "68-01",
+        "68-02",
+        "68-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
       ]
     },
     {
       "id": "69",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
+      "exercises": [
+        "69-01"
+      ]
+    },
+    {
+      "id": "70",
       "name": "த, ட மற்றும் . வரிசைகள்",
       "chars": [
         "த",
@@ -1343,47 +1271,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "69-01"
+        "70-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "70",
-      "name": "ந வரிசை",
-      "chars": [
-        "ந",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "70-01",
-        "70-02",
-        "70-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "71",
-      "name": "ண வரிசை",
+      "name": "ந வரிசை",
       "chars": [
-        "ண",
+        "ந",
         "அ",
         "ஆ",
         "இ",
@@ -1411,9 +1309,9 @@
     },
     {
       "id": "72",
-      "name": "ழ வரிசை",
+      "name": "ண வரிசை",
       "chars": [
-        "ழ",
+        "ண",
         "அ",
         "ஆ",
         "இ",
@@ -1441,6 +1339,36 @@
     },
     {
       "id": "73",
+      "name": "ழ வரிசை",
+      "chars": [
+        "ழ",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "73-01",
+        "73-02",
+        "73-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
+      ]
+    },
+    {
+      "id": "74",
       "name": "ந, ண மற்றும் ழ வரிசைகள்",
       "chars": [
         "ந",
@@ -1461,47 +1389,17 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "73-01"
+        "74-01"
       ],
       "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "74",
-      "name": "ய வரிசை",
-      "chars": [
-        "ய",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "74-01",
-        "74-02",
-        "74-03"
-      ],
-      "exercise_types": [
-        "introduction",
-        "practice",
         "review"
       ]
     },
     {
       "id": "75",
-      "name": "ச வரிசை",
+      "name": "ய வரிசை",
       "chars": [
-        "ச",
+        "ய",
         "அ",
         "ஆ",
         "இ",
@@ -1529,9 +1427,9 @@
     },
     {
       "id": "76",
-      "name": "ஞ வரிசை",
+      "name": "ச வரிசை",
       "chars": [
-        "ஞ",
+        "ச",
         "அ",
         "ஆ",
         "இ",
@@ -1559,6 +1457,36 @@
     },
     {
       "id": "77",
+      "name": "ஞ வரிசை",
+      "chars": [
+        "ஞ",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "77-01",
+        "77-02",
+        "77-03"
+      ],
+      "exercise_types": [
+        "introduction",
+        "practice",
+        "review"
+      ]
+    },
+    {
+      "id": "78",
       "name": "ய, ச மற்றும் ஞ வரிசைகள்",
       "chars": [
         "ய",
@@ -1579,104 +1507,33 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "77-01"
+        "78-01"
       ],
       "exercise_types": [
         "review"
-      ]
-    },
-    {
-      "id": "78",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
-      "exercises": [
-        "78-01"
       ]
     },
     {
       "id": "79",
-      "name": "ந, ண, ழ, ய, ச மற்றும் ஞ வரிசைகள்",
-      "chars": [
-        "ந",
-        "ண",
-        "ழ",
-        "ய",
-        "ச",
-        "ஞ",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
-      "exercises": [
-        "79-01"
-      ],
-      "exercise_types": [
-        "review"
-      ]
-    },
-    {
-      "id": "80",
       "name": "─",
       "chars": [],
       "combination_mode": false,
       "exercises": [
-        "80-01"
+        "79-01"
       ]
     },
     {
-      "id": "82",
-      "name": "சொற்கள் 1",
-      "chars": [
-        "ப",
-        "ற",
-        "வ",
-        "ர",
-        "க",
-        "ள",
-        "ங",
-        "ல",
-        "ம",
-        "ன",
-        "த",
-        "ட",
-        "ந",
-        "ண",
-        "ழ",
-        "ச",
-        "ஞ",
-        "ய",
-        "அ",
-        "ஆ",
-        "இ",
-        "ஈ",
-        "உ",
-        "ஊ",
-        "எ",
-        "ஏ",
-        "ஐ",
-        "ஒ",
-        "ஓ",
-        "ஔ"
-      ],
-      "combination_mode": true,
+      "id": "81",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
       "exercises": [
-        "82-01"
+        "81-01"
       ]
     },
     {
       "id": "83",
-      "name": "சொற்கள் 2",
+      "name": "சொற்கள் 1",
       "chars": [
         "ப",
         "ற",
@@ -1756,7 +1613,7 @@
     },
     {
       "id": "85",
-      "name": "சொற்கள் 4",
+      "name": "சொற்கள் 3",
       "chars": [
         "ப",
         "ற",
@@ -1796,7 +1653,7 @@
     },
     {
       "id": "86",
-      "name": "சொற்கள் 2",
+      "name": "சொற்கள் 4",
       "chars": [
         "ப",
         "ற",
@@ -1836,7 +1693,7 @@
     },
     {
       "id": "87",
-      "name": "சொற்கள் 3",
+      "name": "சொற்கள் 2",
       "chars": [
         "ப",
         "ற",
@@ -1876,7 +1733,7 @@
     },
     {
       "id": "88",
-      "name": "சொற்கள் 4",
+      "name": "சொற்கள் 3",
       "chars": [
         "ப",
         "ற",
@@ -1916,7 +1773,7 @@
     },
     {
       "id": "89",
-      "name": "சொற்கள் 5",
+      "name": "சொற்கள் 4",
       "chars": [
         "ப",
         "ற",
@@ -2116,7 +1973,7 @@
     },
     {
       "id": "94",
-      "name": "சொற்கள் 10",
+      "name": "சொற்கள் 9",
       "chars": [
         "ப",
         "ற",
@@ -2156,7 +2013,7 @@
     },
     {
       "id": "95",
-      "name": "சொற்கள் 11",
+      "name": "சொற்கள் 10",
       "chars": [
         "ப",
         "ற",
@@ -2196,7 +2053,7 @@
     },
     {
       "id": "96",
-      "name": "சொற்கள் 12",
+      "name": "சொற்கள் 11",
       "chars": [
         "ப",
         "ற",
@@ -2236,7 +2093,7 @@
     },
     {
       "id": "97",
-      "name": "சொற்கள் 13",
+      "name": "சொற்கள் 12",
       "chars": [
         "ப",
         "ற",
@@ -2316,7 +2173,7 @@
     },
     {
       "id": "99",
-      "name": "சொற்கள் 12",
+      "name": "சொற்கள் 18",
       "chars": [
         "ப",
         "ற",
@@ -2356,7 +2213,7 @@
     },
     {
       "id": "100",
-      "name": "சொற்கள் 16",
+      "name": "சொற்கள் 19",
       "chars": [
         "ப",
         "ற",
@@ -2396,16 +2253,7 @@
     },
     {
       "id": "101",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
-      "exercises": [
-        "101-01"
-      ]
-    },
-    {
-      "id": "103",
-      "name": "வாக்கியங்கள் 1",
+      "name": "சொற்கள் 20",
       "chars": [
         "ப",
         "ற",
@@ -2440,12 +2288,21 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "103-01"
+        "101-01"
+      ]
+    },
+    {
+      "id": "102",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
+      "exercises": [
+        "102-01"
       ]
     },
     {
       "id": "104",
-      "name": "வாக்கியங்கள் 2",
+      "name": "வாக்கியங்கள் 1",
       "chars": [
         "ப",
         "ற",
@@ -2485,7 +2342,7 @@
     },
     {
       "id": "105",
-      "name": "வாக்கியங்கள் 3",
+      "name": "வாக்கியங்கள் 2",
       "chars": [
         "ப",
         "ற",
@@ -2525,7 +2382,7 @@
     },
     {
       "id": "106",
-      "name": "வாக்கியங்கள் 4",
+      "name": "வாக்கியங்கள் 3",
       "chars": [
         "ப",
         "ற",
@@ -2565,16 +2422,7 @@
     },
     {
       "id": "107",
-      "name": "─",
-      "chars": [],
-      "combination_mode": false,
-      "exercises": [
-        "107-01"
-      ]
-    },
-    {
-      "id": "109",
-      "name": "பந்தி 1",
+      "name": "வாக்கியங்கள் 4",
       "chars": [
         "ப",
         "ற",
@@ -2609,12 +2457,21 @@
       ],
       "combination_mode": true,
       "exercises": [
-        "109-01"
+        "107-01"
+      ]
+    },
+    {
+      "id": "108",
+      "name": "─",
+      "chars": [],
+      "combination_mode": false,
+      "exercises": [
+        "108-01"
       ]
     },
     {
       "id": "110",
-      "name": "பந்தி 2",
+      "name": "பந்தி 1",
       "chars": [
         "ப",
         "ற",
@@ -2654,7 +2511,7 @@
     },
     {
       "id": "111",
-      "name": "பந்தி 3",
+      "name": "பந்தி 2",
       "chars": [
         "ப",
         "ற",
@@ -2694,11 +2551,51 @@
     },
     {
       "id": "112",
+      "name": "பந்தி 3",
+      "chars": [
+        "ப",
+        "ற",
+        "வ",
+        "ர",
+        "க",
+        "ள",
+        "ங",
+        "ல",
+        "ம",
+        "ன",
+        "த",
+        "ட",
+        "ந",
+        "ண",
+        "ழ",
+        "ச",
+        "ஞ",
+        "ய",
+        "அ",
+        "ஆ",
+        "இ",
+        "ஈ",
+        "உ",
+        "ஊ",
+        "எ",
+        "ஏ",
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "combination_mode": true,
+      "exercises": [
+        "112-01"
+      ]
+    },
+    {
+      "id": "113",
       "name": "─",
       "chars": [],
       "combination_mode": false,
       "exercises": [
-        "112-01"
+        "113-01"
       ]
     }
   ]

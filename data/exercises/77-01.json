@@ -1,8 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "review",
+  "exercise_type": "introduction",
   "combination_mode": true,
-  "accuracy_target": 80,
-  "mile_stone": "pinky_finger_2",
-  "text": "செய் சேய் யாசி யோசி சாய் சாஞ்ச சாயை அஞ்சா அஞ்சை அஞ்சு அஞ்சி இஞ்சு எஞ்சு எஞ்சி உஞ்சி அஞ்சாசி"
+  "accuracy_target": 100,
+  "text": "ஞஞ ஞ்ஞ் ஞைஞை ஞெஞெ ஞேஞே ஞுஞு ஞூஞூ ஞொஞொ ஞிஞி ஞீஞீ ஞோஞோ ஞாஞா ஞௌஞௌ"
 }

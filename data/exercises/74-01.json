@@ -1,7 +1,7 @@
 {
   "_version": "1.0.0",
-  "exercise_type": "introduction",
+  "exercise_type": "review",
   "combination_mode": true,
-  "accuracy_target": 100,
-  "text": "ய ய ய் ய் யை யை யெ யெ யே யே யு யு யூ யூ யொ யொ யி யி யீ யீ யோ யோ யா யா யௌ யௌ"
+  "accuracy_target": 80,
+  "text": "நாணி நாழி நாண் ஆணை இணை ஆழி அண்ணை எண்ணை அண்ணி எண்ணு எண்ணி எண் அழி இழு இழி ஆழ் உழி ஊழி ஏழு"
 }
