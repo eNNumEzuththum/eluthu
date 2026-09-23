@@ -187,7 +187,7 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True, include_r
     # Ex 1: Introduction
     intro = []
     for ch in uyirmei_pool:
-        intro += [ch, ch, ' ']
+        intro += [ch, ' ', ch, ' ']
     exercises.append(''.join(intro).strip())
 
     if not has_words:
