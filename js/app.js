@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.6.9';
+window.ELUTHU_VERSIONS['app.js'] = '1.7.0';
 
 'use strict';
 
@@ -717,10 +717,10 @@ function _onComplete(stats) {
   // short) look systematically unmeasured in the picker.
   if (passed) saveExercisePass(lessonIdx, exerciseIdx, stats.wpm, stats.accuracy);
 
-  // Recompute this lesson's star rating (only fires once the whole lesson —
-  // all its phases — is complete; see isLessonComplete()). Must happen
-  // before lessonIdx advances below.
-  if (passed) recalcLessonStars(lessonIdx);
+  // Recompute this lesson's star rating — only fires when the exercise
+  // that just passed is practice or review (never introduction/message).
+  // Must happen before lessonIdx advances below.
+  if (passed) recalcLessonStars(lessonIdx, currentExerciseType, stats);
 
   // Exercise-tagged milestones — an exercise JSON can carry a `mile_stone`
   // field naming a badge id (e.g. "row_home"). Unlocks the moment THIS
@@ -984,7 +984,10 @@ function buildLessonGroups(lessons) {
 
 function buildPicker() {
   if (!manifest) return;
-  recalcAllLessonStars();
+  // No recompute-everything sweep here anymore — the new star algorithm
+  // (accuracy fixed thresholds + speed vs. a specific reference intro) is
+  // self-contained per lesson, nothing about it can shift from OTHER
+  // lessons' activity the way the old cross-lesson baseline could.
   $pickerList.innerHTML = '';
 
   let visibleLessonCount = 0;
@@ -1313,21 +1316,30 @@ function hasPassedExercise(lessonIdx, exerciseIdx) {
 
 // ── Lesson star ratings ─────────────────────────────────────────────────────
 //
-// One star rating per LESSON (not per phase) — combines performance across
-// all of a lesson's exercises (அறிமுகம்/பயிற்சி/மதிப்பாய்வு) into a single
-// score. "Good" thresholds are relative to the user's own baseline (mean of
-// other completed lessons' best scores), not a fixed number, so short early
-// lessons aren't penalized against longer later ones.
+// One rating per LESSON, computed the moment its practice-or-review
+// exercise passes — never on introduction/message completions. Additive,
+// max 5: accuracy-stars (0-3, fixed thresholds) + speed-stars (0-2,
+// relative to a reference introduction's speed, not a rolling baseline).
 //
-// Ratings only ever improve, never regress:
-//   - best_accuracy / best_wpm are running maxima per lesson (redoing worse
-//     never lowers them).
-//   - stars itself is ALSO stored as a running max, on top of that — so even
-//     if the baseline shifts because of unrelated activity in other lessons,
-//     an already-earned rating can't silently drop. Recomputing can only
-//     raise it.
+//   accuracy: 100%->3, 90%+->2, 80%+->1, else 0
+//   speed ratio (this WPM ÷ reference intro's WPM): >=90%->2, >=80%->1, else 0
+//   reference intro: practice -> this lesson's own intro
+//                     review   -> nearest previous REAL (non-message) lesson's intro
 //
-// localStorage['eluthu_lesson_stars']: { "<lessonIdx>": { best_accuracy, best_wpm, stars } }
+// Deliberately self-contained per lesson — nothing here depends on any
+// OTHER lesson's data changing over time (unlike the old cross-lesson
+// baseline design), so there's no blanket recompute-everything sweep on
+// every picker open anymore. Only lessons completed under this algorithm
+// get rated by it; already-completed lessons keep whatever they were
+// rated before, untouched.
+//
+// Stars are a running max — a worse redo can't lower an already-earned
+// rating. "Latest introduction speed" means whatever's currently stored
+// for that intro exercise (already a running best), so a later redo of
+// the intro naturally feeds into this calculation without any extra
+// tracking needed here.
+//
+// localStorage['eluthu_lesson_stars']: { "<lessonIdx>": { stars } }
 
 const LESSON_STARS_KEY = 'eluthu_lesson_stars';
 
@@ -1341,144 +1353,6 @@ function saveLessonStars(data) {
   catch { /* localStorage unavailable — degrade to unrated, no errors */ }
 }
 
-// A lesson counts as complete once every one of its exercises has a passing
-// score — matches the existing per-exercise pass gate (100%/90%/80%).
-function isLessonComplete(li) {
-  const lesson = manifest?.lessons?.[li];
-  if (!lesson) return false;
-  return lesson.exercises.every((_, ei) => hasPassedExercise(li, ei));
-}
-
-// This lesson's own aggregate: mean of its PRACTICE/REVIEW exercises' best
-// accuracy/wpm (drawn from eluthu_scores, which already keeps a running
-// best per exercise). Introduction exercises are excluded — trivially
-// short and expected to be near-100% by design, so including them would
-// dilute the accuracy/wpm signal used to judge "good" performance for star
-// ratings. wpm entries can be null on very short exercises — those are
-// skipped, and if none remain, wpm is null (speed just can't count toward
-// tiers 2-5 for that lesson).
-function lessonAggregate(li) {
-  const lesson = manifest?.lessons?.[li];
-  if (!lesson) return { accuracy: null, wpm: null };
-
-  const scores = lesson.exercises
-    .map((_, ei) => {
-      const exType = lesson.exercise_types?.[ei] ?? 'practice';
-      return exType === 'introduction' ? null : getExerciseScore(li, ei);
-    })
-    .filter(Boolean);
-  if (scores.length === 0) return { accuracy: null, wpm: null };
-
-  const accuracy = scores.reduce((s, sc) => s + sc.accuracy, 0) / scores.length;
-
-  const wpmScores = scores.filter(sc => sc.wpm != null);
-  const wpm = wpmScores.length > 0
-    ? wpmScores.reduce((s, sc) => s + sc.wpm, 0) / wpmScores.length
-    : null;
-
-  return { accuracy, wpm };
-}
-
-// The user's own rolling baseline: mean best_accuracy/best_wpm across all
-// OTHER completed lessons. Null if no baseline exists yet (e.g. this is the
-// very first lesson ever completed) — only 1 star is reachable until a
-// second lesson's data exists to compare against.
-// The user's own rolling baseline: mean best_accuracy/best_wpm across all
-// OTHER completed lessons, PLUS this lesson's own first-ever attempt (once
-// it exists). That second part matters: without it, redoing your very first
-// (or only) completed lesson would have nothing to compare against — no
-// other lesson exists yet, so baseline would stay empty and redo could never
-// improve the rating, which defeats the point of redo. Including your own
-// first attempt means a redo can upgrade a rating purely by beating your own
-// history on that lesson, even before a second lesson exists.
-function lessonBaseline(li) {
-  const all    = loadLessonStars();
-  const self   = all[li]; // existing stored data for THIS lesson, if any
-  const others = Object.entries(all)
-    .filter(([k]) => Number(k) !== li)
-    .map(([, v]) => v);
-
-  const accVals = others.map(o => o.best_accuracy).filter(v => v != null);
-  const wpmVals = others.map(o => o.best_wpm).filter(v => v != null);
-
-  if (self?.first_accuracy != null) accVals.push(self.first_accuracy);
-  if (self?.first_wpm != null)      wpmVals.push(self.first_wpm);
-
-  return {
-    accuracy: accVals.length ? accVals.reduce((s, v) => s + v, 0) / accVals.length : null,
-    wpm:      wpmVals.length ? wpmVals.reduce((s, v) => s + v, 0) / wpmVals.length : null,
-  };
-}
-
-function computeStars(bestAccuracy, bestWpm, baseline) {
-  // 1 star = lesson completed. Tiers 2-5 need accuracy and/or speed "good",
-  // with tiers 4/5 requiring an increasingly wide speed margin.
-  //
-  // Accuracy is capped at 100% — requiring it to be strictly ABOVE baseline
-  // is impossible to satisfy once someone's already at the ceiling (you
-  // can't beat your own 100%). So 100% accuracy counts as "good"
-  // unconditionally for every tier, independent of baseline. Below 100%,
-  // "good" still means strictly above the user's own baseline average.
-  const accGood = bestAccuracy != null && (bestAccuracy >= 100 ||
-    (baseline.accuracy != null && bestAccuracy > baseline.accuracy));
-
-  // Speed has no ceiling to auto-satisfy against, so tiers 4/5 are gated by
-  // margin above baseline (not just "any improvement") — 30%+ for tier 4,
-  // 60%+ for tier 5. Guards baseline.wpm > 0 to avoid a divide-by-zero.
-  const wpmMargin = (baseline.wpm != null && bestWpm != null && baseline.wpm > 0)
-    ? (bestWpm - baseline.wpm) / baseline.wpm
-    : null;
-  const wpmGood     = wpmMargin != null && wpmMargin > 0;      // any improvement (tiers 2/3, unchanged)
-  const wpmGoodWide = wpmMargin != null && wpmMargin >= 0.30;  // 30%+ above baseline (tier 4)
-  const wpmGoodHuge = wpmMargin != null && wpmMargin >= 0.60;  // 60%+ above baseline (tier 5)
-
-  if (accGood && wpmGoodHuge) return 5;
-  if (accGood && wpmGoodWide) return 4;
-  if (accGood && wpmGood)     return 3;
-  if (accGood || wpmGood)     return 2;
-  return 1;
-}
-
-// Recompute one lesson's rating. Only moves best_accuracy/best_wpm/stars
-// upward — see module comment above for why. first_accuracy/first_wpm are
-// captured once, on the lesson's first-ever completion, and never touched
-// again — they're a fixed "beat your own history" comparison point for
-// lessonBaseline() to use on redos.
-function recalcLessonStars(li) {
-  if (!isLessonComplete(li)) return;
-
-  const agg      = lessonAggregate(li);
-  const baseline = lessonBaseline(li);
-  const computed = computeStars(agg.accuracy, agg.wpm, baseline);
-
-  const all  = loadLessonStars();
-  const prev = all[li] ?? { best_accuracy: null, best_wpm: null, first_accuracy: null, first_wpm: null, stars: 0 };
-
-  const bestAccuracy = Math.max(prev.best_accuracy ?? -Infinity, agg.accuracy ?? -Infinity);
-  const bestWpm       = Math.max(prev.best_wpm ?? -Infinity, agg.wpm ?? -Infinity);
-
-  all[li] = {
-    best_accuracy:  bestAccuracy === -Infinity ? null : bestAccuracy,
-    best_wpm:       bestWpm === -Infinity ? null : bestWpm,
-    first_accuracy: prev.first_accuracy ?? agg.accuracy,
-    first_wpm:      prev.first_wpm ?? agg.wpm,
-    stars:          Math.max(prev.stars ?? 0, computed),
-  };
-  saveLessonStars(all);
-}
-
-// Recompute every completed lesson. Cheap given lesson counts involved, and
-// keeps ratings fresh as the baseline shifts from other lessons' activity —
-// safe because recalcLessonStars() can only raise a stored rating, never
-// lower one already earned.
-function recalcAllLessonStars() {
-  if (!manifest) return;
-  manifest.lessons.forEach((lesson, li) => {
-    if (lesson.name === '─') return; // message "lessons" aren't rated
-    recalcLessonStars(li);
-  });
-}
-
 function getLessonStars(li) {
   return loadLessonStars()[li]?.stars ?? 0;
 }
@@ -1486,6 +1360,72 @@ function getLessonStars(li) {
 // ⭐⭐⭐☆☆ style — filled for earned, outline for the remainder, out of 5.
 function renderStarRating(stars) {
   return '⭐'.repeat(stars) + '☆'.repeat(5 - stars);
+}
+
+function accuracyStars(accuracy) {
+  if (accuracy == null) return 0;
+  if (accuracy >= 100) return 3;
+  if (accuracy >= 90)  return 2;
+  if (accuracy >= 80)  return 1;
+  return 0;
+}
+
+function speedStars(ratio) {
+  if (ratio == null) return 0;
+  if (ratio >= 0.90) return 2;
+  if (ratio >= 0.80) return 1;
+  return 0;
+}
+
+// This lesson's introduction exercise index, or null if it has none
+// (shouldn't happen for a practice/review lesson, but stay defensive).
+function findIntroductionEi(li) {
+  const lesson = manifest?.lessons?.[li];
+  if (!lesson) return null;
+  const ei = (lesson.exercise_types ?? []).findIndex(t => (t ?? 'practice') === 'introduction');
+  return ei === -1 ? null : ei;
+}
+
+// Nearest REAL (non-message) lesson strictly before li — skips over
+// message-only pseudo-lessons (lesson.name === '─').
+function findPreviousRealLesson(li) {
+  if (!manifest) return null;
+  for (let i = li - 1; i >= 0; i--) {
+    if (manifest.lessons[i]?.name !== '─') return i;
+  }
+  return null;
+}
+
+// The reference introduction's WPM to compare this completion's speed
+// against. Null if no valid reference exists (e.g. a review lesson with
+// no prior real lesson — assumed not to occur per this lesson's design,
+// but stays defensive rather than throwing).
+function speedReferenceWpm(li, exType) {
+  const refLi = exType === 'review' ? findPreviousRealLesson(li) : li;
+  if (refLi == null) return null;
+  const introEi = findIntroductionEi(refLi);
+  if (introEi == null) return null;
+  return getExerciseScore(refLi, introEi)?.wpm ?? null;
+}
+
+// Recompute one lesson's star rating. Only called when exType is
+// 'practice' or 'review' — introduction/message completions never
+// trigger this.
+function recalcLessonStars(li, exType, stats) {
+  if (exType !== 'practice' && exType !== 'review') return;
+
+  const accStars = accuracyStars(stats.accuracy);
+
+  const refWpm   = speedReferenceWpm(li, exType);
+  const ratio    = (refWpm != null && refWpm > 0 && stats.wpm != null) ? stats.wpm / refWpm : null;
+  const spdStars = speedStars(ratio);
+
+  const computed = Math.min(5, accStars + spdStars);
+
+  const all  = loadLessonStars();
+  const prev = all[li]?.stars ?? 0;
+  all[li] = { stars: Math.max(prev, computed) };
+  saveLessonStars(all);
 }
 
 // Max reachable lesson/exercise (for locked state)
