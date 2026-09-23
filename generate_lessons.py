@@ -167,14 +167,14 @@ def make_non_combo_exercises(chars, lesson_id):
 
 # ── Combo exercise generator ──────────────────────────────────────────────────
 
-def make_combo_exercises(consonants, words, lesson_id, has_words=True):
+def make_combo_exercises(consonants, words, lesson_id, has_words=True, include_review=True):
     """
     Ex 1: Introduction — each uyirmei char twice with space (100%)
     Ex 2: Short words only, each repeated at least twice, fill to N (90%)
           Skipped if word_count == 0
     Ex 3: If words > N → all words (incl. sentences), no repeats, first N (80%)
           If words ≤ N → all words, randomized order, fill to N (80%)
-          Skipped if word_count == 0
+          Skipped if word_count == 0, or if include_review is False
     """
     exercises = []
     words     = words or []
@@ -204,6 +204,9 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True):
             ex2 += extra
         ex2 = ex2[:N]
     exercises.append(' '.join(ex2).strip())
+
+    if not include_review:
+        return exercises
 
     # Ex 3: All words, fill to N, randomized
     if len(words) > N:
@@ -383,8 +386,9 @@ def main():
                     texts = make_combo_exercises(consonants, words, lesson_id=lesson_counter, has_words=False)[:1]
                 accuracy_map = {1: 80}
             else:
-                texts        = make_combo_exercises(consonants, words, lesson_id=lesson_counter, has_words=word_count > 0)
-                accuracy_map = {1: 100, 2: 90, 3: 80} if word_count > 0 else {1: 100}
+                texts        = make_combo_exercises(consonants, words, lesson_id=lesson_counter,
+                                                      has_words=word_count > 0, include_review=False)
+                accuracy_map = {1: 100, 2: 90} if word_count > 0 else {1: 100}
         else:
             if len(chars) >= 3:
                 # Review only — single exercise, random words from lesson chars
