@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.6.6';
+window.ELUTHU_VERSIONS['app.js'] = '1.6.9';
 
 'use strict';
 
@@ -894,17 +894,6 @@ async function loadExercise() {
 async function boot() {
   manifest = await fetchJSON('data/lessons.json');
 
-  // Preload message texts for picker display
-  await Promise.all(manifest.lessons
-    .filter(l => l.name === '─')
-    .map(async l => {
-      try {
-        const data = await fetchJSON(`data/exercises/${l.exercises[0]}.json`);
-        l._msgText = data.text ?? '';
-      } catch (e) { l._msgText = ''; }
-    })
-  );
-
   loadProgress();
   lessonChars = manifest.lessons[lessonIdx].chars;
   renderStreakWidget();
@@ -935,6 +924,64 @@ const EXERCISE_LABELS = {
   'message':      'செய்தி',
 };
 
+// Message-type exercises never call saveExercisePass() (they advance via
+// a keypress-to-continue handler, not the typing engine), so
+// hasPassedExercise()/eluthu_scores has nothing to check for them. Whether
+// the user has read a given position is instead inferred from how far
+// they've actually progressed (eluthu_lesson/eluthu_exercise, the same
+// data maxReachedIdx() already tracks) — strictly before the furthest-
+// reached position means it's already been advanced past.
+function hasReachedPast(li, ei) {
+  const { l, e } = maxReachedIdx();
+  return li < l || (li === l && ei < e);
+}
+
+// Groups a lesson's exercises into picker tiles: consecutive message-type
+// exercises collapse into ONE tile (per user decision — a run of several
+// celebration/instructional screens shouldn't each get their own button);
+// every other exercise type keeps its own tile, unchanged.
+function buildTileGroups(lesson) {
+  const groups = [];
+  let i = 0;
+  while (i < lesson.exercises.length) {
+    const exType = lesson.exercise_types?.[i] ?? 'practice';
+    if (exType === 'message') {
+      let j = i;
+      while (j < lesson.exercises.length && (lesson.exercise_types?.[j] ?? 'practice') === 'message') {
+        j++;
+      }
+      groups.push({ startEi: i, endEi: j - 1, isMessageGroup: true });
+      i = j;
+    } else {
+      groups.push({ startEi: i, endEi: i, isMessageGroup: false });
+      i++;
+    }
+  }
+  return groups;
+}
+
+// Same idea as buildTileGroups(), one level up: in this app's actual
+// content, a "message" is usually an entire dedicated pseudo-lesson
+// (lesson.name === '─'), not an exercise nested inside a typing lesson —
+// consecutive message-lessons in the manifest collapse into one combined
+// picker card instead of one card per lesson.
+function buildLessonGroups(lessons) {
+  const groups = [];
+  let i = 0;
+  while (i < lessons.length) {
+    if (lessons[i].name === '─') {
+      let j = i;
+      while (j < lessons.length && lessons[j].name === '─') j++;
+      groups.push({ startLi: i, endLi: j - 1, isMessageGroup: true });
+      i = j;
+    } else {
+      groups.push({ startLi: i, endLi: i, isMessageGroup: false });
+      i++;
+    }
+  }
+  return groups;
+}
+
 function buildPicker() {
   if (!manifest) return;
   recalcAllLessonStars();
@@ -945,35 +992,55 @@ function buildPicker() {
   let currentGrid = null;
   let currentScrollTarget = null;
 
-  manifest.lessons.forEach((lesson, li) => {
-    // Message lesson — show as clickable info card
-    if (lesson.name === '─') {
-      // Close current grid so message appears between lesson groups
-      currentGrid = null;
-      currentTier = null;
+  buildLessonGroups(manifest.lessons).forEach(group => {
+    if (group.isMessageGroup) {
+      const { startLi, endLi } = group;
+      const isCurrent = lessonIdx >= startLi && lessonIdx <= endLi;
+      // Message lessons have exactly one exercise (always index 0), so
+      // "has the user moved past the last lesson in this run" reduces to
+      // comparing against that fixed position.
+      const isDone = hasReachedPast(endLi, 0);
 
       const msgCard = document.createElement('div');
       msgCard.className = 'picker-message-card';
-      if (li === lessonIdx) {
+
+      // Just an emoji, no truncated text preview — same simplification as
+      // the message-type-exercise tiles within a normal lesson.
+      if (isCurrent) {
         msgCard.classList.add('picker-lesson-current');
         currentScrollTarget = msgCard;
+        msgCard.textContent = '🟡 💬';
+      } else if (isDone) {
+        msgCard.textContent = '✅ 💬';
+      } else {
+        msgCard.textContent = '💬';
       }
 
-      // Get cached message text (set during manifest load) or use placeholder
-      const cachedText = lesson._msgText ?? '';
-      const firstLine  = cachedText.replace(/<[^>]+>/g, '').split('\n')[0].trim().slice(0, 60);
-      msgCard.textContent = '💬 ' + (firstLine || 'செய்தி') + (firstLine.length >= 60 ? '…' : '');
-
       msgCard.addEventListener('click', () => {
-        lessonIdx   = li;
+        lessonIdx   = startLi;
         exerciseIdx = 0;
-        lessonChars = lesson.chars ?? [];
+        lessonChars = manifest.lessons[startLi].chars ?? [];
         closePicker();
         loadExercise();
       });
-      $pickerList.appendChild(msgCard);
+
+      // Sits inside the SAME 2-column grid as neighboring lesson tiles,
+      // rather than a full-width row between grid sections. Deliberately
+      // does NOT reset currentTier/currentGrid (unlike before) — doing so
+      // was forcing every lesson adjacent to a message to spuriously start
+      // its own single-lesson section, even when it was genuinely the same
+      // tier as before.
+      if (!currentGrid) {
+        currentGrid = document.createElement('div');
+        currentGrid.className = 'picker-grid';
+        $pickerList.appendChild(currentGrid);
+      }
+      currentGrid.appendChild(msgCard);
       return;
     }
+
+    const li     = group.startLi;
+    const lesson = manifest.lessons[li];
     visibleLessonCount++;
 
     const tier = getLessonTier(lesson);
@@ -1044,10 +1111,45 @@ function buildPicker() {
     const exWrap = document.createElement('div');
     exWrap.className = 'picker-exercises';
 
-    lesson.exercises.forEach((exId, ei) => {
+    buildTileGroups(lesson).forEach(group => {
+      const { startEi, endEi, isMessageGroup } = group;
       const btn = document.createElement('button');
       btn.className = 'picker-ex-btn';
 
+      if (isMessageGroup) {
+        // Consecutive message screens collapse into one tile: no text
+        // label, just a fixed emoji — clicking jumps to the first message
+        // in the run; "done" means the LAST message in the run has been
+        // read (matches: whichever is the latest is what determines
+        // completion — same logic as the individual-message case, just
+        // extended to the whole group).
+        const isCurrent = li === lessonIdx && exerciseIdx >= startEi && exerciseIdx <= endEi;
+        const isDone    = hasReachedPast(li, endEi);
+
+        if (isCurrent) {
+          btn.classList.add('current');
+          currentScrollTarget = block;
+          btn.textContent = '🟡 💬';
+        } else if (isDone) {
+          btn.classList.add('passed');
+          btn.textContent = '✅ 💬';
+        } else {
+          btn.textContent = '💬';
+        }
+
+        btn.addEventListener('click', () => {
+          lessonIdx   = li;
+          exerciseIdx = startEi;
+          lessonChars = manifest.lessons[li].chars;
+          closePicker();
+          loadExercise();
+        });
+        exWrap.appendChild(btn);
+        return;
+      }
+
+      // Non-message tiles: unchanged from before, one exercise = one tile.
+      const ei = startEi;
       const isCurrent = li === lessonIdx && ei === exerciseIdx;
       const isPassed  = hasPassedExercise(li, ei);
 

@@ -1,4 +1,4 @@
-/* @version 1.4.2 */
+/* @version 1.4.3 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -273,6 +273,37 @@ body {
   font-size: 20px;
   letter-spacing: 1px;
   line-height: 1;
+}
+
+/* Message-lesson tiles — same border/padding/background as .picker-lesson
+   so they sit visually consistent inside the same 2-column grid, but
+   centered content since a message tile is just one big emoji, not a
+   name+chips+exercises stack. */
+.picker-message-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--bg-card);
+  font-size: 22px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.picker-message-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-bg);
+}
+
+/* .picker-lesson-current is reused here (same class app.js already adds),
+   but the existing rule above is scoped to .picker-lesson specifically —
+   this repeats the same blue-highlight look for the message-card case. */
+.picker-message-card.picker-lesson-current {
+  border-color: var(--blue);
+  background: var(--blue-bg);
 }
 
 /* ── Character chips ────────────────────────────────────────────────────── */
