@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.7.0';
+window.ELUTHU_VERSIONS['app.js'] = '1.7.1';
 
 'use strict';
 
@@ -1372,8 +1372,8 @@ function accuracyStars(accuracy) {
 
 function speedStars(ratio) {
   if (ratio == null) return 0;
-  if (ratio >= 0.90) return 2;
-  if (ratio >= 0.80) return 1;
+  if (ratio >= 0.75) return 2;
+  if (ratio >= 0.50) return 1;
   return 0;
 }
 
