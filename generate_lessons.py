@@ -193,16 +193,16 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True, include_r
     if not has_words:
         return exercises
 
-    # Ex 2: Short words, each repeated at least twice
+    # Ex 2: Short words, filled/truncated to a flat cap of MAX_WORDS
     short_words = [w for w in words if ' ' not in w]
-    ex2 = []
+    ex2 = list(short_words)
     if short_words:
-        for w in short_words:
-            ex2 += [w, w]
-        while len(ex2) < N:
-            extra = list(short_words)
-            ex2 += extra
-        ex2 = ex2[:N]
+        if len(ex2) > N:
+            ex2 = ex2[:N]
+        else:
+            while len(ex2) < N:
+                ex2 += short_words
+            ex2 = ex2[:N]
     exercises.append(' '.join(ex2).strip())
 
     if not include_review:
