@@ -1,4 +1,4 @@
-/* @version 1.4.9 */
+/* @version 1.4.11 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -412,8 +412,11 @@ body {
    enough to spill up over the tile above it and across into the star
    rating corner — a big background trend line for the tile, not a small
    inline indicator. No fill, so it never blocks the content it overlaps,
-   and pointer-events:none so clicks still reach the tiles/stars under it. */
-.picker-score-graph {
+   and pointer-events:none so clicks still reach the tiles/stars under it.
+   The outer wrap carries the position/size; the svg and the value labels
+   inside it are both sized/positioned relative to that same box, so a
+   label can be pinned to the line's endpoint by percentage. */
+.picker-score-graph-wrap {
   position: absolute;
   right: 8px;
   bottom: 8px;
@@ -422,6 +425,12 @@ body {
   height: 90px;
   pointer-events: none;
   z-index: 2;
+}
+
+.picker-score-graph {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .picker-score-graph .spark-acc {
@@ -440,6 +449,36 @@ body {
   stroke-linejoin: round;
   opacity: 0.75;
 }
+
+/* Value label pinned to each line's endpoint — one at the start, one at
+   the end — positioned by percentage (left/top set inline per-graph in
+   app.js) so it lands on the actual plotted point. The end label grows
+   leftward (its point sits near the graph's — and card's — right edge,
+   so growing right would spill outside); the start label grows rightward
+   for the same reason at the opposite edge. A small opaque backing keeps
+   the number legible over the line/stars/box it overlaps. */
+.picker-score-graph-label {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  white-space: nowrap;
+  background: var(--bg-card);
+  padding: 0 3px;
+  border-radius: 3px;
+  line-height: 1.5;
+}
+
+.picker-score-graph-label.end {
+  transform: translate(calc(-100% - 3px), -50%);
+}
+
+.picker-score-graph-label.start {
+  transform: translate(3px, -50%);
+}
+
+.picker-score-graph-label.acc { color: var(--correct); }
+.picker-score-graph-label.wpm { color: var(--blue); }
 
 
 /* ── 2-row 3-column layout ──────────────────────────────────────────────── */

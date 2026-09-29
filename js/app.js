@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.8.5';
+window.ELUTHU_VERSIONS['app.js'] = '1.8.7';
 
 'use strict';
 
@@ -1418,30 +1418,61 @@ function renderScoreSparkline(history) {
   const n = history.length;
   const xStep = (W - 2 * PADX) / (n - 1);
 
-  function points(vals, laneTop) {
+  // Returns the polyline points string plus the first and last PLOTTED
+  // point (x, y, and the actual value there — not necessarily history[0]/
+  // history[n-1], since a null wpm entry is skipped when plotting, so the
+  // first/last plotted point can be an inner index). Positions are in
+  // viewBox coordinates, so the caller can drop value labels exactly on
+  // each line's two tips (as %-positioned HTML labels, not SVG text —
+  // text inside this viewBox would get stretched/skewed the same way the
+  // polylines do, since the box uses preserveAspectRatio="none").
+  function series(vals, laneTop) {
     const known = vals.filter(v => v != null);
-    if (known.length < 2) return '';
+    if (known.length < 2) return null;
     const min = Math.min(...known), max = Math.max(...known);
     const range = max - min || 1;
-    return vals.map((v, i) => {
-      if (v == null) return null;
+    const pts = [];
+    vals.forEach((v, i) => {
+      if (v == null) return;
       const x = PADX + i * xStep;
       const y = laneTop + (laneH - LANE_PAD)
         - ((v - min) / range) * (laneH - 2 * LANE_PAD);
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }).filter(Boolean).join(' ');
+      pts.push({ x, y, v });
+    });
+    return { pointsAttr: pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '),
+              first: pts[0], last: pts[pts.length - 1] };
   }
 
-  const accPts = points(history.map(h => h.accuracy), 0);
-  const wpmPts = points(history.map(h => h.wpm), laneH + GAP);
-  const last   = history[history.length - 1];
-  const title  = `${last.accuracy}%${last.wpm != null ? ` · ${last.wpm} WPM` : ''} (last ${n} attempts)`;
+  const acc  = series(history.map(h => h.accuracy), 0);
+  const wpm  = series(history.map(h => h.wpm), laneH + GAP);
+  const last = history[history.length - 1];
+  const title = `${last.accuracy}%${last.wpm != null ? ` · ${last.wpm} WPM` : ''} (last ${n} attempts)`;
 
-  return `<svg class="picker-score-graph" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`
+  const svg = `<svg class="picker-score-graph" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`
     + `<title>${title}</title>`
-    + (accPts ? `<polyline points="${accPts}" class="spark-acc" />` : '')
-    + (wpmPts ? `<polyline points="${wpmPts}" class="spark-wpm" />` : '')
+    + (acc ? `<polyline points="${acc.pointsAttr}" class="spark-acc" />` : '')
+    + (wpm ? `<polyline points="${wpm.pointsAttr}" class="spark-wpm" />` : '')
     + `</svg>`;
+
+  // Value labels positioned by percentage (of the viewBox) so they land
+  // on the line's actual endpoints regardless of how much the box is
+  // stretched by CSS. The end label anchors growing LEFTWARD (the tip
+  // sits near the graph's — and the card's — right edge, so growing
+  // right would spill outside the card); the start label anchors growing
+  // RIGHTWARD for the same reason at the opposite edge.
+  function label(point, unit, cls) {
+    if (!point) return '';
+    return `<span class="picker-score-graph-label ${cls}" `
+      + `style="left:${(point.x / W * 100).toFixed(1)}%; top:${(point.y / H * 100).toFixed(1)}%;">`
+      + `${point.v}${unit}</span>`;
+  }
+
+  const labels = label(acc?.first, '%', 'acc start')
+    + label(acc?.last,  '%', 'acc end')
+    + label(wpm?.first, ' WPM', 'wpm start')
+    + label(wpm?.last,  ' WPM', 'wpm end');
+
+  return `<div class="picker-score-graph-wrap">${svg}${labels}</div>`;
 }
 
 // ── Lesson star ratings ─────────────────────────────────────────────────────
