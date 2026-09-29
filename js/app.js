@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.8.4';
+window.ELUTHU_VERSIONS['app.js'] = '1.8.5';
 
 'use strict';
 
@@ -1176,7 +1176,11 @@ function buildPicker() {
         currentScrollTarget = block;
         btn.textContent = `🟡 ${exLabel}`;
       } else if (isPassed) {
-        const score = getExerciseScore(li, ei);
+        // Latest attempt, not best-ever — the best-ever record still
+        // drives stars/badges, but the picker box itself should reflect
+        // "how did I just do" rather than a running max that can lag
+        // behind a worse (but most recent) redo.
+        const score = getLatestScore(li, ei);
         btn.classList.add('passed');
         const hasScore = score && typeof score === 'object' && score.accuracy !== undefined;
         // score.wpm != null (not a strict truthy check) — a legitimately
@@ -1380,6 +1384,20 @@ function recordScoreHistory(lessonIdx, exerciseIdx, accuracy, wpm) {
 
 function getScoreHistory(lessonIdx, exerciseIdx) {
   return loadScoreHistory()[`${lessonIdx}-${exerciseIdx}`] ?? [];
+}
+
+// The most recent PASSED attempt's accuracy/wpm, for display in the
+// picker — deliberately different from getExerciseScore() (which tracks
+// the best-ever running max, still used for badges/stars). Falls back to
+// the best-ever record for exercises passed before this history feature
+// existed, so old passes don't suddenly show nothing.
+function getLatestScore(lessonIdx, exerciseIdx) {
+  const history = getScoreHistory(lessonIdx, exerciseIdx);
+  if (history.length) {
+    const last = history[history.length - 1];
+    return { accuracy: last.accuracy, wpm: last.wpm };
+  }
+  return getExerciseScore(lessonIdx, exerciseIdx);
 }
 
 // Tiny inline-SVG sparkline: accuracy % and WPM as two separate stacked

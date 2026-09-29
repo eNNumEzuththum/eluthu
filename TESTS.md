@@ -11,8 +11,8 @@
 | combination.js | 1.1.8 |
 | typing.js | 1.0.1 |
 | lessons.js | 1.0.0 |
-| app.js | 1.8.4 |
-| version.js | 1.10.20 |
+| app.js | 1.8.5 |
+| version.js | 1.11.20 |
 | tamil99-writer.html | 1.6.3 |
 ---
 
