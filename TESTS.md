@@ -5,14 +5,14 @@
 | File | Version |
 |---|---|
 | index.html | 1.1.9 |
-| style.css | 1.4.3 |
+| style.css | 1.4.9 |
 | tamil99-keymap.json | 1.0.0 |
 | tamil99.js | 1.0.0 |
 | combination.js | 1.1.8 |
 | typing.js | 1.0.1 |
 | lessons.js | 1.0.0 |
-| app.js | 1.7.1 |
-| version.js | 1.9.20 |
+| app.js | 1.8.4 |
+| version.js | 1.10.20 |
 | tamil99-writer.html | 1.6.3 |
 ---
 

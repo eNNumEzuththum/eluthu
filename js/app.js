@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.7.1';
+window.ELUTHU_VERSIONS['app.js'] = '1.8.4';
 
 'use strict';
 
@@ -717,6 +717,12 @@ function _onComplete(stats) {
   // short) look systematically unmeasured in the picker.
   if (passed) saveExercisePass(lessonIdx, exerciseIdx, stats.wpm, stats.accuracy);
 
+  // Log this attempt into the per-exercise session history, so the picker
+  // can draw a progress sparkline (accuracy/WPM over past attempts) instead
+  // of just the single best-ever score. Only passed attempts are logged —
+  // failed/incomplete attempts aren't meaningful "sessions" to trend on.
+  if (passed) recordScoreHistory(lessonIdx, exerciseIdx, stats.accuracy, stats.wpm);
+
   // Recompute this lesson's star rating — only fires when the exercise
   // that just passed is practice or review (never introduction/message).
   // Must happen before lessonIdx advances below.
@@ -1159,6 +1165,12 @@ function buildPicker() {
       const exType  = lesson.exercise_types?.[ei] ?? 'practice';
       const exLabel = EXERCISE_LABELS[exType] ?? `பயிற்சி ${ei + 1}`;
 
+      // Prefer the progress sparkline (needs 2+ logged attempts); fall
+      // back to the plain last-score text for exercises passed only once,
+      // or passed before this history feature existed (their history log
+      // starts empty and only fills in from here on).
+      const graph = isPassed ? renderScoreSparkline(getScoreHistory(li, ei)) : null;
+
       if (isCurrent) {
         btn.classList.add('current');
         currentScrollTarget = block;
@@ -1167,13 +1179,24 @@ function buildPicker() {
         const score = getExerciseScore(li, ei);
         btn.classList.add('passed');
         const hasScore = score && typeof score === 'object' && score.accuracy !== undefined;
-        btn.innerHTML = `✅ ${exLabel}`
-          // score.wpm != null (not a strict truthy check) — a legitimately
-          // fast exercise can compute to exactly 0 WPM (elapsed rounds to 0
-          // at Date.now()'s millisecond resolution on very short/fast
-          // exercises); a truthy check would hide that real 0 the same way
-          // as a genuinely unrecorded null/undefined value.
-          + (hasScore ? `<span class="picker-score">${score.accuracy}%${score.wpm != null ? ` · ${score.wpm} WPM` : ''}</span>` : '');
+        // score.wpm != null (not a strict truthy check) — a legitimately
+        // fast exercise can compute to exactly 0 WPM (elapsed rounds to 0
+        // at Date.now()'s millisecond resolution on very short/fast
+        // exercises); a truthy check would hide that real 0 the same way
+        // as a genuinely unrecorded null/undefined value.
+        // Always shown, same as before the sparkline existed — the graph
+        // is a separate overlay (see below), not a replacement for this.
+        // Accuracy and WPM colored separately (matching the sparkline's
+        // green accuracy line / blue WPM line) rather than one flat
+        // inherited color, so the box's numbers visually key to the
+        // overlay graph's two series.
+        const fallback = hasScore
+          ? `<span class="picker-score">`
+            + `<span class="picker-score-acc">${score.accuracy}%</span>`
+            + (score.wpm != null ? ` · <span class="picker-score-wpm">${score.wpm} WPM</span>` : '')
+            + `</span>`
+          : '';
+        btn.innerHTML = `✅ ${exLabel}` + fallback;
       } else {
         btn.textContent = exLabel;
       }
@@ -1185,7 +1208,18 @@ function buildPicker() {
         closePicker();
         loadExercise();
       });
+
       exWrap.appendChild(btn);
+
+      // The sparkline is appended directly to the LESSON CARD (not next to
+      // the button), absolutely positioned as a large overlay that spans
+      // from near the exercise row up over the tile — deliberately drawn
+      // across the star rating and the box above it, since it's meant to
+      // read as a big background trend line for the whole tile rather
+      // than a small per-exercise indicator. It has no fill and
+      // pointer-events:none, so it never blocks clicking the tiles or
+      // stars underneath it.
+      if (graph) block.insertAdjacentHTML('beforeend', graph);
     });
 
     block.appendChild(exWrap);
@@ -1312,6 +1346,84 @@ function getExerciseScore(lessonIdx, exerciseIdx) {
 
 function hasPassedExercise(lessonIdx, exerciseIdx) {
   return !!getExerciseScore(lessonIdx, exerciseIdx);
+}
+
+// ── Per-exercise score history (picker progress sparkline) ────────────────────
+// Keeps a short trailing log of past PASSED attempts per exercise, so the
+// picker can draw a tiny accuracy/WPM trend line instead of just the
+// single best-ever score. Independent of eluthu_scores (which only tracks
+// running maxima) — this is the only place attempt-by-attempt history lives.
+// Capped per exercise so localStorage doesn't grow without bound over
+// months of daily practice across hundreds of exercises.
+const SCORE_HISTORY_KEY = 'eluthu_score_history';
+const SCORE_HISTORY_MAX = 10; // trailing attempts kept per exercise
+
+function loadScoreHistory() {
+  try { return JSON.parse(localStorage.getItem(SCORE_HISTORY_KEY) || '{}'); }
+  catch { return {}; }
+}
+
+function saveScoreHistoryData(data) {
+  try { localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(data)); }
+  catch {}
+}
+
+function recordScoreHistory(lessonIdx, exerciseIdx, accuracy, wpm) {
+  const all  = loadScoreHistory();
+  const key  = `${lessonIdx}-${exerciseIdx}`;
+  const list = all[key] ?? [];
+  list.push({ ts: Date.now(), accuracy: Math.round(accuracy), wpm: wpm ?? null });
+  if (list.length > SCORE_HISTORY_MAX) list.splice(0, list.length - SCORE_HISTORY_MAX);
+  all[key] = list;
+  saveScoreHistoryData(all);
+}
+
+function getScoreHistory(lessonIdx, exerciseIdx) {
+  return loadScoreHistory()[`${lessonIdx}-${exerciseIdx}`] ?? [];
+}
+
+// Tiny inline-SVG sparkline: accuracy % and WPM as two separate stacked
+// lanes (accuracy on top, WPM below), each scaled independently to its own
+// min/max within the history window. Two lanes rather than one shared
+// height — with only a couple of points, an "accuracy improved" line and
+// a "WPM improved" line normalize to the exact same diagonal coordinates
+// when scaled onto one shared height, so the accuracy line (drawn last)
+// completely hides the WPM line underneath it. Separate lanes guarantee
+// both are always visible regardless of how their trends compare.
+// Returns null when there are fewer than 2 points — a single dot isn't a
+// trend, so the caller falls back to the plain "last score" text.
+function renderScoreSparkline(history) {
+  if (!history || history.length < 2) return null;
+
+  const W = 120, H = 60, PADX = 4, LANE_PAD = 3, GAP = 6;
+  const laneH = (H - GAP) / 2;
+  const n = history.length;
+  const xStep = (W - 2 * PADX) / (n - 1);
+
+  function points(vals, laneTop) {
+    const known = vals.filter(v => v != null);
+    if (known.length < 2) return '';
+    const min = Math.min(...known), max = Math.max(...known);
+    const range = max - min || 1;
+    return vals.map((v, i) => {
+      if (v == null) return null;
+      const x = PADX + i * xStep;
+      const y = laneTop + (laneH - LANE_PAD)
+        - ((v - min) / range) * (laneH - 2 * LANE_PAD);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).filter(Boolean).join(' ');
+  }
+
+  const accPts = points(history.map(h => h.accuracy), 0);
+  const wpmPts = points(history.map(h => h.wpm), laneH + GAP);
+  const last   = history[history.length - 1];
+  const title  = `${last.accuracy}%${last.wpm != null ? ` · ${last.wpm} WPM` : ''} (last ${n} attempts)`;
+
+  return `<svg class="picker-score-graph" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`
+    + `<title>${title}</title>`
+    + (accPts ? `<polyline points="${accPts}" class="spark-acc" />` : '')
+    + (wpmPts ? `<polyline points="${wpmPts}" class="spark-wpm" />` : '')
+    + `</svg>`;
 }
 
 // ── Lesson star ratings ─────────────────────────────────────────────────────

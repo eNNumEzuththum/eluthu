@@ -1,4 +1,4 @@
-/* @version 1.4.3 */
+/* @version 1.4.9 */
 /* With this: */
 @font-face {
   font-family: 'Noto Sans Tamil';
@@ -341,6 +341,17 @@ body {
 }
 
 /* ── Picker exercise buttons ─────────────────────────────────────────────── */
+/* Exercises stack one per row, in order — this used to happen only as a
+   side-effect of .picker-ex-btn.passed's own display:flex making it a
+   full-width block; now that the button is back to shrink-to-fit sizing,
+   the container itself needs to force the stacking. */
+.picker-exercises {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
 .picker-ex-btn {
   padding: 6px 14px;
   border-radius: 8px;
@@ -369,16 +380,65 @@ body {
 .picker-ex-btn.passed {
   border-color: var(--correct);
   color: var(--correct);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
+  /* Shrink-to-fit (no display:flex here) — this box wraps only the
+     checkmark + label + score text, same as before the sparkline existed.
+     The progress sparkline is a large absolutely-positioned overlay on
+     the lesson card itself (.picker-score-graph below), not a child of
+     this button. */
 }
 
 .picker-score {
   font-size: 10px;
   opacity: 0.8;
   font-family: var(--font-ui);
+  white-space: nowrap;
+  display: block;
+}
+
+/* Colored to match the overlay sparkline's two series (green accuracy
+   line, blue WPM line), instead of both numbers inheriting the button's
+   flat green text color. */
+.picker-score-acc {
+  color: var(--correct);
+}
+
+.picker-score-wpm {
+  color: var(--blue);
+}
+
+/* Per-exercise progress sparkline (accuracy + WPM over recent attempts).
+   Appended directly to .picker-lesson (which is position:relative) as a
+   large overlay anchored near the exercise row, deliberately tall/wide
+   enough to spill up over the tile above it and across into the star
+   rating corner — a big background trend line for the tile, not a small
+   inline indicator. No fill, so it never blocks the content it overlaps,
+   and pointer-events:none so clicks still reach the tiles/stars under it. */
+.picker-score-graph {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 62%;
+  max-width: 230px;
+  height: 90px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.picker-score-graph .spark-acc {
+  fill: none;
+  stroke: var(--correct);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.picker-score-graph .spark-wpm {
+  fill: none;
+  stroke: var(--blue);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
 }
 
 
