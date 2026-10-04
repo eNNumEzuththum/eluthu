@@ -16,7 +16,7 @@
  * Interface is identical to TypingEngine so app.js can swap between them.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['combination.js'] = '1.1.8';
+window.ELUTHU_VERSIONS['combination.js'] = '1.1.9';
 
 'use strict';
 
@@ -30,11 +30,31 @@ const COMBO_SOFT_HARD = {
 const COMBO_PULLI = '்';
 const COMBO_ZWNJ  = '\u200C';
 
+// Sentence punctuation that can appear as a target character but isn't in
+// CHAR_TO_KEY (that map is built from CURRICULUM -- Tamil letters with a
+// finger/position -- punctuation was never added to it; app.js's own
+// keydown handler matches '.'/',' by e.code, not by a CHAR_TO_KEY lookup).
+// Any getNextKey() fallback that reads _charToKey[someChar] needs this
+// too, or it silently breaks the moment a bare consonant -- or the cursor
+// itself -- lands on '.'/',' -- see keyForChar() below.
+const COMBO_PUNCT_KEY = { '.': 'Period', ',': 'Comma' };
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function isConsonant(ch) {
   const cp = ch?.codePointAt(0);
   return cp >= 0x0B95 && cp <= 0x0BB9;
+}
+
+// _charToKey only covers Tamil letters (built from CURRICULUM); punctuation
+// needs the separate COMBO_PUNCT_KEY table above. Centralizing this lookup
+// so every getNextKey() fallback treats punctuation the same way, instead
+// of defaulting to 'Space' (wrong -- a word-final bare consonant followed
+// by '.' or ',' has that punctuation mark as its real next key) or null
+// (no key highlighted at all, when the cursor itself reaches the mark).
+function keyForChar(charToKey, ch) {
+  if (ch == null) return null;
+  return charToKey[ch] ?? COMBO_PUNCT_KEY[ch] ?? null;
 }
 
 
@@ -154,7 +174,7 @@ class CombinationEngine {
     if (curCluster === ' ' || curCluster === COMBO_ZWNJ) return 'Space';
 
     const d = decomposeCluster(curCluster);
-    if (!d) return this._charToKey[curCluster] ?? null;
+    if (!d) return keyForChar(this._charToKey, curCluster);
 
     const pending = this._pendingConsonant;
     const nextCluster = this._target[cur + 1] ?? null;
@@ -175,6 +195,10 @@ class CombinationEngine {
       if (d.marker === '' && this._pendingFromChain && !isWordStart) {
         const afterNext = this._target[cur + 1] ?? null;
         if (!afterNext || afterNext === ' ') return 'Space';
+        // Punctuation right after the pending bare consonant — e.g. a
+        // sentence-final word like "ஒன்றல்ல." — IS the real next key
+        // (Period/Comma), not a cue to fall back to Space.
+        if (COMBO_PUNCT_KEY[afterNext]) return COMBO_PUNCT_KEY[afterNext];
         const dAfter = decomposeCluster(afterNext);
         if (dAfter && dAfter.consonant === pending) return this._charToKey[pending] ?? null;
         if (dAfter) return this._charToKey[dAfter.consonant] ?? null;
@@ -200,7 +224,11 @@ class CombinationEngine {
       // For bare consonant (marker=''), pressing the next consonant commits
       // the current pending via regular chain — show next consonant's key.
       if (d.marker === '') {
-        return dNext ? (this._charToKey[dNext.consonant] ?? 'Space') : 'Space';
+        if (dNext) return this._charToKey[dNext.consonant] ?? 'Space';
+        // No decomposable next cluster — could be genuine end-of-target,
+        // a space, or punctuation (same gap as Rule 2a above).
+        if (nextCluster && COMBO_PUNCT_KEY[nextCluster]) return COMBO_PUNCT_KEY[nextCluster];
+        return 'Space';
       }
       // (marker is non-empty — fall through to vowel key)
       return this._markerKey(d.marker);
