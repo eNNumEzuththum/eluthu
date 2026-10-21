@@ -5,7 +5,7 @@
  * Two sections: lesson char row + keyboard.
  */
 window.ELUTHU_VERSIONS = window.ELUTHU_VERSIONS || {};
-window.ELUTHU_VERSIONS['app.js'] = '1.8.7';
+window.ELUTHU_VERSIONS['app.js'] = '1.9.2';
 
 'use strict';
 
@@ -794,8 +794,7 @@ async function loadExercise() {
   }
 
   const lesson  = manifest.lessons[lessonIdx];
-  const exId    = lesson.exercises[exerciseIdx];
-  const data    = await fetchJSON(`data/exercises/${exId}.json`);
+  const data    = await fetchJSON(`data/exercises/${exerciseFileId(lessonIdx, exerciseIdx)}.json`);
 
   exerciseText = data.text;
 
@@ -900,6 +899,8 @@ async function loadExercise() {
 async function boot() {
   manifest = await fetchJSON('data/lessons.json');
 
+  validateManifestIds();
+  migrateToStableKeys();
   loadProgress();
   lessonChars = manifest.lessons[lessonIdx].chars;
   renderStreakWidget();
@@ -1169,7 +1170,8 @@ function buildPicker() {
       // back to the plain last-score text for exercises passed only once,
       // or passed before this history feature existed (their history log
       // starts empty and only fills in from here on).
-      const graph = isPassed ? renderScoreSparkline(getScoreHistory(li, ei)) : null;
+      const graph = (isPassed && exType !== 'introduction')
+        ? renderScoreSparkline(getScoreHistory(li, ei)) : null;
 
       if (isCurrent) {
         btn.classList.add('current');
@@ -1215,14 +1217,11 @@ function buildPicker() {
 
       exWrap.appendChild(btn);
 
-      // The sparkline is appended directly to the LESSON CARD (not next to
-      // the button), absolutely positioned as a large overlay that spans
-      // from near the exercise row up over the tile — deliberately drawn
-      // across the star rating and the box above it, since it's meant to
-      // read as a big background trend line for the whole tile rather
-      // than a small per-exercise indicator. It has no fill and
-      // pointer-events:none, so it never blocks clicking the tiles or
-      // stars underneath it.
+      // The sparkline is appended directly to the LESSON CARD, absolutely
+      // positioned as a large overlay spilling over the star rating and the
+      // box above. Only practice/review exercises get one (see `graph`
+      // above), so there is at most one graph per card and they never stack.
+      // No fill and pointer-events:none, so it never blocks clicks.
       if (graph) block.insertAdjacentHTML('beforeend', graph);
     });
 
@@ -1302,11 +1301,168 @@ function updateBackButton() {
 }
 
 
+// ── Stable data keys ─────────────────────────────────────────────────────────
+//
+// All saved data (scores, attempt history, lesson stars, resume position) is
+// keyed by the PERMANENT ids in lessons.json — the lesson's `id` and the
+// exercise's id inside it — never by array position. Position (lessonIdx /
+// exerciseIdx) is only used to find an entry in the manifest; it shifts
+// whenever a lesson or exercise is inserted/removed above it, which used to
+// orphan or mis-assign saved data. Order and navigation still come from the
+// array order of lessons.json, exactly as before.
+//
+// Exercise ids in lessons.json are lesson-local ("01"); the exercise file and
+// the data key are "<lesson id>-<exercise id>" (e.g. "13-01"). Ids that
+// already carry the "<lesson id>-" prefix (the old format) are accepted too,
+// so the app works both before and after lessons.json is converted.
+
+function lessonKeyOf(li) {
+  const lesson = manifest?.lessons?.[li];
+  if (!lesson) return null;
+  // Fallback only matters for a lesson missing an id (validateManifestIds
+  // warns about that) — it keeps the app running rather than throwing.
+  return lesson.id != null ? String(lesson.id) : `#${li}`;
+}
+
+function exerciseFileId(li, ei) {
+  const lesson = manifest?.lessons?.[li];
+  const raw    = lesson?.exercises?.[ei];
+  if (raw == null) return null;
+  const s      = String(raw);
+  const prefix = `${lessonKeyOf(li)}-`;
+  return s.startsWith(prefix) ? s : `${prefix}${s}`;
+}
+
+// Warn (console only) about anything that would silently break the stable
+// keys: missing/duplicate lesson ids, duplicate exercise ids in a lesson, and
+// an id at or above next_lesson_id (a forgotten counter increment — the next
+// new lesson would then reuse an existing id and inherit its data).
+function validateManifestIds() {
+  if (!manifest?.lessons) return;
+  const nextId = manifest.next_lesson_id;
+  if (nextId == null) console.warn('[eluthu] lessons.json has no "next_lesson_id" — add one so deleted lesson ids are never reused.');
+  const seen = new Set();
+  manifest.lessons.forEach((lesson, li) => {
+    if (lesson.id == null) { console.warn(`[eluthu] lesson at position ${li} has no id`); return; }
+    const k = String(lesson.id);
+    if (seen.has(k)) console.warn(`[eluthu] duplicate lesson id "${k}" (position ${li}) — their saved data will be merged`);
+    seen.add(k);
+    if (nextId != null && Number(lesson.id) >= Number(nextId)) {
+      console.warn(`[eluthu] lesson id ${k} is >= next_lesson_id (${nextId}) — bump next_lesson_id`);
+    }
+    const exSeen = new Set();
+    (lesson.exercises ?? []).forEach((_, ei) => {
+      const fid = exerciseFileId(li, ei);
+      if (exSeen.has(fid)) console.warn(`[eluthu] duplicate exercise id "${fid}" in lesson ${k}`);
+      exSeen.add(fid);
+    });
+  });
+}
+
+// One-time conversion of data saved under the old position keys
+// ("<lessonIdx>-<exerciseIdx>", lesson stars "<lessonIdx>", resume as two
+// indices) to the stable keys above. Every lesson/exercise id in the original
+// lessons.json was simply its position + 1, zero-padded to 2 digits
+// (position 12, exercise 1 -> lesson "13", exercise "13-02"), so the old keys
+// are converted by that fixed rule and do NOT depend on the current
+// lessons.json — editing the file before a returning user's first visit
+// can't misplace their data. All new values are computed first and written
+// together, then a flag is set, so it can never run twice (new keys like
+// "13-01" look just like old ones, so a second pass would corrupt them).
+const KEYS_V2_FLAG = 'eluthu_keys_v2';
+const RESUME_KEY   = 'eluthu_resume';
+
+const legacyPad2    = n => String(n + 1).padStart(2, '0');
+const legacyLesson  = p => legacyPad2(p);
+const legacyExercise = (p, e) => `${legacyPad2(p)}-${legacyPad2(e)}`;
+
+function migrateToStableKeys() {
+  try {
+    if (localStorage.getItem(KEYS_V2_FLAG)) return;
+
+    // New user (or already clean): no old-format data exists, so there is
+    // nothing to convert — just mark done so new-format keys are never
+    // mistaken for old ones later.
+    const hasOldData = [SCORES_KEY, SCORE_HISTORY_KEY, LESSON_STARS_KEY, 'eluthu_lesson', 'eluthu_exercise']
+      .some(k => localStorage.getItem(k) != null);
+    if (!hasOldData) { localStorage.setItem(KEYS_V2_FLAG, '1'); return; }
+
+    const remapExercises = (storeKey) => {
+      const raw = localStorage.getItem(storeKey);
+      if (!raw) return null;
+      const out = {};
+      Object.entries(JSON.parse(raw)).forEach(([k, v]) => {
+        const m  = /^(\d+)-(\d+)$/.exec(k);
+        const nk = m ? legacyExercise(+m[1], +m[2]) : null;
+        if (nk) out[nk] = v;
+        else console.warn(`[eluthu] migration: dropped "${k}" from ${storeKey} (unrecognised key)`);
+      });
+      return out;
+    };
+
+    const scores  = remapExercises(SCORES_KEY);
+    const history = remapExercises(SCORE_HISTORY_KEY);
+
+    let stars = null;
+    const rawStars = localStorage.getItem(LESSON_STARS_KEY);
+    if (rawStars) {
+      stars = {};
+      Object.entries(JSON.parse(rawStars)).forEach(([k, v]) => {
+        const nk = /^\d+$/.test(k) ? legacyLesson(+k) : null;
+        if (nk) stars[nk] = v;
+        else console.warn(`[eluthu] migration: dropped lesson stars "${k}" (unrecognised key)`);
+      });
+    }
+
+    let resume = null;
+    const oldL = localStorage.getItem('eluthu_lesson');
+    const oldE = localStorage.getItem('eluthu_exercise');
+    if (oldL != null) {
+      const pl = parseInt(oldL), pe = parseInt(oldE ?? '0');
+      if (Number.isFinite(pl) && Number.isFinite(pe))
+        resume = { lesson: legacyLesson(pl), exercise: legacyExercise(pl, pe) };
+    }
+
+    // Write phase
+    if (scores)  localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
+    if (history) localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(history));
+    if (stars)   localStorage.setItem(LESSON_STARS_KEY, JSON.stringify(stars));
+    if (resume)  localStorage.setItem(RESUME_KEY, JSON.stringify(resume));
+    localStorage.removeItem('eluthu_lesson');
+    localStorage.removeItem('eluthu_exercise');
+    localStorage.setItem(KEYS_V2_FLAG, '1');
+    console.log('[eluthu] migrated saved data to stable lesson/exercise ids');
+  } catch (err) {
+    console.warn('[eluthu] stable-key migration failed; will retry next load', err);
+  }
+}
+
 // ── Progress persistence ─────────────────────────────────────────────────────
+// Stored as the lesson id + exercise id, not indices, so adding or removing
+// lessons above the user's place doesn't drop them on a different exercise.
 
 function saveProgress() {
-  localStorage.setItem('eluthu_lesson',   lessonIdx);
-  localStorage.setItem('eluthu_exercise', exerciseIdx);
+  const lk = lessonKeyOf(lessonIdx);
+  const ek = exerciseFileId(lessonIdx, exerciseIdx);
+  if (!lk || !ek) return;
+  try { localStorage.setItem(RESUME_KEY, JSON.stringify({ lesson: lk, exercise: ek })); }
+  catch { /* localStorage unavailable — progress just won't persist */ }
+}
+
+// Resolve the saved ids back to current positions. Null if nothing is saved
+// or that lesson no longer exists (caller then starts from the beginning);
+// a lesson that exists but whose saved exercise was removed resolves to the
+// lesson's first exercise rather than a wrong one.
+function resolveResume() {
+  if (!manifest) return null;
+  try {
+    const r = JSON.parse(localStorage.getItem(RESUME_KEY) || 'null');
+    if (!r) return null;
+    const l = manifest.lessons.findIndex((_, i) => lessonKeyOf(i) === r.lesson);
+    if (l < 0) return null;
+    const e = manifest.lessons[l].exercises.findIndex((_, i) => exerciseFileId(l, i) === r.exercise);
+    return { l, e: e < 0 ? 0 : e };
+  } catch { return null; }
 }
 
 // ── Exercise pass/fail state ──────────────────────────────────────────────────
@@ -1318,8 +1474,9 @@ function loadScores() {
 }
 
 function saveExercisePass(lessonIdx, exerciseIdx, wpm, accuracy) {
+  const key    = exerciseFileId(lessonIdx, exerciseIdx);
+  if (!key) return;
   const scores = loadScores();
-  const key    = `${lessonIdx}-${exerciseIdx}`;
   const prev   = scores[key];
 
   // Track accuracy-best and wpm-best as two INDEPENDENT running maxima,
@@ -1345,7 +1502,8 @@ function saveExercisePass(lessonIdx, exerciseIdx, wpm, accuracy) {
 }
 
 function getExerciseScore(lessonIdx, exerciseIdx) {
-  return loadScores()[`${lessonIdx}-${exerciseIdx}`] ?? null;
+  const key = exerciseFileId(lessonIdx, exerciseIdx);
+  return key ? (loadScores()[key] ?? null) : null;
 }
 
 function hasPassedExercise(lessonIdx, exerciseIdx) {
@@ -1373,8 +1531,9 @@ function saveScoreHistoryData(data) {
 }
 
 function recordScoreHistory(lessonIdx, exerciseIdx, accuracy, wpm) {
+  const key  = exerciseFileId(lessonIdx, exerciseIdx);
+  if (!key) return;
   const all  = loadScoreHistory();
-  const key  = `${lessonIdx}-${exerciseIdx}`;
   const list = all[key] ?? [];
   list.push({ ts: Date.now(), accuracy: Math.round(accuracy), wpm: wpm ?? null });
   if (list.length > SCORE_HISTORY_MAX) list.splice(0, list.length - SCORE_HISTORY_MAX);
@@ -1383,7 +1542,8 @@ function recordScoreHistory(lessonIdx, exerciseIdx, accuracy, wpm) {
 }
 
 function getScoreHistory(lessonIdx, exerciseIdx) {
-  return loadScoreHistory()[`${lessonIdx}-${exerciseIdx}`] ?? [];
+  const key = exerciseFileId(lessonIdx, exerciseIdx);
+  return key ? (loadScoreHistory()[key] ?? []) : [];
 }
 
 // The most recent PASSED attempt's accuracy/wpm, for display in the
@@ -1515,7 +1675,7 @@ function saveLessonStars(data) {
 }
 
 function getLessonStars(li) {
-  return loadLessonStars()[li]?.stars ?? 0;
+  return loadLessonStars()[lessonKeyOf(li)]?.stars ?? 0;
 }
 
 // ⭐⭐⭐☆☆ style — filled for earned, outline for the remainder, out of 5.
@@ -1584,28 +1744,23 @@ function recalcLessonStars(li, exType, stats) {
   const computed = Math.min(5, accStars + spdStars);
 
   const all  = loadLessonStars();
-  const prev = all[li]?.stars ?? 0;
-  all[li] = { stars: Math.max(prev, computed) };
+  const lk   = lessonKeyOf(li);
+  const prev = all[lk]?.stars ?? 0;
+  all[lk] = { stars: Math.max(prev, computed) };
   saveLessonStars(all);
 }
 
 // Max reachable lesson/exercise (for locked state)
 function maxReachedIdx() {
-  const l = parseInt(localStorage.getItem('eluthu_lesson')   ?? '0');
-  const e = parseInt(localStorage.getItem('eluthu_exercise') ?? '0');
-  return { l, e };
+  return resolveResume() ?? { l: 0, e: 0 };
 }
 
 function loadProgress() {
-  const lesson   = parseInt(localStorage.getItem('eluthu_lesson')   ?? '0');
-  const exercise = parseInt(localStorage.getItem('eluthu_exercise') ?? '0');
   if (!manifest) return;
-  if (lesson < manifest.lessons.length) {
-    lessonIdx   = lesson;
-    lessonChars = manifest.lessons[lesson].chars;
-    const exCount = manifest.lessons[lesson].exercises.length;
-    exerciseIdx = exercise < exCount ? exercise : 0;
-  }
+  const pos = resolveResume() ?? { l: 0, e: 0 };
+  lessonIdx   = pos.l;
+  exerciseIdx = pos.e;
+  lessonChars = manifest.lessons[pos.l]?.chars ?? [];
 }
 
 // ── Practice streak / heatmap / achievement badges ─────────────────────────────
