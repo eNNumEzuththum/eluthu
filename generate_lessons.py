@@ -5,8 +5,12 @@ generate_lessons.py — எழுது
 Generates exercise JSON files and updates data/lessons.json manifest.
 
 Reads:
-  - lesson_plan.json  (for messages and lesson structure)
-  - lesson_words.json (for lesson metadata and words)
+  - lesson_plan.json  (hand-written: messages and lesson structure, no ids)
+  - lesson_words.json (lesson metadata, words and the permanent lesson ids; created and
+                       updated by add_words_to_lesson.py — run that script first)
+
+Lesson ids are permanent and never derived from list position; exercise ids are
+lesson-local ("01", "02", ...) fixed slots (see "Exercise ids" below).
 
 Usage:
     python3 generate_lessons.py
@@ -15,6 +19,8 @@ Usage:
 import json
 import os
 import random
+
+from add_words_to_lesson import LessonIds   # ids are created there; read-only here
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 SCRIPT_DIR        = os.path.dirname(os.path.abspath(__file__))
@@ -222,14 +228,67 @@ def make_combo_exercises(consonants, words, lesson_id, has_words=True, include_r
 
     return exercises
 
+# ── Lesson ids ────────────────────────────────────────────────────────────────
+# Permanent lesson ids are created by add_words_to_lesson.py and stored in
+# lesson_words.json (see the "Lesson ids" section there). This script only
+# READS them: run add_words_to_lesson.py first.
+
+# ── Exercise ids ──────────────────────────────────────────────────────────────
+# Exercise ids are lesson-local ("01", "02", ...) and are fixed SLOTS, not list
+# positions: a slot number always means the same exercise within that kind of
+# lesson, so adding or removing an exercise never renumbers the others, and a
+# retired slot is never reused. To add a new kind of exercise, give it the next
+# number above everything listed here (including retired slots).
+#
+#   kind              slot 1          slot 2     retired (never reuse)
+#   message           message         -          -
+#   special           review          -          -
+#   combo_multi       review          -          -
+#   combo_single      introduction    practice   3 (review)
+#   review_only       review          -          -
+#   non_combo_pair    introduction    practice   3-6 (older multi-step intro)
+#   non_combo_single  introduction    -          2-6
+EXERCISE_SLOTS = {
+    'message':          (1,),
+    'special':          (1,),
+    'combo_multi':      (1,),
+    'combo_single':     (1, 2),
+    'review_only':      (1,),
+    'non_combo_pair':   (1, 2),
+    'non_combo_single': (1,),
+}
+
+# accuracy target per slot (100 = introduction, 90 = practice, 80 = review)
+EXERCISE_ACCURACY = {
+    'message':          {1: 100},
+    'special':          {1: 80},
+    'combo_multi':      {1: 80},
+    'combo_single':     {1: 100, 2: 90},
+    'review_only':      {1: 80},
+    'non_combo_pair':   {1: 100, 2: 90},
+    'non_combo_single': {1: 100},
+}
+
+ACCURACY_TO_TYPE = {100: 'introduction', 90: 'practice', 80: 'review'}
+
+def exercise_file_stem(lid, ex):
+    """Exercise files stay data/exercises/<lesson id>-<exercise id>.json"""
+    return f"{lid}-{ex}"
+
+def write_exercise(lid, ex, data):
+    stem = exercise_file_stem(lid, ex)
+    with open(os.path.join(EXERCISES_DIR, f"{stem}.json"), 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    return stem
+
 # ── Milestone helper ──────────────────────────────────────────────────────────
 
-def apply_mile_stone(exercises_dir, ex_id, mile_stone):
-    """Attach a 'mile_stone' field to an already-written exercise file,
-    inserted just before the 'text' key."""
-    path = os.path.join(exercises_dir, f"{ex_id}.json")
+def apply_mile_stone(exercises_dir, stem, mile_stone):
+    """Attach a 'mile_stone' field to an already-written exercise file
+    (<lesson id>-<exercise id>), inserted just before the 'text' key."""
+    path = os.path.join(exercises_dir, f"{stem}.json")
     if not os.path.exists(path):
-        print(f"  ⚠ mile_stone '{mile_stone}' — exercise {ex_id} not found, skipped")
+        print(f"  ⚠ mile_stone '{mile_stone}' — exercise {stem} not found, skipped")
         return
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -244,7 +303,7 @@ def apply_mile_stone(exercises_dir, ex_id, mile_stone):
         new_data['mile_stone'] = mile_stone
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(new_data, f, ensure_ascii=False, indent=2)
-    print(f"  ★ mile_stone '{mile_stone}' → {ex_id}")
+    print(f"  ★ mile_stone '{mile_stone}' → {stem}")
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -252,22 +311,24 @@ def main():
     random.seed(0)
     os.makedirs(EXERCISES_DIR, exist_ok=True)
 
+    if not os.path.exists(LESSON_WORDS_FILE):
+        raise SystemExit('lesson_words.json not found — run add_words_to_lesson.py first.')
     with open(LESSON_WORDS_FILE, 'r', encoding='utf-8') as f:
-        lesson_words = json.load(f)
+        lesson_words = json.load(f)['lessons']
 
     with open(LESSON_PLAN_FILE, 'r', encoding='utf-8') as f:
         lesson_plan = json.load(f)
 
-    # Lookup lesson_words by ID — IDs match sequential plan positions
+    # Permanent ids come from lesson_words.json (written by add_words_to_lesson.py).
+    ids = LessonIds(lesson_plan, allocate=False)
+
+    # lesson_words.json is matched to the plan by lesson id (not position)
     words_by_id = {l['id']: l for l in lesson_words}
 
     manifest_lessons   = []
-    lesson_counter     = 0
-    last_exercise_id   = None   # most recently written exercise file (any lesson)
+    last_exercise_stem = None   # most recently written exercise file (any lesson)
 
-    for plan_entry in lesson_plan:
-        lesson_counter += 1
-        lid = str(lesson_counter) if lesson_counter >= 100 else f"{lesson_counter:02d}"
+    for plan_entry, entry_id_key in zip(lesson_plan, ids.keys):
 
         # ── Milestone ────────────────────────────────────────────────────────
         # Normally mile_stone points BACKWARD: tag the previous entry's last
@@ -280,16 +341,18 @@ def main():
         forward_mile_stone = mile_stone if (mile_stone and is_fwd_special) else None
 
         if mile_stone and not is_fwd_special:
-            if last_exercise_id:
-                apply_mile_stone(EXERCISES_DIR, last_exercise_id, mile_stone)
+            if last_exercise_stem:
+                apply_mile_stone(EXERCISES_DIR, last_exercise_stem, mile_stone)
             else:
                 print(f"  ⚠ mile_stone '{mile_stone}' — no previous exercise to tag, skipped")
 
         # ── Message entry ─────────────────────────────────────────────────────
         if 'message' in plan_entry:
+            lid          = ids.id_of(entry_id_key)
             message_text = plan_entry['message']
             message_key  = plan_entry.get('key', 'any')
-            ex_id = f"{lid}-01"
+            slots        = EXERCISE_SLOTS['message']
+            ex           = f"{slots[0]:02d}"
             data  = {
                 '_version':         '1.0.0',
                 'exercise_type':    'message',
@@ -298,12 +361,10 @@ def main():
                 'text':             message_text,
                 'key':              message_key,
             }
-            with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-            last_exercise_id = ex_id
+            last_exercise_stem = write_exercise(lid, ex, data)
             manifest_lessons.append({
                 'id': lid, 'name': '─', 'chars': [],
-                'combination_mode': False, 'exercises': [ex_id],
+                'combination_mode': False, 'exercises': [ex],
             })
             print(f"\nLesson {lid} — [message] {repr(message_text[:50])}")
             continue
@@ -318,8 +379,13 @@ def main():
                                if w.get('name', '').startswith(special_name)]
             fwd_milestone_applied = False
             for lesson in special_entries:
-                lesson_counter += 1
-                lid = str(lesson_counter) if lesson_counter >= 100 else f"{lesson_counter:02d}"
+                # id comes from lesson_words.json, which add_words_to_lesson.py
+                # builds from this entry's "ids" in the plan
+                lid = lesson['id']
+                if lid not in ids.special_ids(entry_id_key):
+                    print(f"  ⚠ lesson {lid} ({lesson.get('name', '')}) is not one of this "
+                          f"entry's ids in lesson_words.json — lesson_words.json looks stale, "
+                          f"re-run add_words_to_lesson.py")
                 name       = lesson.get('name', '')
                 words      = lesson.get('words', [])
                 consonants = [ch for ch in lesson.get('chars', []) if is_consonant(ch)]
@@ -328,28 +394,29 @@ def main():
 
                 # Words/sentences/paragraphs: single review exercise, as-is, no repeat
                 texts        = [' '.join(words)] if words else []
-                accuracy_map = {1: 80}
+                slots        = EXERCISE_SLOTS['special']
+                accuracy_map = EXERCISE_ACCURACY['special']
                 # Override exercise_type to 'review' for all special lessons
                 _special_type = 'review'
 
                 exercise_ids = []
-                for i, text in enumerate(texts, 1):
-                    ex_id           = f"{lid}-{i:02d}"
-                    accuracy_target = accuracy_map.get(i, 80)
+                for slot, text in zip(slots, texts):
+                    ex              = f"{slot:02d}"
+                    accuracy_target = accuracy_map.get(slot, 80)
                     exercise_type   = _special_type
                     data = {
-                        '_version': '1.0.0', 'exercise_type': exercise_type,
+                        '_version': '1.0.0',
+                        'exercise_type': exercise_type,
                         'combination_mode': combo, 'accuracy_target': accuracy_target,
                         'text': text.strip(),
                     }
-                    with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
-                        json.dump(data, f, ensure_ascii=False, indent=2)
-                    last_exercise_id = ex_id
+                    stem = write_exercise(lid, ex, data)
+                    last_exercise_stem = stem
                     if forward_mile_stone and not fwd_milestone_applied:
-                        apply_mile_stone(EXERCISES_DIR, ex_id, forward_mile_stone)
+                        apply_mile_stone(EXERCISES_DIR, stem, forward_mile_stone)
                         fwd_milestone_applied = True
-                    print(f"  {ex_id}: [{exercise_type}] {repr(text[:60])}{'...' if len(text)>60 else ''}")
-                    exercise_ids.append(ex_id)
+                    print(f"  {stem}: [{exercise_type}] {repr(text[:60])}{'...' if len(text)>60 else ''}")
+                    exercise_ids.append(ex)
 
                 manifest_chars = list(consonants)
                 for vowel in VOWEL_TO_MARKER:
@@ -361,7 +428,8 @@ def main():
                 print(f"\nLesson {lid} — {name}  [combination]")
             continue
 
-        # ── Normal lesson — lookup by ID ──────────────────────────────────────
+        # ── Normal lesson — lookup by its permanent id ────────────────────────
+        lid    = ids.id_of(entry_id_key)
         lesson = words_by_id.get(lid)
         if lesson is None:
             print(f"  Lesson {lid} — skipped (not in lesson_words.json)")
@@ -379,18 +447,19 @@ def main():
         if combo and consonants:
             word_count   = lesson.get('word_count', 0)
             if len(consonants) >= 2:
+                kind = 'combo_multi'
                 # Review lesson — single exercise, words as-is from lesson_words.json
                 if words:
                     texts = [' '.join(words)]
                 else:
-                    texts = make_combo_exercises(consonants, words, lesson_id=lesson_counter, has_words=False)[:1]
-                accuracy_map = {1: 80}
+                    texts = make_combo_exercises(consonants, words, lesson_id=lid, has_words=False)[:1]
             else:
-                texts        = make_combo_exercises(consonants, words, lesson_id=lesson_counter,
-                                                      has_words=word_count > 0, include_review=False)
-                accuracy_map = {1: 100, 2: 90} if word_count > 0 else {1: 100}
+                kind  = 'combo_single'
+                texts = make_combo_exercises(consonants, words, lesson_id=lid,
+                                             has_words=word_count > 0, include_review=False)
         else:
             if len(chars) >= 3:
+                kind = 'review_only'
                 # Review only — single exercise, random words from lesson chars
                 pool = [c for c in chars if c != ' ']
                 if len(pool) >= 2:
@@ -398,26 +467,37 @@ def main():
                     texts = [text]
                 else:
                     texts = []
-                accuracy_map = {1: 80}
+            elif len(chars) == 2:
+                kind  = 'non_combo_pair'
+                texts = make_non_combo_exercises(chars, lesson_id=lid)
             else:
-                texts        = make_non_combo_exercises(chars, lesson_id=lesson_counter)
-                accuracy_map = {1: 100, 2: 90} if len(chars) == 2 else {1:100, 2:100, 3:100, 4:100, 5:90, 6:80}
+                kind  = 'non_combo_single'
+                texts = make_non_combo_exercises(chars, lesson_id=lid)
 
-        exercise_ids = []
-        for i, text in enumerate(texts, 1):
-            ex_id           = f"{lid}-{i:02d}"
-            accuracy_target = accuracy_map.get(i, 80)
-            exercise_type   = {100: 'introduction', 90: 'practice', 80: 'review'}.get(accuracy_target, 'review')
+        slots        = EXERCISE_SLOTS[kind]
+        accuracy_map = EXERCISE_ACCURACY[kind]
+        if len(texts) > len(slots):
+            raise SystemExit(f"Lesson {lid} ({kind}) produced {len(texts)} exercises but only "
+                             f"slots {slots} are defined — add a new slot to EXERCISE_SLOTS "
+                             f"(next number above all used/retired ones).")
+
+        exercise_ids   = []
+        exercise_types = []
+        for slot, text in zip(slots, texts):
+            ex              = f"{slot:02d}"
+            accuracy_target = accuracy_map.get(slot, 80)
+            exercise_type   = ACCURACY_TO_TYPE.get(accuracy_target, 'review')
             data = {
-                '_version': '1.0.0', 'exercise_type': exercise_type,
+                '_version': '1.0.0',
+                'exercise_type': exercise_type,
                 'combination_mode': combo, 'accuracy_target': accuracy_target,
                 'text': text.strip(),
             }
-            with open(os.path.join(EXERCISES_DIR, f"{ex_id}.json"), 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-            last_exercise_id = ex_id
-            print(f"  {ex_id}: [{exercise_type}] acc={accuracy_target} {repr(text[:50])}{'...' if len(text)>50 else ''}")
-            exercise_ids.append(ex_id)
+            stem = write_exercise(lid, ex, data)
+            last_exercise_stem = stem
+            print(f"  {stem}: [{exercise_type}] acc={accuracy_target} {repr(text[:50])}{'...' if len(text)>50 else ''}")
+            exercise_ids.append(ex)
+            exercise_types.append(exercise_type)
 
         if combo and consonants:
             manifest_chars = list(consonants)
@@ -429,22 +509,20 @@ def main():
         manifest_lessons.append({
             'id': lid, 'name': name, 'chars': manifest_chars,
             'combination_mode': combo, 'exercises': exercise_ids,
-            'exercise_types': [
-                {100: 'introduction', 90: 'practice', 80: 'review'}.get(
-                    accuracy_map.get(i, 80), 'review')
-                for i in range(1, len(texts) + 1)
-            ],
+            'exercise_types': exercise_types,
         })
 
     manifest = {
-        '_version':     '1.0.0',
-        '_description': 'எழுது lesson manifest',
-        'lessons':      manifest_lessons,
+        '_version':       '1.0.0',
+        '_description':   'எழுது lesson manifest',
+        'next_lesson_id': ids.next_id,
+        'lessons':        manifest_lessons,
     }
     with open(LESSONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
 
-    print(f"\ndata/lessons.json updated — {len(manifest_lessons)} lessons")
+    print(f"\ndata/lessons.json updated — {len(manifest_lessons)} lessons, "
+          f"next_lesson_id = {ids.next_id}")
     print(f"Exercise files: {EXERCISES_DIR}")
     print("\nDone! ✓")
 
