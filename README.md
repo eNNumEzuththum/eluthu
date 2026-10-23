@@ -2,46 +2,54 @@
 
 # eluthu: Master Tamil Touch Typing
 
-**▶ [Let's Start Now](https://ennumezuththum.github.io/eluthu/)** — Free, runs entirely in your browser, nothing to install.
+**▶ [Let's Start Now](https://ennumezuththum.github.io/eluthu/)** — Free, runs locally in your browser, nothing to install.
 
 ![eluthu — Tamil touch typing lesson screen](assets/preview.png)
 
-**eluthu** is a free, open-source Tamil touch typing tutor designed to help anyone type Tamil faster, accurately, and effortlessly.
+**eluthu** is a free, open-source Tamil touch typing tutor for the **Tamil 99** keyboard layout.
 
-Ten years ago, [TypingClub](https://www.typingclub.com/) transformed my English typing skills. When I couldn't find a similar dedicated tool for Tamil, I decided to build **eluthu**.
+Back in 2015, a touch typing tutor transformed my English typing skills. I went from hunt-and-peck typing at 20 words per minute to effortlessly typing with ten fingers at over 80 words per minute without looking at the keyboard, thanks to [TypingClub](https://www.typingclub.com/).
+
+When I noticed a lack of similar dedicated tools for Tamil, I decided to build **eluthu**. Below you'll find what it offers, why it teaches Tamil 99, and why touch typing is worth learning.
 
 ---
 
-## Why Touch Typing?
+## Key Features
 
-You might wonder why keyboard typing still matters in the era of smartphones and voice-to-text tools.
+- **Progressive Lessons:** A step-by-step curriculum that builds muscle memory naturally.
+- **Three Levels:**
+  - **Beginner:** the pulli (்), vowels (e.g. அ) and consonants with the inherent "a" (e.g. க).
+  - **Intermediate:** pure consonants (e.g. க்) and other vowel-consonants (e.g. கா).
+  - **Advanced:** sentences and paragraphs.
+- **Finger-Position Learning:** Keys are introduced in ergonomic pairs based on home-row positioning rather than alphabetical order. (Your first two keys are **ப** via `J` and **்** pulli via `F`.)
+- **Visual Keyboard Guidance:** A colour-coded on-screen keyboard shows which finger to use for each key and highlights the next key in white, while a hand diagram shows the finger to press it with. Only unlocked or currently practised keys are visible to prevent cognitive overload.
+- **Grammar Integration:** After the vowels, consonants are introduced alongside the high-efficiency grammar flows built into Tamil 99.
+- **Interactive Messages:** Instructional screens between lessons guide you through the learning journey.
+- **Introduction, Practice & Review:** Each new key has two phases, introduction and practice, with review exercises in between. In the introduction, the cursor won't move until you press the right key; practice needs 90%+ accuracy and review 80%+, so you build confidence before moving on.
+- **Real Tamil Words:** Combination lessons use real Tamil words and phrases built strictly from characters you have already learned.
+- **Local Progress Saving:** Your progress in each lesson is saved automatically in your browser and shown in graphs.
+- **Progress Tracking:** A streak heatmap, achievement badges and lesson star ratings — see [Track Your Progress](#track-your-progress).
+- **Tamil99 Writer:** A standalone, lightweight Tamil word processor for writing freely — see [Tamil99 Writer](#tamil99-writer).
 
-While voice dictation works well for quick notes, serious writing requires editing, refining, and restructuring—tasks that demand manual input. If you write regularly, typing efficiently on a physical keyboard remains essential.
-
-Efficient touch typing relies on three core principles:
-1. **Minimizing keystrokes**
-2. **Shortening finger movement distance**
-3. **Avoiding awkward key combinations** (such as heavy reliance on the `Shift` key)
-
-Most importantly, touch typing lets you keep your eyes on the screen, allowing you to focus completely on your thoughts rather than searching for keys.
+> **Note:** Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers are not yet supported. They are on the [Roadmap](#roadmap).
 
 ---
 
 ## Why Tamil 99?
 
-There are several Tamil keyboard layouts in use today. The three best-known are **Tamil 99**, **Bamini**, and **Anjal Phonetic**.
+There are several Tamil keyboard layouts. The three best-known are **Tamil 99**, **Bamini** and **Anjal Phonetic**.
 
-- **Anjal ** follows a "type as you speak" approach — English letters map to similar-sounding Tamil characters (for example, கா = k + A [Key K + Shift + Key A]). This makes it intuitive for beginners.
+- **Anjal Phonetic** follows a "type as you speak" approach — English letters map to similar-sounding Tamil characters (for example, கா = k + A [Key K + Shift + Key A]). This makes it intuitive for beginners.
 
 - **Bamini** closely follows traditional Tamil typewriter conventions (for example, கா = க [Key i] + ா [Key m]).
 
-- **Tamil 99** optimizes key placement for fast, logical typing on standard QWERTY keyboards, using a consonant-vowel pattern (for example, கா = க [Key H] + ஆ [Key Q]). It relies on three key design principles:
+- **Tamil 99** optimises key placement for fast, logical typing on standard QWERTY keyboards, using a consonant-vowel pattern (for example, கா = க [Key H] + ஆ [Key Q]). It relies on three design principles:
 
-   1. **Frequency-Based Layout:** Keys are arranged based on how frequently letters occur in the Tamil language.
-   2. **Grammar-Optimized Flow:** It leverages natural Tamil grammar. For example, pure consonants (மெய்) are frequently followed by vowel-consonants (உயிர்மெய்), like **க்** and **க** in **வணக்கம்**. Tamil 99 makes these natural sequences fluid to type.
-   3. **Minimal Shift Usage:** The `Shift` key is reserved for non-native Tamil sounds and rare special characters, so your hands rarely need to leave the home row.
+   1. **Shorter finger movement:** Keys are arranged by how frequently letters occur in Tamil, so finger movement is minimised.
+   2. **Fewer keystrokes:** Tamil words often have a consonant followed by the same consonant (as in அ**ம்மம்மா**), or a soft consonant followed by its matching hard consonant (as in த**ம்பி**). In these cases you don't type the pulli — Tamil 99 adds it automatically (for example, the **க்க** in **வணக்கம்**).
+   3. **Minimal `Shift` usage:** To reduce finger strain, `Shift` is needed only for Grantha characters and rare symbols.
 
-For speed and efficiency, both Tamil 99 and Bamini are strong choices. Due to its Tamil-grammar-based design, **Tamil 99** is preferred by most professional Tamil writers.
+Tamil 99 is also the official standard keyboard layout of the Tamil Nadu government, approved in 1999 (see [Resources & References](#resources--references)).
 
 ### Layout Comparison
 
@@ -50,27 +58,47 @@ Typing the word **வணக்கம்**:
 | Layout | Keystrokes | Unique Keys | Requires `Shift` Key? |
 | :--- | :---: | :---: | :---: |
 | **Tamil 99** | **6** | **5** | **No** |
-| Bamini | 6 | 5 | No |
-| Phonetic (Anjal) | 7 | 6 | Yes |
+| Bamini | 7 | 5 | No |
+| Anjal Phonetic | 8 | 6 | Yes |
 
-While the difference seems minor for a single word, Tamil 99 and Bamini are closely matched on raw keystroke count. Tamil 99's advantage lies in *how* its keys are assigned: each key maps predictably to a Tamil grammar rule rather than needing to be memorized from typewriter-era conventions, which most learners find easier to reason about and retain. Against phonetic typing, the gap is more dramatic — Tamil 99 saves substantial unnecessary keystrokes when drafting longer articles.
+Tamil 99 needs the fewest keystrokes, and because it is designed around Tamil grammar, it is generally preferred for natural, fast touch typing.
 
 ---
 
-## Key Features
+## Why Learn Touch Typing?
 
-- **Progressive Lessons:** Step-by-step curriculum that builds muscle memory naturally.
-- **Finger-Position Learning:** Keys are introduced in ergonomic pairs based on home-row positioning rather than alphabetical order. (Your first two keys are **ப** via `J` and **்** pulli via `F`).
-- **Visual Keyboard Guidance:** Dynamic visual guides display key placement and finger overlays. Only unlocked or currently practicing keys are visible to prevent cognitive overload.
-- **Grammar Integration:** Consonants are introduced alongside high-efficiency grammar flows inherent to Tamil 99.
-- **Interactive Messages:** Instructional screens between lessons guide you through the learning journey
-- **Introduction, Practice & Review:** Each lesson has dedicated exercise phases — introduction (100% accuracy required), practice (90%), and review (80%) — so you build confidence before moving on.
-- **Real Tamil Words:** Combination lessons use real Tamil words and phrases derived strictly from characters you have learned so far (capped at 50 words per exercise for optimal learning pace).
-- **Local Progress Saving:** Your progress is saved automatically in your browser.
-- **Tamil99 Writer:** A standalone, lightweight Tamil word processor for writing freely. See [Tamil99 Writer](#tamil99-writer) below.
-- **Streak Heatmap:** A calendar-style heatmap tracks your daily practice, alongside a live streak counter — see [Track Your Progress](#track-your-progress) below.
-- **Achievement Badges:** Earn badges for milestones — daily practice duration, streak length, typing speed, accuracy, and completing each keyboard row or character set.
-- **Lesson Star Ratings:** Every lesson earns a 1–3 star rating based on your performance, and improves as you redo it.
+### Why type on a keyboard at all?
+
+You might wonder why typing on a keyboard is still necessary in the era of smartphones and voice-to-text tools.
+
+Voice dictation works well for quick notes, but serious writing requires editing, refining and restructuring — tasks that demand manual input. If you write regularly, typing efficiently on a physical keyboard remains essential.
+
+### What is touch typing?
+
+Touch typing is the ability to type on a computer keyboard using all ten fingers without looking down at the keys.
+
+| | Touch typing | Hunt-and-peck |
+| :--- | :--- | :--- |
+| **Hands** | Fingers, wrists and hands stay relaxed. The workload is shared across all ten fingers with minimal movement, reducing the risk of repetitive strain injury (RSI). | Hands hover in the air while your arms move across the keyboard, putting unnecessary strain on your joints. |
+| **Eyes & posture** | Your eyes stay on the screen, so you sit upright and catch mistakes instantly. | Looking back and forth between keyboard and screen leads to a craned neck, hunched shoulders and a curved back, causing neck, back and eye strain. |
+| **Mind** | Your fingers find keys from muscle memory, so your mind stays on what you are writing. | Your brain constantly switches between what to write, where the keys are, and checking for errors, which breaks concentration and causes mental fatigue. |
+
+### Benefits of touch typing
+
+1. **Better ergonomics and posture:** Less strain and fatigue in your fingers, wrists, arms, neck, back and eyes.
+2. **Higher-quality writing:** With your attention on your ideas rather than the keys, your writing flows seamlessly.
+3. **Faster speed:** Once muscle memory takes over, your fingers hit keys significantly faster.
+4. **Greater accuracy:** Muscle memory leads to fewer typos, and because your eyes are on the screen, you fix mistakes immediately.
+5. **Accessibility:** Touch typing lets visually impaired people type fluently without seeing the keyboard.
+
+### What does it take to learn?
+
+* **Regular practice:** With 15 minutes of practice every day, your brain learns to direct your fingers automatically (muscle memory). I recommend keeping this up for six weeks, though progress varies by person.
+* **Patience:** Don't worry if your fingers stumble. High speeds won't happen overnight, and at first your typing speed will drop temporarily — stay motivated and stay patient.
+* **Eyes on the screen:** The single most important rule of touch typing is never to look at the keyboard.
+* **Breaking old habits:** Be prepared to unlearn old hunt-and-peck finger movements.
+* **Accuracy over speed:** Focus on accuracy — speed comes naturally with practice.
+* **No special hardware:** You don't need to buy a Tamil keyboard or stick Tamil letters on your keys; your ordinary QWERTY keyboard is enough. To type in Tamil outside eluthu, enable the Tamil 99 layout in your operating system. It's easy on any OS, and if you need help setting it up, contact us via the [feedback form](https://forms.gle/uwwtEWPmU6NVf6QaA).
 
 ---
 
@@ -81,19 +109,18 @@ A dedicated writing space, completely separate from the lesson curriculum — fo
 - **Type freely** using Tamil 99, with copy and paste both ways (button or native Ctrl+V/Cmd+V) to move text in and out of the box.
 - **Real cursor editing** — move with the arrow keys (Left/Right, Home/End), insert or delete text anywhere, not just at the end.
 - **Auto-save** — your draft saves itself a second after you stop typing, with a small "Saved ✓" indicator, and is restored automatically the next time you open the page, even after a hard refresh.
-- **Live word and character count** as you type.
-- **Adjustable font size** (small/medium/large), remembered across visits.
-- **Resizable writing area** — drag the bottom-right corner to make it as tall as you need.
+
+Anything you write here doesn't count towards your streak, badges or lesson stars.
 
 ---
 
 ## Track Your Progress
 
-eluthu includes a few lightweight ways to see how you're doing over time — all computed locally from your own practice data, nothing sent anywhere.
+eluthu helps you track your progress over time — all computed locally from your own practice data, nothing sent anywhere.
 
-- **🔥 Streak & Heatmap:** A GitHub-style contribution graph shows which days you practiced, with a running streak counter for consecutive days. Click any day on the heatmap for a detailed breakdown — exercises completed, average speed, and accuracy for that day.
+- **🔥 Streak & Heatmap:** A GitHub-style contribution graph shows which days you practised, with a running streak counter for consecutive days. Click any day on the heatmap for a detailed breakdown — exercises completed, average speed and accuracy for that day.
 - **🏅 Badges:** Unlockable achievements across several categories — daily practice duration, streak length, typing speed, accuracy, keyboard-row completion, character-set completion, and content milestones (first word, sentence, paragraph). Badges appear on the heatmap on the day you earn them.
-- **⭐ Lesson Stars:** Each lesson is rated 1–3 stars based on your best performance. Redoing a lesson can only improve its rating, never lower it — so there's no risk in going back to sharpen a skill.
+- **⭐ Lesson Stars:** Each lesson is rated 1–5 stars based on your best performance. Redoing a lesson can only improve its rating, never lower it — so there's no risk in going back to sharpen a skill.
 
 ---
 
@@ -102,16 +129,16 @@ eluthu includes a few lightweight ways to see how you're doing over time — all
 eluthu is designed to be completely private:
 
 - **Zero Data Transmission:** Nothing you type ever leaves your device. All processing happens in your browser.
-- **No Accounts Needed:** No registration, login, or personal details required.
+- **No Accounts Needed:** No registration, login or personal details required.
 - **Local Storage Only:** Progress is saved locally in your browser (`localStorage`). Clearing your browser data resets your progress.
-- **Ad-Free & Tracker-Free:** No ads, analytics, or third-party tracking scripts.
--  **Open Source:** Licensed under the MIT License — all source code is publicly auditable in this repository.
+- **Ad-Free & Tracker-Free:** No ads, analytics or third-party tracking scripts.
+- **Open Source:** Licensed under the MIT License — all source code is publicly auditable in this repository.
 
 ---
 
 ## Roadmap
 
-The following features are planned for future releases:
+The following feature is planned for future releases:
 
 1. Full support for Grantha characters (ஸ, ஷ, ஜ, ஹ, க்ஷ) and numbers.
 
@@ -119,10 +146,10 @@ The following features are planned for future releases:
 
 ## How You Can Help
 
-- **Use & Share:** Try eluthu and share it with students, writers, or anyone learning Tamil.
-- **Provide Feedback:** Submit bug reports or feature requests via our [Quick Feedback Form](https://forms.gle/uwwtEWPmU6NVf6QaA) or [GitHub Issues](https://github.com/eNNumEzuththum/eluthu/issues).
-- **Contribute Content:** Help expand our word database and lesson exercises.
-- **Contribute Code:** Pull requests are always welcome!
+- **Use & Share:** Try eluthu and share it with friends, family, students, writers, or anyone learning Tamil.
+- **Provide Feedback:** Submit bug reports or feature requests via our [Quick Feedback Form](https://forms.gle/uwwtEWPmU6NVf6QaA) or [GitHub Issues](https://github.com/eNNumEzuththum/eluthu/issues). Please include the version number shown in the app.
+- **Contribute Content:** Help expand our word database and lesson exercises — see [Regenerating lessons](#regenerating-lessons).
+- **Contribute Code or Design:** Pull requests are always welcome!
 
 **Contact:** [enn.eluththu@gmail.com](mailto:enn.eluththu@gmail.com)
 
@@ -141,16 +168,23 @@ The following features are planned for future releases:
    ```bash
    python3 -m http.server 8080
    ```
-
 3. Open http://localhost:8080 in your web browser.
 
+### Regenerating lessons
+
+Lessons are generated from two hand-edited sources: `lesson_plan.json` (lesson definitions) and `words.txt` (frequently used Tamil words).
+
+```bash
+python3 add_words_to_lesson.py   # lesson_plan.json + words.txt → lesson_words.json
+python3 generate_lessons.py      # lesson_words.json → data/lessons.json + data/exercises/
+```
 
 ### Code Structure
 
 ```text
 .
 ├── index.html                # Main entry point for the web application
-├── tamil99-writer.html      # Standalone Tamil99 word processor — separate from lesson progress
+├── tamil99-writer.html       # Standalone Tamil99 word processor — separate from lesson progress
 ├── css/
 │   └── style.css             # Application styles
 ├── js/
@@ -162,7 +196,7 @@ The following features are planned for future releases:
 │   └── version.js            # Application versioning tracker
 ├── assets/
 │   ├── keyboard.svg          # Keyboard layout diagram with finger guides
-│   └── keyboard_all_keys.svg # Dual-labeled keyboard diagram (Tamil + English)
+│   └── keyboard_all_keys.svg # Dual-labelled keyboard diagram (Tamil + English)
 ├── data/
 │   ├── lessons.json          # Lesson manifest (ordering, metadata, exercise lists)
 │   ├── tamil99-keymap.json   # QWERTY to Tamil 99 key bindings
@@ -195,5 +229,3 @@ The following features are planned for future releases:
 Distributed under the MIT License. See LICENSE for details.
 
 Free to use, modify, and distribute. Contributions are welcome!
-
----
