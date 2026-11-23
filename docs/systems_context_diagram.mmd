@@ -1,0 +1,18 @@
+
+    C4Context
+      title System Context diagram for Eluthu
+      Enterprise_Boundary(b0, "EluthuBoundary") {
+        Person(learner, "Eluthu User", "An user of the Eluthu.")
+        Person(developer, "Eluthu Developer", "A developer of the Eluthu.")
+
+        System(SystemAA, "Eluthu: Tamil Typing Tutor", "Teach Tamil Touch Typing.")
+
+      }
+
+      Rel(learner, SystemAA, "Uses")
+
+      UpdateElementStyle(learner, $fontColor="red", $bgColor="grey", $borderColor="red")
+      UpdateRelStyle(learner, SystemAA, $textColor="blue", $lineColor="blue", $offsetX="5")
+
+      UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+
